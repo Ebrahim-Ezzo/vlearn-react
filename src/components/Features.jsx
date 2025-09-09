@@ -10,22 +10,22 @@ const METRICS = [
 
 const CARDS = [
     {
-        img: "/assets/illus/feature-1.jpg",
+        img: "/assets/illus/feature-1.webp",
         title: "خطط دراسة ذكية",
         desc: ".تنظيم تلقائي للدروس مع تذكيرات ومتابعة تقدّمك"
     },
     {
-        img: "/assets/illus/feature-2.jpg",
+        img: "/assets/illus/feature-2.webp",
         title: "دروس مباشرة ومسجّلة",
         desc: ".انضم للبث أو راجع التسجيلات أي وقت"
     },
     {
-        img: "/assets/illus/feature-3.jpg",
+        img: "/assets/illus/feature-3.webp",
         title: "اختبارات فورية",
         desc: ".نتائج لحظية مع شرح للأجوبة ونِقاط للتحفيز"
     },
     {
-        img: "/assets/illus/feature-4.jpg",
+        img: "/assets/illus/feature-4.webp",
         title: "تقارير تقدّم",
         desc: ".لوحة تحليلات بسيطة تفهمك مستواك بسرعة"
     },
