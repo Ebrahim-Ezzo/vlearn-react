@@ -1,0 +1,163 @@
+/* src/styles/howItWorks.css */
+
+/* section */
+.howitworks {
+  background: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 4%) 0%,
+    rgb(246 246 246 / 0%) 100%
+  );
+  padding: 35px 35px;
+  margin-top: 20px;
+}
+
+.howitworks_container {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* header */
+.howitworks_title {
+  text-align: center;
+  color: var(--secondary);
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+
+.howitworks_lead {
+  text-align: center;
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 0 24px;
+}
+
+/* steps grid */
+.howitworks_steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+/* card */
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.step:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* icon pill */
+.step_icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 176, 6, 0.18),
+    rgba(255, 99, 99, 0.18)
+  );
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+/* text */
+.step_title {
+  margin: 2px 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary);
+  text-align: right; /* RTL */
+}
+
+.step_desc {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text);
+  opacity: 0.9;
+  text-align: right; /* RTL */
+}
+
+/* CTA link */
+.howitworks_cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.howitworks_link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.howitworks_link:hover,
+.howitworks_link:focus {
+  color: var(--secondary);
+  border-color: currentColor;
+  outline: none;
+}
+
+/* responsive */
+@media (min-width: 768px) {
+  .howitworks_title {
+    font-size: 32px;
+  }
+  .howitworks_lead {
+    font-size: 18px;
+  }
+  .howitworks_steps {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .step {
+    padding: 16px 18px;
+  }
+  .step_title {
+    font-size: 17px;
+  }
+  .step_desc {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .howitworks {
+    padding: 50px 20px;
+    margin-top: 40px;
+  }
+  .howitworks_steps {
+    gap: 22px;
+  }
+  .step_icon {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+}

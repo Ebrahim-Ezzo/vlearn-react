@@ -1,0 +1,180 @@
+/* src/styles/features.css */
+
+.features {
+  padding: 72px 16px;
+  background: linear-gradient(
+    180deg,
+    rgb(246 246 246 / 0%) 0%,
+    rgb(0 0 0 / 4% / 0%) 100%
+  );
+}
+
+.features_container {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* header */
+.features_header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+.features_title {
+  color: var(--secondary);
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+.features_lead {
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* ---------- Metrics row ---------- */
+.metrics {
+  list-style: none;
+  margin: 22px 0 26px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.metric_item {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+.metric_value {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1.2;
+}
+.metric_label {
+  font-size: 13px;
+  color: var(--text);
+  opacity: 0.9;
+}
+
+/* ---------- Cards scroller ---------- */
+.cards_scroller_wrap {
+  margin-top: 10px;
+  position: relative;
+}
+.cards_scroller {
+  list-style: none;
+  padding: 4px;
+  margin: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 82%;
+  gap: 14px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.cards_scroller::-webkit-scrollbar {
+  height: 6px;
+}
+.cards_scroller::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  padding: 14px;
+  text-align: right;
+}
+.card:hover {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.card_media {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 176, 6, 0.12),
+    rgba(255, 99, 99, 0.1)
+  );
+  margin-bottom: 10px;
+}
+.card_media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(100%);
+  transition:
+    transform 0.4s ease,
+    filter 0.3s ease;
+}
+
+.card:hover .card_media img {
+  filter: grayscale(0%);
+  transform: scale(1.05) rotate(-2deg);
+}
+
+.card_title {
+  margin: 0 0 6px;
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: 800;
+}
+.card_desc {
+  margin: 0;
+  color: var(--text);
+  opacity: 0.9;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* ---------- Responsive ---------- */
+@media (min-width: 768px) {
+  .features_title {
+    font-size: 32px;
+  }
+  .features_lead {
+    font-size: 17px;
+  }
+
+  .metrics {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .metric_value {
+    font-size: 26px;
+  }
+  .metric_label {
+    font-size: 14px;
+  }
+
+  .cards_scroller {
+    grid-auto-columns: 45%;
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .features {
+    padding: 88px 20px;
+  }
+
+  .cards_scroller {
+    grid-auto-columns: 30%;
+    gap: 18px;
+  }
+}

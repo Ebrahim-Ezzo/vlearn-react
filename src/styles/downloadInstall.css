@@ -1,0 +1,184 @@
+/* section */
+.dl {
+  padding: 72px 16px;
+  background: linear-gradient(180deg, #f3f5f8 0%, #ffffff 100%);
+}
+
+/* container (grid) */
+.dl_container {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid; /* grid (grid) */
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+/* text side */
+.dl_text {
+  text-align: center;
+}
+
+.dl_title {
+  color: var(--secondary);
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.dl_lead {
+  color: var(--text);
+  opacity: 0.9;
+  font-size: 16px;
+  margin: 0 0 16px;
+  line-height: 1.7;
+}
+
+/* steps (ordered list) */
+.dl_steps {
+  direction: rtl;
+  margin: 0 0 18px;
+  color: var(--primary);
+  list-style-position: inside;
+  line-height: 1.9;
+  font-size: 15px;
+  text-align: center;
+  list-style: none;
+}
+.dl_steps li {
+  margin: 6px 0;
+  padding: 6px 0;
+}
+
+.dl_steps li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* CTA store buttons */
+.dl_cta {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.store_btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.15s ease;
+}
+.store_btn svg {
+  font-size: 20px;
+}
+
+.store_btn:hover,
+.store_btn:focus {
+  transform: translateY(-2px);
+  outline: none;
+}
+
+/* ألوان خفيفة لكل زر */
+.store_btn.play:hover,
+.store_btn.play:focus,
+.store_btn.ios:hover,
+.store_btn.ios:focus {
+  background-image: linear-gradient(to right, var(--primary), var(--secondary));
+  color: #fff;
+}
+
+/* visual side */
+.dl_visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.phone_frame {
+  width: min(78vw, 360px);
+  aspect-ratio: 9/16;
+  border-radius: 28px;
+  border: 3px solid #eeeeee;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+.phone_frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* decorative blobs (blurred shapes) */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(18px);
+  opacity: 0.25;
+  z-index: -1;
+}
+.blob-a {
+  width: 180px;
+  height: 180px;
+  left: -20px;
+  top: -20px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 176, 6, 0.35),
+    rgba(255, 99, 99, 0.25)
+  );
+}
+.blob-b {
+  width: 220px;
+  height: 220px;
+  right: -30px;
+  bottom: -30px;
+  background: radial-gradient(
+    circle at 70% 70%,
+    rgba(20, 145, 200, 0.3),
+    rgba(255, 176, 6, 0.2)
+  );
+}
+
+/* responsive */
+@media (min-width: 768px) {
+  .dl_title {
+    font-size: 32px;
+  }
+  .dl_lead {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dl {
+    padding: 88px 20px;
+  }
+  .dl_container {
+    grid-template-columns: 1fr 1fr; /* نص + صورة */
+    gap: 40px;
+  }
+  .dl_text {
+    text-align: right;
+  }
+  .dl_cta {
+    justify-content: right;
+  }
+  .dl_steps {
+    text-align: right;
+    list-style: initial;
+  }
+}
