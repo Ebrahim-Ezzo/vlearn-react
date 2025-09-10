@@ -1,10 +1,26 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import "../styles/navbar.css";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = (e) => {
+      if (e.matches) setOpen(false); // إذا صار ديسكتوب، سكّر المنيو
+    };
+    mq.addEventListener?.("change", onChange);
+    mq.addListener?.(onChange); // fallback للمتصفحات القديمة
+
+    return () => {
+      mq.removeEventListener?.("change", onChange);
+      mq.removeListener?.(onChange);
+    };
+  }, []);
+
 
   return (
     <header className="navbar">
@@ -34,10 +50,10 @@ export default function NavBar() {
 
           {/* links*/}
           <nav className={`navbar_menu ${open ? "is-open" : ""}`}>
-            <a href="#downloads">التنزيلات</a>
-            <a href="#features">الميزات</a>
-            <a href="#how">كيف يعمل</a>
             <a href="#hero">الرئيسية</a>
+            <a href="#how">كيف يعمل</a>
+            <a href="#features">الميزات</a>
+            <a href="#downloads">التنزيلات</a>
           </nav>
         </div>
         {/* logo*/}

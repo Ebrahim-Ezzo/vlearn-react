@@ -62,10 +62,12 @@
 }
 
 /* ---------- Cards scroller ---------- */
+
 .cards_scroller_wrap {
   margin-top: 10px;
   position: relative;
 }
+
 .cards_scroller {
   list-style: none;
   padding: 4px;
@@ -79,9 +81,11 @@
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
 }
+
 .cards_scroller::-webkit-scrollbar {
   height: 6px;
 }
+
 .cards_scroller::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.15);
   border-radius: 999px;
@@ -112,6 +116,7 @@
   );
   margin-bottom: 10px;
 }
+
 .card_media img {
   width: 100%;
   height: 100%;
@@ -121,6 +126,13 @@
   transition:
     transform 0.4s ease,
     filter 0.3s ease;
+}
+
+.card_media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .card:hover .card_media img {
