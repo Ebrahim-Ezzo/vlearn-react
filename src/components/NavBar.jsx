@@ -10,10 +10,10 @@ export default function NavBar() {
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
     const onChange = (e) => {
-      if (e.matches) setOpen(false); // إذا صار ديسكتوب، سكّر المنيو
+      if (e.matches) setOpen(false);
     };
     mq.addEventListener?.("change", onChange);
-    mq.addListener?.(onChange); // fallback للمتصفحات القديمة
+    mq.addListener?.(onChange);
 
     return () => {
       mq.removeEventListener?.("change", onChange);

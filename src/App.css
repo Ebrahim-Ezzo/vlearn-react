@@ -48,4 +48,5 @@ main {
 /* added by me */
 body {
   overflow-x: hidden;
+  font-family: "Cairo", sans-serif;
 }

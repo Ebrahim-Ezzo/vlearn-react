@@ -34,7 +34,7 @@
   position: fixed;
   left: 50%;
   top: 55px;
-  transform: translate(-50%, -8px); /* بدون scale */
+  transform: translate(-50%, -8px);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -78,11 +78,11 @@
 .menu-icon span {
   position: absolute;
   left: 50%;
+  transform: translateX(-50%);
   width: 100%;
   height: 2px;
   background-color: var(--text);
   border-radius: 2px;
-  transform: translateX(-50%);
   transition: all 0.3s ease;
 }
 
@@ -124,11 +124,6 @@
 
 .navbar_social {
   display: none;
-  color: var(--secondary);
-}
-
-.navbar_social svg {
-  color: var(--text);
 }
 
 .nav-group {
@@ -184,7 +179,6 @@
 
   .navbar_menu a:hover {
     color: var(--secondary);
-    /* background-color: white; */
   }
 
   .navbar_menu a:focus {
@@ -212,6 +206,10 @@
   .navbar_menu {
     display: flex;
     position: static;
+    /* 
+  left & top are set to auto here
+  just for clarification, since they’re default with position: static
+*/
     left: auto;
     top: auto;
     transform: none;
@@ -263,6 +261,7 @@
     text-decoration-thickness: 2px;
     text-underline-offset: 4px;
   }
+  
   .navbar_logo img {
     height: 50px;
   }
