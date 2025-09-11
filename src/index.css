@@ -16,8 +16,47 @@
   --secondary: #2a82c4;
   --accent: #f6c833;
   --text: #111111;
-  --muted: #6b7280;
+  --muted: #ddd;
+  --button-text: #fff;
+  --link-color: #fff;
+  --text-inverse: #fff;
 }
+/**********************************/
+
+html[data-theme="alt"] {
+  --primary: #7bd3ea;
+  --secondary: #f6c833;
+  --accent: #ff9671;
+
+  --text: #0f141a;
+  --muted: #3a3f46;
+
+  --button-text: #0f141a;
+  --link-color: #0f141a;
+  --text-inverse: #ffffff;
+
+  --surface: #1b2027;
+  --bg: #12161b;
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+.card,
+.navbar_menu {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+a {
+  color: var(--link-color);
+}
+.btn_primary {
+  color: var(--button-text);
+  background: var(--primary);
+}
+/**********************************/
 
 a {
   font-weight: 500;

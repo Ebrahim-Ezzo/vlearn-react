@@ -17,7 +17,6 @@
   gap: 20px;
   align-items: center;
   width: 100%;
-  /* here */
 }
 
 .hero_title {
@@ -86,7 +85,7 @@
   z-index: 1;
   margin-top: 30px;
   background-color: var(--primary);
-  color: #fff;
+  color: var(--button-text);
   transition: color 0.3s ease;
 }
 .btn_primary:focus,
@@ -112,7 +111,7 @@
   width: 100%;
 }
 .btn_primary:hover {
-  color: #fff;
+  color: var(--button-text);
 }
 
 /* Tabs */
@@ -144,7 +143,7 @@
 }
 .tab.active {
   background: var(--secondary);
-  color: #fff;
+  color: var(--button-text);
 }
 
 /* Tab content text */

@@ -32,7 +32,7 @@
   margin: 0;
 }
 
-/* ---------- Metrics row ---------- */
+/* Metrics row */
 .metrics {
   list-style: none;
   margin: 22px 0 26px;
@@ -61,7 +61,7 @@
   opacity: 0.9;
 }
 
-/* ---------- Cards scroller ---------- */
+/* Cards scroller */
 
 .cards_scroller_wrap {
   margin-top: 10px;
@@ -154,7 +154,7 @@
   line-height: 1.8;
 }
 
-/* ---------- Responsive ---------- */
+/* Responsive */
 @media (min-width: 768px) {
   .features_title {
     font-size: 32px;

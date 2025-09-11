@@ -91,13 +91,12 @@
   outline: none;
 }
 
-/* ألوان خفيفة لكل زر */
 .store_btn.play:hover,
 .store_btn.play:focus,
 .store_btn.ios:hover,
 .store_btn.ios:focus {
   background-image: linear-gradient(to right, var(--primary), var(--secondary));
-  color: #fff;
+  color: var(--button-text);
 }
 
 /* visual side */
@@ -168,7 +167,7 @@
     padding: 88px 20px;
   }
   .dl_container {
-    grid-template-columns: 1fr 1fr; /* نص + صورة */
+    grid-template-columns: 1fr 1fr;
     gap: 40px;
   }
   .dl_text {

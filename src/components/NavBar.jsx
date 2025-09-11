@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import "../styles/navbar.css";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
-
+import ThemeSwitch from "./ThemeSwitch";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
@@ -20,7 +20,6 @@ export default function NavBar() {
       mq.removeListener?.(onChange);
     };
   }, []);
-
 
   return (
     <header className="navbar">
@@ -40,13 +39,12 @@ export default function NavBar() {
           </button>
 
           <div className="navbar_social">
-            {/* <FaFacebook />
-          <FaInstagram />
-          <FaWhatsapp /> */}
             <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook"><FaFacebook /></a>
             <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><FaInstagram /></a>
             <a href="https://wa.me/xxxxxxxx" target="_blank" rel="noopener" aria-label="WhatsApp"><FaWhatsapp /></a>
           </div>
+          <ThemeSwitch />
+
 
           {/* links*/}
           <nav className={`navbar_menu ${open ? "is-open" : ""}`}>

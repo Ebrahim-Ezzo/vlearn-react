@@ -134,15 +134,16 @@
 }
 
 .navbar_menu a {
-  color: white;
+  color: var(--link-color);
 }
 
 /*Tab*/
 @media (min-width: 768px) {
   .navbar_social {
     display: flex;
+    align-items: center;
     gap: 15px;
-    color: #fff;
+    color: var(--link-color);
     font-size: 20px;
   }
 
@@ -174,7 +175,7 @@
     text-decoration: none !important;
     padding: 4px 0;
     transition: color 0.2s ease;
-    color: white;
+    color: var(--link-color);
   }
 
   .navbar_menu a:hover {
@@ -183,7 +184,7 @@
 
   .navbar_menu a:focus {
     outline: none;
-    color: #ddd;
+    color: var(--muted);
     text-decoration-thickness: 2px;
   }
 
@@ -239,7 +240,7 @@
   }
 
   .navbar_menu a {
-    color: #fff;
+    color: var(--link-color);
     text-decoration: none;
     padding: 4px 0;
     font-size: 16px;
@@ -261,13 +262,13 @@
     text-decoration-thickness: 2px;
     text-underline-offset: 4px;
   }
-  
+
   .navbar_logo img {
     height: 50px;
   }
 
   .navbar_social {
-    color: #fff;
+    color: var(--link-color);
     font-size: 25px;
   }
 }
