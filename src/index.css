@@ -45,10 +45,12 @@ body {
   color: var(--text);
 }
 .card,
-.navbar_menu {
+.navbar_menu,
+.dl {
   background: var(--surface);
   border: 1px solid var(--border);
 }
+
 a {
   color: var(--link-color);
 }

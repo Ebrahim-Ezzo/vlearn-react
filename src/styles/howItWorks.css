@@ -44,7 +44,7 @@
 .step {
   display: grid;
   grid-template-columns: auto 1fr;
-  align-items: start;
+  align-items: center;
   gap: 12px;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.06);
@@ -133,9 +133,11 @@
     grid-template-columns: 1fr 1fr;
     gap: 18px;
   }
+
   .step {
     padding: 16px 18px;
   }
+
   .step_title {
     font-size: 17px;
   }

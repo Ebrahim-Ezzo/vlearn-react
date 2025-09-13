@@ -1,4 +1,3 @@
-// src/components/HowItWorks.jsx
 import "../styles/howItWorks.css";
 import {
     FiUserPlus,
@@ -20,7 +19,7 @@ export default function HowItWorks() {
                     </p>
                 </header>
 
-                <ul className="howitworks_steps" role="list">
+                <ul className="howitworks_steps">
                     <li className="step">
                         <span className="step_icon" aria-hidden="true">
                             <FiUserPlus />

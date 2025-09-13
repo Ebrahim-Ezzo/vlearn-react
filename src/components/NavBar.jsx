@@ -13,11 +13,8 @@ export default function NavBar() {
       if (e.matches) setOpen(false);
     };
     mq.addEventListener?.("change", onChange);
-    mq.addListener?.(onChange);
-
     return () => {
       mq.removeEventListener?.("change", onChange);
-      mq.removeListener?.(onChange);
     };
   }, []);
 

@@ -1,14 +1,14 @@
 /* section */
 .dl {
   padding: 72px 16px;
-  background: linear-gradient(180deg, #f3f5f8 0%, #ffffff 100%);
+  /* background: linear-gradient(180deg, #f3f5f8 0%, #ffffff 100%); */
+  background-color: var(--surface);
 }
 
-/* container (grid) */
 .dl_container {
   max-width: 1120px;
   margin: 0 auto;
-  display: grid; /* grid (grid) */
+  display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
   align-items: center;
@@ -27,7 +27,7 @@
 }
 
 .dl_lead {
-  color: var(--text);
+  color: var(--accent);
   opacity: 0.9;
   font-size: 16px;
   margin: 0 0 16px;
