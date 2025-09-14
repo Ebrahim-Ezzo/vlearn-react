@@ -55,8 +55,10 @@ export default function Features() {
                     >
                         <ul
                             className="feat_track"
-                            style={{ transform: `translateX(-${idx * 100}%)` }}
-                            role="list"
+                            // style={{ transform: `translateX(-${idx * 100}%)` }}
+                            // role="list"
+                            style={{ transform: `translate3d(-${idx * 100}%, 0, 0)` }}
+
                         >
                             {CARDS.map((c, i) => (
                                 <li key={i} className="feat_slide">
