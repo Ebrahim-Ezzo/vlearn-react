@@ -3,6 +3,23 @@
   padding: 35px 35px;
   margin-top: 0px;
   padding-block-start: 20px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.howitworks > * {
+  position: relative;
+  z-index: 1;
+}
+.howitworks::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/assets/bg/vlearn-bg.svg") no-repeat right 20% top 80px / 70%;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .howitworks_container {

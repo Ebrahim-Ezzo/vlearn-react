@@ -23,7 +23,7 @@
   --button-text: #0f141a;
   --link-color: #fff;
   --text-inverse: #fff;
-  --how-it-works:#dddddd2b;
+  --how-it-works: #dddddd2b;
 }
 /**********************************/
 
@@ -41,7 +41,7 @@ html[data-theme="alt"] {
 
   --surface: #1b2027;
   --bg: #12161b;
-  --how-it-works:#12161b;
+  --how-it-works: #12161b;
   --border: rgba(255, 255, 255, 0.08);
 }
 

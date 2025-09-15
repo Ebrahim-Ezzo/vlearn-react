@@ -50,4 +50,5 @@ body {
   overflow-x: hidden;
   font-family: "Cairo", sans-serif;
   list-style: none;
+  /* background-image: url(/public/assets/bg/vlearn-bg.svg); */
 }
