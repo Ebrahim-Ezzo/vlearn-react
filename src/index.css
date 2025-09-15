@@ -23,6 +23,7 @@
   --button-text: #0f141a;
   --link-color: #fff;
   --text-inverse: #fff;
+  --how-it-works:#dddddd2b;
 }
 /**********************************/
 
@@ -33,13 +34,14 @@ html[data-theme="alt"] {
   --new: #f45a4a;
   --text: #fff;
   --muted: #3a3f46;
---rev-text: #0f141a;
+  --rev-text: #0f141a;
   --button-text: #0f141a;
   --link-color: #0f141a;
   --text-inverse: #ffffff;
 
   --surface: #1b2027;
   --bg: #12161b;
+  --how-it-works:#12161b;
   --border: rgba(255, 255, 255, 0.08);
 }
 

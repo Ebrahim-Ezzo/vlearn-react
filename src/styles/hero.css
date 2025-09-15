@@ -145,7 +145,7 @@
   width: 100%;
 }
 .btn_primary:hover {
-  color: var(--text);
+  color: var(--rev-text);
 }
 
 /* imgs slider */

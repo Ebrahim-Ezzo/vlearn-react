@@ -5,6 +5,7 @@ import HowItWorks from './components/HowItWorks';
 import AppIntro from './components/AppIntro';
 import Features from './components/Features';
 import DownloadInstall from './components/DownloadInstall';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
         <AppIntro />
         <Features />
         <DownloadInstall />
-
+        <Footer />
       </main>
     </>
   )
