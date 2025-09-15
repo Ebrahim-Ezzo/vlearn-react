@@ -5,6 +5,7 @@
   align-items: flex-start;
   justify-content: center;
   background-color: var(--surface);
+  padding-bottom: 20px;
 }
 
 .hero_container {
@@ -36,7 +37,7 @@
 }
 
 .hero_tagline {
-  color: var(--accent);
+  color: var(--primary);
   font-size: 20px;
   font-weight: 500;
   text-align: center;
@@ -45,7 +46,7 @@
 }
 
 .hero_paragraph {
-  color: var(--primary);
+  color: var(--text);
   font-size: 16px;
   line-height: 1.6;
   text-align: center;
@@ -115,9 +116,11 @@
   overflow: hidden;
   z-index: 1;
   margin-top: 30px;
-  background-color: var(--primary);
+  background-color: var(--secondary);
   color: var(--button-text);
   transition: color 0.3s ease;
+  outline: none;
+  border: none;
 }
 .btn_primary:focus,
 .btn_primary:active {
@@ -133,7 +136,7 @@
   background-image: linear-gradient(
     to right,
     var(--primary) 0%,
-    var(--secondary) 100%
+    var(--new) 100%
   );
   transition: width 0.5s ease;
   z-index: -1;
@@ -142,7 +145,7 @@
   width: 100%;
 }
 .btn_primary:hover {
-  color: var(--button-text);
+  color: var(--text);
 }
 
 /* imgs slider */

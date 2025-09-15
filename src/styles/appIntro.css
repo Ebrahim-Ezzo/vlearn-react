@@ -1,9 +1,5 @@
 .appintro {
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(245, 246, 248, 0.85) 100%
-  );
+  background-color: #dddddd2b;
   padding: 20px 16px;
 }
 

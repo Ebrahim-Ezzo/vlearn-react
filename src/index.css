@@ -14,8 +14,10 @@
 
   --primary: #f45a4a;
   --secondary: #2a82c4;
-  --accent: #f6c833;
+  /* --accent: #f6c833; */
+  --accent: #111111;
   --text: #111111;
+  --new: #2a82c4;
   --muted: #ddd;
   --button-text: #fff;
   --link-color: #fff;
@@ -25,10 +27,10 @@
 
 html[data-theme="alt"] {
   --primary: #7bd3ea;
-  --secondary: #f6c833;
+  --secondary: #7bd3ea;
   --accent: #ff9671;
-
-  --text: #0f141a;
+  --new: #f45a4a;
+  --text: #fff;
   --muted: #3a3f46;
 
   --button-text: #0f141a;

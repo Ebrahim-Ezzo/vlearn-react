@@ -14,7 +14,7 @@ export default function Hero() {
 
                 <div className="side_content">
                     <div className="title">
-                        <h1 className="hero_title">Vlearn</h1>
+                        <h1 className="hero_title">VLearn</h1>
                         <p className="hero_tagline">منصتك الذكية للتعليم الافتراضي</p>
                     </div>
 

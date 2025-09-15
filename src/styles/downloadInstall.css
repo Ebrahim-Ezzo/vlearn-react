@@ -71,7 +71,7 @@
   height: 46px;
   padding: 0 16px;
   border-radius: 12px;
-  background: #fff;
+  background: var(--secondary);
   color: var(--text);
   text-decoration: none;
   border: 1px solid rgba(0, 0, 0, 0.08);
