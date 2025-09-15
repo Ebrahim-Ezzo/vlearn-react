@@ -18,8 +18,9 @@
   --accent: #111111;
   --text: #111111;
   --new: #2a82c4;
+  --rev-text: #fff;
   --muted: #ddd;
-  --button-text: #fff;
+  --button-text: #0f141a;
   --link-color: #fff;
   --text-inverse: #fff;
 }
@@ -32,7 +33,7 @@ html[data-theme="alt"] {
   --new: #f45a4a;
   --text: #fff;
   --muted: #3a3f46;
-
+--rev-text: #0f141a;
   --button-text: #0f141a;
   --link-color: #0f141a;
   --text-inverse: #ffffff;

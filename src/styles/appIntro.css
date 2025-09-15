@@ -54,10 +54,10 @@
 }
 .appintro_btn:hover,
 .appintro_btn:focus {
-  color: var(--accent);
+  color: var(--text);
   background-image: linear-gradient(
     to right,
-    var(--primary) 0%,
+    var(--new) 0%,
     var(--secondary) 100%
   );
   transform: translateY(-2px);

@@ -95,8 +95,9 @@
 .store_btn.play:focus,
 .store_btn.ios:hover,
 .store_btn.ios:focus {
-  background-image: linear-gradient(to right, var(--primary), var(--secondary));
-  color: var(--button-text);
+  /* background-image: linear-gradient(to right, var(--primary), var(--secondary)); */
+  color: var(--rev-text);
+  background-color: var(--secondary);
 }
 
 /* visual side */
