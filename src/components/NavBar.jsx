@@ -22,7 +22,6 @@ export default function NavBar() {
     <header className="navbar">
       <div className="navbar_container">
         {/* menu button */}
-
         <div className="nav-group">
           <button
             className={`navbar_button ${open ? "is-active" : ""}`}
