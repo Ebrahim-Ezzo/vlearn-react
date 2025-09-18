@@ -1,0 +1,62 @@
+.minimal-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  max-width: 920px;
+  margin: 16px auto 0;
+  padding: 0 16px;
+
+  direction: rtl;
+}
+
+.logo img {
+  display: block;
+  height: 50px;
+  position: absolute;
+  left: 20px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border, #e5e7eb);
+  background: #fff;
+  color: var(--ink, #0f172a);
+  text-decoration: none;
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.06s ease;
+}
+
+.back-btn:hover {
+  background: #f9fafb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.back-btn:active {
+  transform: translateY(1px);
+}
+
+.back-arrow {
+  line-height: 1;
+}
+
+/* موبايل */
+@media (max-width: 520px) {
+  .minimal-topbar {
+    margin-top: 12px;
+    padding: 0 12px;
+  }
+  .logo img {
+    height: 28px;
+  }
+}

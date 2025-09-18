@@ -14,7 +14,7 @@
 
   --primary: #f45a4a;
   --secondary: #2a82c4;
-  /* --accent: #f6c833; */
+  --acount: #f45a4adb;
   --accent: #111111;
   --text: #111111;
   --new: #2a82c4;
@@ -30,6 +30,7 @@
 html[data-theme="alt"] {
   --primary: #7bd3ea;
   --secondary: #7bd3ea;
+  --acount: #3a3f464d;
   --accent: #ff9671;
   --new: #f45a4a;
   --text: #fff;
@@ -48,12 +49,6 @@ html[data-theme="alt"] {
 body {
   background: var(--bg);
   color: var(--text);
-}
-.card,
-.navbar_menu,
-.dl {
-  background: var(--surface);
-  border: 1px solid var(--border);
 }
 
 a {

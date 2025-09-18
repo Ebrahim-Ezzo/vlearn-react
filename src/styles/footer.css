@@ -28,7 +28,7 @@
 }
 
 .footer_contact a {
-  color: var(--primary);
+  color: var(--secondary);
   text-decoration: none;
   font-weight: 700;
   border-bottom: 2px solid transparent;
@@ -39,12 +39,16 @@
 }
 .footer_nav a:hover,
 .footer_contact a:hover {
-  color: var(--secondary);
   border-color: currentColor;
 }
 
 .footer_container p {
     margin: 0;
+}
+
+.delet a, .delet a:hover {
+  color: var(--primary);
+
 }
 
 /* Tablet / Desktop */

@@ -1,0 +1,191 @@
+.delete-page {
+  max-width: 920px;
+  margin: 48px auto 96px;
+  padding: 0 16px;
+  direction: rtl;
+}
+
+/* الهيدر */
+.delete-header h1 {
+  margin: 0 0 10px;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: red;
+}
+.delete-header p {
+  margin: 0;
+  line-height: 1.9;
+  color: var(--text);
+  font-size: 15.5px;
+}
+
+.delete-header p :link {
+  color: blue;
+}
+
+.delete-header p :link:hover {
+  color: red;
+}
+
+.delete-header a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 700;
+}
+.delete-header a:hover {
+  color: var(--primary-600);
+  text-decoration: underline;
+}
+
+/* فورم كـ "كارت" خفيف */
+.delete-form {
+  margin-top: 18px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 18px;
+}
+
+/* الحقول */
+.field {
+  margin-bottom: 16px;
+}
+.field label {
+  display: block;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 14.6px;
+}
+
+/* إدخال الهاتف */
+.input {
+  width: 100%;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid black;
+  outline: none;
+  padding: 0 12px;
+  direction: ltr; /* لرقم الهاتف */
+  background: var(--bg-soft);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+  font-size: 15px;
+}
+.input:focus {
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(8, 29, 74, 0.14);
+}
+
+/* تلميح وخطأ */
+.hint {
+  font-size: 12.6px;
+  color: #6b7280;
+  margin-top: 6px;
+}
+.error {
+  font-size: 12.6px;
+  color: var(--danger-600);
+  margin-top: 6px;
+}
+
+/* الإقرار */
+.agree {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 2px 2px;
+  margin: 8px 0 18px;
+  color: var(--ink);
+}
+.agree input[type="checkbox"] {
+  margin-top: 4px;
+  accent-color: var(--primary);
+}
+
+/* الأزرار */
+.btn {
+  height: 46px;
+  border-radius: 12px;
+  padding: 0 20px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 0.06s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn[disabled],
+.btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  background: #eef2f7;
+  color: #9aa6b2;
+  box-shadow: none;
+}
+
+.btn-danger {
+  background: red;
+  color: white;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+}
+
+.btn-ghost {
+  background-color: red;
+  color: white;
+}
+
+/* المودال */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.45);
+  display: grid;
+  place-items: center;
+  z-index: 60;
+}
+.modal-card {
+  width: min(520px, 92vw);
+  background: #fff;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: var(--shadow-md);
+}
+.modal-card h2 {
+  margin: 0 0 8px;
+  color: var(--danger-600);
+  font-size: 22px;
+}
+.modal-card p {
+  margin: 0;
+  color: black;
+  line-height: 1.9;
+}
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+/* موبايل */
+@media (max-width: 520px) {
+  .delete-header h1 {
+    font-size: 24px;
+  }
+  .delete-form {
+    padding: 14px;
+  }
+  .btn {
+    width: 100%;
+  }
+}

@@ -1,11 +1,14 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../styles/navbar.css";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import ThemeSwitch from "./ThemeSwitch";
+import { FaUser } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -17,6 +20,24 @@ export default function NavBar() {
       mq.removeEventListener?.("change", onChange);
     };
   }, []);
+
+  if (location.pathname === "/login") {
+    return (
+      <nav className="navbar login_nav">
+        <div className="navbar_container">
+
+          <div className="logo">
+            <img src="/images/logo.svg" alt="VLearn" />
+          </div>
+
+          <Link to="/" className="back_home">
+            العودة للرئيسية
+          </Link>
+        </div>
+      </nav>
+    );
+  }
+
 
   return (
     <header className="navbar">
@@ -44,11 +65,24 @@ export default function NavBar() {
 
           {/* links*/}
           <nav className={`navbar_menu ${open ? "is-open" : ""}`}>
-            <a href="#hero">الرئيسية</a>
-            <a href="#how">كيف يعمل</a>
-            <a href="#features">الميزات</a>
-            <a href="#downloads">التنزيلات</a>
+            {location.pathname === "/login" ? (
+              <Link to="/" className="nav_link">الرئيسية</Link>
+            ) : (
+              <>
+                <a href="#hero">الرئيسية</a>
+                <a href="#how">كيف يعمل</a>
+                <a href="#features">الميزات</a>
+                <a href="#downloads">التنزيلات</a>
+                <div className="account">
+                  <Link to="/login" className="nav_link account_link">
+                    <FaUser className="icon_user" />
+                    <p>الحساب</p>
+                  </Link>
+                </div>
+              </>
+            )}
           </nav>
+
         </div>
         {/* logo*/}
         <div className="navbar_logo">

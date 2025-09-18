@@ -167,7 +167,6 @@
 .feat_dots .dot.is-active {
   background: var(--secondary);
   transform: scale(1.4);
-  /* box-shadow: 0 0 6px var(--secondary); */
 }
 .feat_dots .dot:focus {
   outline: none;
