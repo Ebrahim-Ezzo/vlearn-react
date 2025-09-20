@@ -1,9 +1,7 @@
 import "../styles/footer.css";
-import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
-    const { t } = useTranslation();
     const year = new Date().getFullYear();
     return (
         <footer className="footer" id="footer">
@@ -11,13 +9,13 @@ export default function Footer() {
                 <ul className="footer_contact">
 
                     <li className="delet">
-                        <Link to="/delete-account">{t('footer_001')}</Link>
+                        <Link to="/delete-account">حذف الحساب</Link>
                     </li>
 
-                    <li><Link to="/terms">{t('footer_002')}</Link></li>
-                    <li><Link to="/privacy">{t('footer_003')}</Link></li>
+                    <li><Link to="/terms">الشروط والأحكام</Link></li>
+                    <li><Link to="/privacy">سياسة الخصوصية</Link></li>
                 </ul>
-                <p>© {year} {t('footer_rights')} — VRoad</p>
+                <p>© {year} جميع الحقوق محفوظة — VRoad</p>
             </div>
         </footer>
     );

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import "../styles/hero.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
@@ -8,7 +7,6 @@ import "swiper/css/navigation";
 
 export default function Hero() {
     const [role, setRole] = useState("student");
-    const { t } = useTranslation();
 
     return (
         <section className="hero" id="hero">
@@ -17,44 +15,54 @@ export default function Hero() {
                 <div className="side_content">
                     <div className="title">
                         <h1 className="hero_title">VLearn</h1>
-                        <p className="hero_tagline">{t('hero_001')}</p>
+                        <p className="hero_tagline">منصتك الذكية للتعليم الافتراضي</p>
                     </div>
 
                     <div className="hero_content">
 
-                        <p className="hero_paragraph">{t('hero_intro')}</p>
-
+                        <p className="hero_paragraph">
+                            VLearn تطبيق التعليم الافتراضي الذي يضمن لك النجاح والتفوق في
+                            الامتحان. ابدأ اليوم وكن من المتفوقين مع مجموعة من المعلمين
+                            المتميزين
+                        </p>
 
                         {/* Tabs */}
                         <div className="hero_tabs" role="tablist">
                             <button
                                 className={`tab ${role === "student" ? "active" : ""}`}
-                                onClick={() => setRole("student")}
+                                onClick={() => setRole("student"))
                                 role="tab"
                                 aria-selected={role === "student"}
-                            >{t('hero_002')}</button>
+                            >
+                                طالب
+                            </button>
                             <button
                                 className={`tab ${role === "teacher" ? "active" : ""}`}
-                                onClick={() => setRole("teacher")}
+                                onClick={() => setRole("teacher"))
                                 role="tab"
                                 aria-selected={role === "teacher"}
-                            >{t('hero_003')}</button>
+                            >
+                                معلّم
+                            </button>
                         </div>
 
                         {/* Tab content */}
                         <div className="tab_content" role="tabpanel">
                             {role === "student" ? (
                                 <p className="tab_text">
-                                    {t('hero_student_text')}
+                                    خطط دراسة ذكية، اختبارات فورية، وتقارير تقدّم لحظة بلحظة , كل شي
+                                    بمكان واحد
                                 </p>
                             ) : (
-                                <p className="tab_text">{t('hero_004')}</p>
+                                <p className="tab_text">
+                                    أنشئ صفوفك بسهولة، تابع أداء الطلاب، وشارك دروس مباشرة ومسجّلة
+                                </p>
                             )}
                         </div>
 
                         {/* cta */}
                         <div className="hero_buttons">
-                            <button className="btn_primary">{t('hero_005')}</button>
+                            <button className="btn_primary">ابدأ الآن</button>
                         </div>
                     </div>
                 </div>
@@ -84,7 +92,7 @@ export default function Hero() {
                         </Swiper>
                     </div>
                 </div>
-            </div>
-        </section>
+            </div >
+        </section >
     );
 }

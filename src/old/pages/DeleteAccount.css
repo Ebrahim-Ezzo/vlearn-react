@@ -63,7 +63,7 @@
   border: 1px solid black;
   outline: none;
   padding: 0 12px;
-  direction: ltr;
+  direction: ltr; /* لرقم الهاتف */
   background: var(--bg-soft);
   transition:
     border-color 0.2s,

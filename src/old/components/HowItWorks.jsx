@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import "../styles/howItWorks.css";
 import {
     FiUserPlus,
@@ -10,14 +9,14 @@ import {
 } from "react-icons/fi";
 
 export default function HowItWorks() {
-    const { t } = useTranslation();
     return (
         <section id="how" className="howitworks">
             <div className="howitworks_container">
                 <header className="howitworks_header">
-                    <h2 className="howitworks_title">{t('how_title')}</h2>
-                    <p className="howitworks_lead">{t('how_intro')}</p>
-
+                    <h2 className="howitworks_title">كيف يعمل التطبيق</h2>
+                    <p className="howitworks_lead">
+                        VLearn خطوات بسيطة لتبدأ رحلتك التعليمية مع
+                    </p>
                 </header>
 
                 <ul className="howitworks_steps">
@@ -26,8 +25,10 @@ export default function HowItWorks() {
                             <FiUserPlus />
                         </span>
                         <div className="step_body">
-                            <h3 className="step_title">{t('how_step_signup')}</h3>
-                            <p className="step_desc">{t('how_step_signup_desc')}</p>
+                            <h3 className="step_title">إنشاء حساب</h3>
+                            <p className="step_desc">
+                                .سجّل بسهولة برقم هاتفك، ثم أدخل رمز التفعيل
+                            </p>
                         </div>
                     </li>
 
@@ -36,9 +37,9 @@ export default function HowItWorks() {
                             <FiLayers />
                         </span>
                         <div className="step_body">
-                            <h3 className="step_title">{t('howitworks_001')}</h3>
+                            <h3 className="step_title">اختيار التخصص</h3>
                             <p className="step_desc">
-                                .{t('how_step_choose_desc')}
+                                .اختر فرعك الأكاديمي، ومنخصّص لك المحتوى بحسب المواد
                             </p>
                         </div>
                     </li>
@@ -48,9 +49,9 @@ export default function HowItWorks() {
                             <FiCheckCircle />
                         </span>
                         <div className="step_body">
-                            <h3 className="step_title">{t('how_step_subscribe')}</h3>
+                            <h3 className="step_title">الاشتراك</h3>
                             <p className="step_desc">
-                                .{t('how_step_subscribe_desc')}
+                                .اشترك بالمادة المطلوبة أو اختر باقاتنا واستفد من العروض
                             </p>
                         </div>
                     </li>
@@ -60,8 +61,10 @@ export default function HowItWorks() {
                             <FiCreditCard />
                         </span>
                         <div className="step_body">
-                            <h3 className="step_title">{t('howitworks_002')}</h3>
-                            <p className="step_desc">{t('how_payment_desc')}</p>
+                            <h3 className="step_title">الدفع</h3>
+                            <p className="step_desc">
+                                .اختر طريقة الدفع التي تناسبك
+                            </p>
                         </div>
                     </li>
 
@@ -70,9 +73,10 @@ export default function HowItWorks() {
                             <FiClipboard />
                         </span>
                         <div className="step_body">
-                            <h3 className="step_title">{t('howitworks_003')}</h3>
-                            <p className="step_desc">{t('how_learn_desc')}</p>
-
+                            <h3 className="step_title">التعلّم والاختبارات</h3>
+                            <p className="step_desc">
+                                .ادخل دروسك، جرّب الاختبارات، وخُذ تقييمًا فوريًا
+                            </p>
                         </div>
                     </li>
 
@@ -81,14 +85,18 @@ export default function HowItWorks() {
                             <FiPercent />
                         </span>
                         <div className="step_body">
-                            <h3 className="step_title">{t('howitworks_004')}</h3>
-                            <p className="step_desc">{t('how_offers_desc')}</p>
+                            <h3 className="step_title">العروض والمسابقات</h3>
+                            <p className="step_desc">
+                                .تابع جديدنا لتحصل على خصومات وفرص إضافية
+                            </p>
                         </div>
                     </li>
                 </ul>
 
                 <div className="howitworks_cta">
-                    <a href="#downloads" className="howitworks_link">{t('howitworks_005')}</a>
+                    <a href="#downloads" className="howitworks_link">
+                        ابدأ الآن ↘
+                    </a>
                 </div>
             </div>
         </section>

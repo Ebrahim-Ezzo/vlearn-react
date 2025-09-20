@@ -1,16 +1,14 @@
-import { useTranslation } from "react-i18next";
 import "./login.css";
 import { useState } from "react";
 
 export default function LoginPage() {
-    const { t } = useTranslation();
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [showMsgs, setShowMsgs] = useState(true);
     const [success, setSuccess] = useState(false);
 
-    const nameMsg = t("loginpage_006");
-    const phoneMsg = t("loginpage_007");
+    const nameMsg = "الاسم 2–20 حرف (حروف ومسافات فقط)";
+    const phoneMsg = "رقم الموبايل 9–13 أرقام";
 
     const isNameValid = (v) => /^[\u0621-\u064Aa-zA-Z\s]{2,20}$/.test(v.trim());
     const isPhoneValid = (v) => /^\d{9,13}$/.test(v.trim());
@@ -32,15 +30,15 @@ export default function LoginPage() {
     return (
         <main className="login_page">
             <div className="login_card">
-                <h2 className="login_title">{t('loginpage_001')}</h2>
+                <h2 className="login_title">تسجيل الدخول</h2>
 
                 <form className="login_form" noValidate onSubmit={handleSubmit}>
                     <div className="form_group">
-                        <label htmlFor="name">{t('loginpage_002')}</label>
+                        <label htmlFor="name">الاسم</label>
                         <input
                             id="name"
                             name="name"
-                            placeholder={t("loginpage_008")}
+                            placeholder="ادخل اسمك"
                             autoComplete="name"
                             value={name}
                             onChange={(e) => {
@@ -55,7 +53,7 @@ export default function LoginPage() {
                     </div>
 
                     <div className="form_group">
-                        <label htmlFor="phone">{t('loginpage_003')}</label>
+                        <label htmlFor="phone">رقم الموبايل</label>
                         <input
                             id="phone"
                             name="phone"
@@ -72,13 +70,14 @@ export default function LoginPage() {
                         {showMsgs && <p className="error_text">{phoneMsg}</p>}
                     </div>
 
-                    <button type="submit" className="login_btn">{t('loginpage_004')}</button>
+                    <button type="submit" className="login_btn">التسجيل</button>
                 </form>
 
                 {/* رسالة نجاح */}
                 {success && (
                     <p className="success_text">
-                        ✅ اهلا <span className="username">{name}</span>{t('loginpage_005')}</p>
+                        ✅ اهلا <span className="username">{name}</span>، تم تسجيل الدخول بنجاح
+                    </p>
                 )}
             </div>
         </main>

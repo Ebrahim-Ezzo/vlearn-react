@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
 import "../styles/appIntro.css";
 
 export default function AppIntro() {
-    const { t } = useTranslation();
     const ref = useRef(null);
     const [show, setShow] = useState(false);
 
@@ -22,17 +20,25 @@ export default function AppIntro() {
         <section id="intro" className="appintro">
             <div className="appintro_container">
                 <div className="appintro_text">
-                    <h2 className="appintro_title">{t('appintro_001')}</h2>
-                    <p className="appintro_para">{t('appintro_002')}<b>VLearn</b>{t('appintro_003')}</p>
-                    <p className="appintro_para">{t('appintro_004')}</p>
-                    <a href="#features" className="appintro_btn">{t('appintro_005')}</a>
+                    <h2 className="appintro_title">مقدمة عن التطبيق</h2>
+                    <p className="appintro_para">
+                        منصة <b>VLearn</b> تقدّم دورات تدريبية وتعزيزية مع اختبارات آلية من بنك
+                        أسئلة مخصّص للمناهج المعتمدة، وتدعم التعلم الذكي خطوة بخطوة
+                    </p>
+                    <p className="appintro_para">
+                        يصل المعلمون بالطلاب ضمن تجربة سهلة بالعربية، مع اشتراكات مرنة
+                        .وتقارير تقدّم فورية لتبقى على إطلاع دائم بنتائجك
+                    </p>
+                    <a href="#features" className="appintro_btn">
+                        تعرّف أكثر
+                    </a>
                 </div>
 
                 <div className="appintro_visual" ref={ref}>
                     <div className={`intro_phone_frame ${show ? "is-visible" : ""}`}>
                         <img
                             src="/assets/screens/intro.jpg"
-                            alt={t("appintro_006")}
+                            alt="واجهة تطبيق VLearn"
                             loading="lazy"
                         />
                     </div>

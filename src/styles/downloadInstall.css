@@ -35,7 +35,6 @@
 
 /* steps (ordered list) */
 .dl_steps {
-  direction: rtl;
   margin: 0 0 18px;
   color: var(--primary);
   list-style-position: inside;
@@ -129,7 +128,7 @@
   opacity: 0.25;
   z-index: -1;
 }
-.blob-a {
+/* .blob-a {
   width: 180px;
   height: 180px;
   left: -20px;
@@ -139,8 +138,8 @@
     rgba(255, 176, 6, 0.35),
     rgba(255, 99, 99, 0.25)
   );
-}
-.blob-b {
+} */
+/* .blob-b {
   width: 220px;
   height: 220px;
   right: -30px;
@@ -150,7 +149,7 @@
     rgba(20, 145, 200, 0.3),
     rgba(255, 176, 6, 0.2)
   );
-}
+} */
 
 /* responsive */
 @media (min-width: 768px) {

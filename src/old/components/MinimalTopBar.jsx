@@ -1,18 +1,16 @@
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import "../styles/MinimalTopBar.css";
 
 export default function MinimalTopBar() {
-    const { t } = useTranslation();
     return (
-        <div className = "minimal-topbar" >
+        <div className="minimal-topbar">
 
-            <Link to="/" className="back-btn" aria-label={t("minimaltopbar_002")}>
+            <Link to="/" className="back-btn" aria-label="العودة إلى الصفحة الرئيسية">
                 <span className="back-arrow">←</span>
-                <span>{t('minimaltopbar_001')}</span>
+                <span>رجوع للرئيسية</span>
             </Link>
 
-            <Link to="/" className="logo" aria-label={t("minimaltopbar_003")}>
+            <Link to="/" className="logo" aria-label="العودة إلى الرئيسية">
                 {/* لوغو من public/images */}
                 <img src="/images/logo.svg" alt="VLearn Logo" />
             </Link>

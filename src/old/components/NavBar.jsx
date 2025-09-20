@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "../i18n";
 import "../styles/navbar.css";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import ThemeSwitch from "./ThemeSwitch";
@@ -31,7 +30,9 @@ export default function NavBar() {
             <img src="/images/logo.svg" alt="VLearn" />
           </div>
 
-          <Link to="/" className="back_home">{t('navbar_001')}</Link>
+          <Link to="/" className="back_home">
+            العودة للرئيسية
+          </Link>
         </div>
       </nav>
     );
@@ -65,35 +66,35 @@ export default function NavBar() {
           {/* links*/}
           <nav className={`navbar_menu ${open ? "is-open" : ""}`}>
             {location.pathname === "/login" ? (
-              <Link to="/" className="nav_link">{t("hero")}</Link>
+              <Link to="/" className="nav_link">الرئيسية</Link>
             ) : (
               <>
-                <a href="#hero">{t("hero")}</a>
-                <a href="#how">{t("how")}</a>
-                <a href="#features">{t("features")}</a>
-                <a href="#downloads">{t("downloads")}</a>
+                <a href="#hero">(t("hero"))</a>
+                <a href="#how">(t("how"))</a>
+                <a href="#features">(t("features"))</a>
+                <a href="#downloads">(t("downloads"))</a>
 
                 <div className="account">
                   <Link to="/login" className="nav_link account_link">
                     <FaUser className="icon_user" />
-                    <p>{t('navbar_002')}</p>
+                    <p>الحساب</p>
                   </Link>
                 </div>
               </>
             )}
             {/* 88888888888888888888888888888888888888 */}
-            <button onClick={() => i18n.changeLanguage("ar")}>AR</button>
-            <button onClick={() => i18n.changeLanguage("en")}>EN</button>
-            {/* 88888888888888888888888888888888888888 */}
+            <button onClick={() => i18n.changeLanguage("ar"))>AR</button>
+          <button onClick={() => i18n.changeLanguage("en"))>EN</button>
+        {/* 88888888888888888888888888888888888888 */}
 
-          </nav>
+      </nav>
 
-        </div>
-        {/* logo*/}
-        <div className="navbar_logo">
-          <img src="/assets/logo.svg" alt="VLearn logo" />
-        </div>
-      </div>
-    </header>
+    </div>
+        {/* logo*/ }
+  <div className="navbar_logo">
+    <img src="/assets/logo.svg" alt="VLearn logo" />
+  </div>
+      </div >
+    </header >
   );
 }

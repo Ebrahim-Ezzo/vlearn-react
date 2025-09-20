@@ -1,18 +1,16 @@
-import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import "./DeleteAccount.css";
 import MinimalTopBar from "../components/MinimalTopBar";
 
 export default function DeleteAccount() {
-    const { t } = useTranslation();
     const [phone, setPhone] = useState("");
     const [agree, setAgree] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [touched, setTouched] = useState(false);
 
     useEffect(() => {
-        document.title=t("deleteaccount_016");
+        document.title = "حذف الحساب — VLearn";
     }, []);
 
     const phoneRegex = useMemo(() => /^(?:\+\d{9,12}|0\d{9,12})$/, []);
@@ -27,7 +25,7 @@ export default function DeleteAccount() {
 
     const handleConfirm = () => {
         const support = "support@vlearn.sy";
-        const subject = encodeURIComponent(t("deleteaccount_017"));
+        const subject = encodeURIComponent("طلب حذف حساب");
         const body = encodeURIComponent(
             `مرحبًا فريق VLearn،
 
@@ -47,17 +45,20 @@ export default function DeleteAccount() {
         <>
             <MinimalTopBar />
 
-            <section className="delete-page" aria-labelledby="delete-title">
+            <sectionclassName="delete-page" aria-labelledby="delete-title">
                 <header className="delete-header">
-                    <h1 id="delete-title">{t('deleteaccount_001')}</h1>
-                    <p>{t('deleteaccount_002')}<Link to="/privacy">{t('deleteaccount_003')}</Link>{t('deleteaccount_004')}<Link to="/terms">{t('deleteaccount_005')}</Link>. قد تفقد بشكل نهائي أي
+                    <h1 id="delete-title">حذف الحساب</h1>
+                    <p>
+                        يرجى قراءة النقاط التالية قبل المتابعة. بحذفك للحساب سيتم إزالة بياناتك
+                        الشخصية وفقًا لـ <Link to="/privacy">سياسة الخصوصية</Link> و{" "}
+                        <Link to="/terms">الشروط والأحكام</Link>. قد تفقد بشكل نهائي أي
                         تقدّم/نقاط/قوائم محفوظة. لا يمكن التراجع عن هذه العملية.
                     </p>
                 </header>
 
                 <form className="delete-form" onSubmit={openModal} noValidate>
                     <div className="field">
-                        <label htmlFor="phone">{t('deleteaccount_006')}</label>
+                        <label htmlFor="phone">رقم الهاتف المرتبط بالحساب</label>
                         <input
                             id="phone"
                             className="input"
@@ -71,9 +72,13 @@ export default function DeleteAccount() {
                             maxLength={13}
 
                         />
-                        <div id="phone-hint" className="hint">{t('deleteaccount_007')}</div>
+                        <div id="phone-hint" className="hint">
+                            اكتب الرقم بصيغة دولية (مثال: ‎+9715xxxxxxx). أرقام فقط.
+                        </div>
                         {touched && !isPhoneValid && (
-                            <div id="phone-error" className="error" role="alert">{t('deleteaccount_008')}</div>
+                            <div id="phone-error" className="error" role="alert">
+                                الرجاء إدخال رقم هاتف صالح.
+                            </div>
                         )}
                     </div>
 
@@ -83,7 +88,8 @@ export default function DeleteAccount() {
                             checked={agree}
                             onChange={(e) => setAgree(e.target.checked)}
                         />
-                        <span>{t('deleteaccount_009')}<strong>{t('deleteaccount_010')}</strong>.
+                        <span>
+                            أقرّ أني أفهم أن عملية الحذف <strong>نهائية وغير قابلة للاسترجاع</strong>.
                         </span>
                     </label>
 
@@ -91,7 +97,9 @@ export default function DeleteAccount() {
                         type="submit"
                         className="btn btn-danger"
                         disabled={!canProceed}
-                    >{t('deleteaccount_011')}</button>
+                    >
+                        حذف الحساب
+                    </button>
                 </form>
 
                 {showModal && (
@@ -102,17 +110,24 @@ export default function DeleteAccount() {
                         onClick={() => setShowModal(false)}
                     >
                         <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-                            <h2 id="modal-title">{t('deleteaccount_012')}</h2>
-                            <p>{t('deleteaccount_013')}</p>
+                            <h2 id="modal-title">تأكيد حذف الحساب</h2>
+                            <p>
+                                بحذفك للحساب، قد تفقد بياناتك ومزاياك بشكل نهائي، وقد تبقى بعض
+                                البيانات لفترة محدودة لأغراض الامتثال القانوني. هل تريد المتابعة؟
+                            </p>
 
                             <div className="modal-actions">
-                                <button className="btn btn-ghost" onClick={() => setShowModal(false)}>{t('deleteaccount_014')}</button>
-                                <button className="btn btn-danger" onClick={handleConfirm}>{t('deleteaccount_015')}</button>
+                                <button className="btn btn-ghost" onClick={() => setShowModal(false)}>
+                                    إلغاء
+                                </button>
+                                <button className="btn btn-danger" onClick={handleConfirm}>
+                                    تأكيد الحذف
+                                </button>
                             </div>
                         </div>
                     </div>
                 )}
-            </section>
+            </sectionclassName=>
         </>
 
     );

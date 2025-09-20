@@ -1,23 +1,30 @@
-import { useTranslation } from "react-i18next";
 // src/components/DownloadInstall.jsx
 import "../styles/downloadInstall.css";
 import { FaGooglePlay, FaApple } from "react-icons/fa";
 
 export default function DownloadInstall() {
-    const { t } = useTranslation();
     return (
         <section id="downloads" className="dl">
             <div className="dl_container">
                 {/* النص + الأزرار */}
                 <div className="dl_text">
-                    <h2 className="dl_title">{t('downloadinstall_001')}</h2>
-                    <p className="dl_lead">{t('downloadinstall_002')}</p>
+                    <h2 className="dl_title">التنزيل والتثبيت السريع</h2>
+                    <p className="dl_lead">
+                        نزّل التطبيق وابدأ مباشرة بخطوات بسيطة لتفعل حسابك وتتصفح الدروس وتختار
+                        اشتراكك المناسب
+                    </p>
 
                     <ul className="dl_steps">
-                        <li>{t('downloadinstall_003')}</li>
-                        <li>{t('downloadinstall_004')}</li>
-                        <li>{t('downloadinstall_005')}</li>
-                        <li>{t('downloadinstall_006')}</li>
+                        <li>نزل التطبيق من المتجر</li>
+                        <li>
+                            سجل برقم هاتفك وأدخل رقم التفعيل
+                        </li>
+                        <li>
+                            اختر فرعك واشترك بالمادة اوالباقة المناسبة
+                        </li>
+                        <li>
+                            ابدأ التعلم وجرب الإختبارات اليومية
+                        </li>
                     </ul>
 
                     <div className="dl_cta">
@@ -41,7 +48,7 @@ export default function DownloadInstall() {
                     <div className="phone_frame">
                         <img
                             src="/assets/screens/install.jpg"
-                            alt={t("downloadinstall_007")}
+                            alt="شاشة من تطبيق VLearn"
                             loading="lazy"
                         />
                     </div>

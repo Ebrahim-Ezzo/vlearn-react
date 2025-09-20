@@ -12,15 +12,27 @@ import LoginPage from "./pages/LoginPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import DeleteAccount from "./pages/DeleteAccount";
-
 import { Routes, Route, useLocation } from "react-router-dom";
+
+import { useEffect } from "react";
 
 export default function App() {
   const { pathname } = useLocation();
 
-  // المسارات اللي ما بدنا فيها هيدر/فوتر
   const HIDE_CHROME_ROUTES = ["/delete-account", "/privacy", "/terms"];
   const hideChrome = HIDE_CHROME_ROUTES.includes(pathname);
+
+  useEffect(() => {
+    const titles = {
+      "/": "VLearn - الصفحة الرئيسية",
+      "/delete-account": "حذف الحساب — VLearn",
+      "/privacy": "سياسة الخصوصية — VLearn",
+      "/terms": "الشروط والأحكام — VLearn",
+      "/login": "تسجيل الدخول — VLearn",
+    };
+    document.title = titles[pathname] || "VLearn";
+  }, [pathname]);
+
 
   return (
     <>

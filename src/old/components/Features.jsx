@@ -1,27 +1,23 @@
-import { useTranslation } from "react-i18next";
 import { useState, useRef } from "react";
 import "../styles/features.css";
 
 const METRICS = [
-    { value: "2000+", labelKey: "features_003" },
-    { value: "500+", labelKey: "features_004" },
-    { value: "24/7", labelKey: "features_005" },
-    { value: "98%", labelKey: "features_006" },
+    { value: "2000+", label: "درس" },
+    { value: "500+", label: "معلّم" },
+    { value: "24/7", label: "دعم" },
+    { value: "98%", label: "رضا المستخدمين" },
 ];
 
 const CARDS = [
-    { img: "/assets/illus/feature-1.webp", titleKey: "features_007", descKey: "features_008" },
-    { img: "/assets/illus/feature-2.webp", titleKey: "features_009", descKey: "features_010" },
-    { img: "/assets/illus/feature-3.webp", titleKey: "features_011", descKey: "features_012" },
-    { img: "/assets/illus/feature-4.webp", titleKey: "features_013", descKey: "features_014" },
+    { img: "/assets/illus/feature-1.webp", title: "خطط دراسة ذكية", desc: ".تنظيم تلقائي للدروس مع تذكيرات ومتابعة تقدّمك" },
+    { img: "/assets/illus/feature-2.webp", title: "دروس مباشرة ومسجّلة", desc: ".انضم للبث أو راجع التسجيلات أي وقت" },
+    { img: "/assets/illus/feature-3.webp", title: "اختبارات فورية", desc: ".نتائج لحظية مع شرح للأجوبة ونِقاط للتحفيز" },
+    { img: "/assets/illus/feature-4.webp", title: "تقارير تقدّم", desc: ".لوحة تحليلات بسيطة تفهمك مستواك بسرعة" },
 ];
 
 export default function Features() {
-    const { t } = useTranslation();
-    const metrics = METRICS.map(m => ({...m, label: t(m.labelKey)}));
-    const cards = CARDS.map(c => ({...c, title: t(c.titleKey), desc: t(c.descKey)}));
     const [idx, setIdx] = useState(0);
-    const n = cards.length;
+    const n = CARDS.length;
 
     const startX = useRef(0), dx = useRef(0);
     const onTouchStart = (e) => { startX.current = e.touches[0].clientX; dx.current = 0; };
@@ -35,13 +31,13 @@ export default function Features() {
             <div className="features_container">
 
                 <header className="features_header">
-                    <h2 className="features_title">{t('features_001')}</h2>
-                    <p className="features_lead">{t('features_002')}</p>
+                    <h2 className="features_title">الميزات الرئيسية</h2>
+                    <p className="features_lead">.أرقام تلخص التجربة, وتفاصيل تدعمها</p>
                 </header>
 
                 {/* Metrics */}
                 <ul className="metrics" role="list">
-                    {metrics.map((m, i) => (
+                    {METRICS.map((m, i) => (
                         <li key={i} className="metric_item">
                             <div className="metric_value">{m.value}</div>
                             <div className="metric_label">{m.label}</div>
@@ -62,7 +58,7 @@ export default function Features() {
                             style={{ transform: `translate3d(-${idx * 100}%, 0, 0)` }}
 
                         >
-                            {cards.map((c, i) => (
+                            {CARDS.map((c, i) => (
                                 <li key={i} className="feat_slide">
                                     <div className="card">
                                         <div className="card_media">
@@ -75,8 +71,8 @@ export default function Features() {
                             ))}
                         </ul>
                     </div>
-                    <div className="feat_dots" role="tablist" aria-label={t("features_002")}>
-                        {cards.map((_, i) => (
+                    <div className="feat_dots" role="tablist" aria-label="الشرائح">
+                        {CARDS.map((_, i) => (
                             <button
                                 key={i}
                                 className={`dot ${idx === i ? "is-active" : ""}`}

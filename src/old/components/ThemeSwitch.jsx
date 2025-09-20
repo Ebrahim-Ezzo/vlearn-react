@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import "../styles/themeSwitch.css";
 
 export default function ThemeSwitch() {
-    const { t } = useTranslation();
     const [checked, setChecked] = useState(false);
 
     useEffect(() => {
