@@ -38,7 +38,7 @@ export default function HowItWorks() {
                         <div className="step_body">
                             <h3 className="step_title">{t('howitworks_001')}</h3>
                             <p className="step_desc">
-                                .{t('how_step_choose_desc')}
+                                {t('how_step_choose_desc')}
                             </p>
                         </div>
                     </li>
@@ -50,7 +50,7 @@ export default function HowItWorks() {
                         <div className="step_body">
                             <h3 className="step_title">{t('how_step_subscribe')}</h3>
                             <p className="step_desc">
-                                .{t('how_step_subscribe_desc')}
+                                {t('how_step_subscribe_desc')}
                             </p>
                         </div>
                     </li>

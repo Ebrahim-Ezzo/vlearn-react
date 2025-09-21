@@ -6,8 +6,12 @@ import ThemeSwitch from "./ThemeSwitch";
 import { FaUser } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { FaGlobe } from "react-icons/fa";
+
 
 export default function NavBar() {
+  const { t, i18n } = useTranslation();
+
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
@@ -36,8 +40,6 @@ export default function NavBar() {
       </nav>
     );
   }
-
-  const { t, i18n } = useTranslation();
 
   return (
     <header className="navbar">
@@ -75,19 +77,30 @@ export default function NavBar() {
 
                 <div className="account">
                   <Link to="/login" className="nav_link account_link">
-                    <FaUser className="icon_user" />
+                      <FaUser className="icon_user" size={16} />
                     <p>{t('navbar_002')}</p>
                   </Link>
                 </div>
               </>
             )}
-            {/* 88888888888888888888888888888888888888 */}
-            <button onClick={() => i18n.changeLanguage("ar")}>AR</button>
-            <button onClick={() => i18n.changeLanguage("en")}>EN</button>
-            {/* 88888888888888888888888888888888888888 */}
-
           </nav>
 
+          {/* language */}
+          <button
+            className="lang-toggle"
+            onClick={() => {
+              const next = i18n.language === "ar" ? "en" : "ar";
+              i18n.changeLanguage(next);
+            }}
+          >
+            <i className="fa-solid fa-globe"></i>
+            <span className="lang-code">
+              {i18n.language.toUpperCase()}
+            </span>
+          </button>
+          
+          {/*  */}
+          
         </div>
         {/* logo*/}
         <div className="navbar_logo">

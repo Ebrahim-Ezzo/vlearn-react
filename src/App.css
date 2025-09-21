@@ -50,5 +50,46 @@ body {
   overflow-x: hidden;
   font-family: "Cairo", sans-serif;
   list-style: none;
-  /* background-image: url(/public/assets/bg/vlearn-bg.svg); */
+}
+
+/* عربي: نصوص فقط RTL ويمين */
+html[lang="ar"]
+  :where(
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    li,
+    blockquote,
+    .tab_text,
+    .hero_paragraph,
+    .step_title,
+    .step_desc
+  ) {
+  direction: rtl;
+  /* text-align: right; */
+}
+
+/* إنجليزي: نصوص فقط LTR ويسار (للتأكيد) */
+html[lang="en"]
+  :where(
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    li,
+    blockquote,
+    .tab_text,
+    .hero_paragraph,
+    .step_title,
+    .step_desc
+  ) {
+  direction: ltr;
+  /* text-align: left; */
 }

@@ -29,6 +29,7 @@
 }
 
 .navbar_menu {
+  min-width: 410px;
   display: flex;
   position: fixed;
   left: 50%;
@@ -37,7 +38,7 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  width: min(70vw, 360px);
+  width: 410px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -155,11 +156,6 @@
   width: 70px;
   padding-inline-end: 10px;
   padding-left: 10px;
-  /* color: var(--text); */
-}
-
-.nav_link .icon_user {
-  font-size: 13px;
 }
 
 .login_nav {
@@ -170,6 +166,21 @@
 .login_nav .back_home {
   color: var(--primary);
   font-size: 14px;
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: transparent;
+  width: fit-content;
+  border: none;
+  outline: none;
+}
+.lang-toggle:hover, .lang-toggle:focus {
+    border: none;
+  outline: none;
 }
 
 /*Tab*/
@@ -246,6 +257,7 @@
   .navbar_menu {
     display: flex;
     position: static;
+    justify-content: space-between;
     /* 
   left & top are set to auto here
   just for clarification, since they’re default with position: static
@@ -257,7 +269,7 @@
     visibility: visible;
     pointer-events: auto;
     flex-direction: row-reverse;
-    gap: 24px;
+    gap: 13px;
     width: auto;
     padding: 0;
     background: none;
@@ -306,5 +318,6 @@
 
   .nav_link .icon_user {
     display: block;
+    /* font-size: 13px; */
   }
 }

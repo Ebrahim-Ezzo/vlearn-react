@@ -135,7 +135,7 @@
   }
   .appintro_text {
     align-self: center;
-    text-align: right;
+    text-align: center;
   }
   .intro_phone_frame {
     width: min(40vw, 360px);

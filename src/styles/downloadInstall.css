@@ -40,12 +40,12 @@
   list-style-position: inside;
   line-height: 1.9;
   font-size: 15px;
-  text-align: center;
   list-style: none;
 }
 .dl_steps li {
   margin: 6px 0;
-  padding: 6px 0;
+  padding: 6px 6px;
+  list-style-position: inside;
 }
 
 .dl_steps li::marker {
@@ -170,13 +170,16 @@
     gap: 40px;
   }
   .dl_text {
-    text-align: right;
+    text-align: start;
   }
-  .dl_cta {
-    justify-content: right;
-  }
+
   .dl_steps {
-    text-align: right;
     list-style: initial;
+    padding-inline: 0px;
   }
+
+  .dl_steps li {
+    text-align: start;
+    padding-inline: 20px;
+}
 }

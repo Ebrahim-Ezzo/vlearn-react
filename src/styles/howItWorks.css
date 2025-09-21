@@ -1,5 +1,4 @@
 .howitworks {
-  /* background: var(--how-it-works); */
   background: #dddddd2b;
   padding: 35px 35px;
   margin-top: 0px;
@@ -100,7 +99,7 @@
   font-size: 16px;
   font-weight: 700;
   color: var(--primary);
-  text-align: right;
+  text-align: start;
 }
 
 .step_desc {
@@ -109,7 +108,7 @@
   line-height: 1.8;
   color: var(--secondary);
   opacity: 0.9;
-  text-align: right;
+  text-align: start;
 }
 
 /* CTA link */
