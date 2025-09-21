@@ -168,20 +168,6 @@
   font-size: 14px;
 }
 
-.lang-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  background-color: transparent;
-  width: fit-content;
-  border: none;
-  outline: none;
-}
-.lang-toggle:hover, .lang-toggle:focus {
-    border: none;
-  outline: none;
-}
 
 /*Tab*/
 @media (min-width: 768px) {

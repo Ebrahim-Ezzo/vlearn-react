@@ -7,6 +7,7 @@ import { FaUser } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaGlobe } from "react-icons/fa";
+import LanguageToggle from "./LanguageToggle";
 
 
 export default function NavBar() {
@@ -77,7 +78,7 @@ export default function NavBar() {
 
                 <div className="account">
                   <Link to="/login" className="nav_link account_link">
-                      <FaUser className="icon_user" size={16} />
+                    <FaUser className="icon_user" size={16} />
                     <p>{t('navbar_002')}</p>
                   </Link>
                 </div>
@@ -86,7 +87,7 @@ export default function NavBar() {
           </nav>
 
           {/* language */}
-          <button
+          {/* <button
             className="lang-toggle"
             onClick={() => {
               const next = i18n.language === "ar" ? "en" : "ar";
@@ -97,10 +98,11 @@ export default function NavBar() {
             <span className="lang-code">
               {i18n.language.toUpperCase()}
             </span>
-          </button>
-          
+          </button> */}
+          <LanguageToggle />
+
           {/*  */}
-          
+
         </div>
         {/* logo*/}
         <div className="navbar_logo">

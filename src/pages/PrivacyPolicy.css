@@ -48,6 +48,8 @@
   margin: 0 0 8px;
   color: var(--ink);
   line-height: 1.9;
+  list-style-position: inside;
+  text-align: start;
 }
 
 @media (max-width: 520px) {

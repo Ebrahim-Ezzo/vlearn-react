@@ -58,6 +58,8 @@
   margin: 4px 0;
   color: #0f172a;
   line-height: 1.9;
+  text-align: start;
+  list-style-position: inside;
 }
 .terms-content em {
   font-style: normal;

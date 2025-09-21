@@ -12,6 +12,7 @@ import LoginPage from "./pages/LoginPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import DeleteAccount from "./pages/DeleteAccount";
+import Contact from "./pages/Contact";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import { useEffect } from "react";
@@ -19,7 +20,7 @@ import { useEffect } from "react";
 export default function App() {
   const { pathname } = useLocation();
 
-  const HIDE_CHROME_ROUTES = ["/delete-account", "/privacy", "/terms"];
+  const HIDE_CHROME_ROUTES = ["/delete-account", "/privacy", "/terms", "/Contact"];
   const hideChrome = HIDE_CHROME_ROUTES.includes(pathname);
 
   useEffect(() => {
@@ -57,6 +58,7 @@ export default function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsConditions />} />
         <Route path="/delete-account" element={<DeleteAccount />} />
+        <Route path="/Contact" element={<Contact />} />
       </Routes>
 
       {!hideChrome && <Footer />}

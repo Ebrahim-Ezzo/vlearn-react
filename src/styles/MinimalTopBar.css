@@ -3,16 +3,22 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-
-  max-width: 920px;
   margin: 16px auto 0;
   padding: 0 16px;
+  max-height: fit-content;
+  border: 2px solid var(--primary);
+  border-radius: 6px;
+  width: auto;
+  margin-inline: 20px;
+  margin-top: 20px;
+}
+
+.logo {
+  height: fit-content;
 }
 
 .logo img {
-  display: block;
   height: 50px;
-  position: absolute;
   left: 20px;
 }
 
