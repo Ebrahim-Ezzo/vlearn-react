@@ -44,7 +44,7 @@ export default function Contact() {
         }
         setSubmitting(true);
         try {
-            await new Promise((r) => setTimeout(r, 800)); // TODO: send to API
+            await new Promise((r) => setTimeout(r, 800));
             setStatus({ ok: true, err: "" });
             setForm({ name: "", email: "", phone: "", subject: "", message: "", agree: false });
         } catch {
@@ -64,7 +64,7 @@ export default function Contact() {
         <>
             <MinimalTopBar />
             <main className="contact-page" dir={isAr ? "rtl" : "ltr"}>
-                {/* Hero */}
+                
                 <section className="contact-hero">
                     <h1>{t("contact.title")}</h1>
                     <p>{t("contact.intro")}</p>
