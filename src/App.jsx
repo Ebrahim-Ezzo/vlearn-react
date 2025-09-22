@@ -13,6 +13,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import DeleteAccount from "./pages/DeleteAccount";
 import Contact from "./pages/Contact";
+import WhatsAppButton from "./components/WhatsAppButton";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import { useEffect } from "react";
@@ -46,6 +47,7 @@ export default function App() {
           element={
             <main>
               <Hero />
+              <WhatsAppButton />
               <HowItWorks />
               <AppIntro />
               <Features />

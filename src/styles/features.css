@@ -26,12 +26,14 @@
   font-size: 28px;
   font-weight: 800;
   margin: 0 0 6px;
+  text-align: center;
 }
 .features_lead {
   color: var(--accent);
   font-size: 16px;
   font-weight: 700;
   margin: 0;
+  text-align: center;
 }
 
 /* ===== Metrics ===== */
@@ -56,11 +58,13 @@
   font-weight: 900;
   color: var(--primary);
   line-height: 1.2;
+  text-align: center;
 }
 .metric_label {
   font-size: 13px;
   color: var(--text);
   opacity: 0.9;
+  text-align: center;
 }
 
 /* ===== Vars ===== */
@@ -134,7 +138,7 @@
   font-size: 18px;
   font-weight: 800;
   line-height: 1.4;
-  text-align: start;
+  text-align: center;
 }
 .card_desc {
   margin: 0 18px 20px;
@@ -143,7 +147,7 @@
   font-size: 15px;
   line-height: 1.9;
   min-height: 48px;
-  text-align: start;
+  text-align: center;
 }
 
 /* ===== Dots ===== */
@@ -203,6 +207,15 @@
 }
 
 @media (min-width: 1024px) {
+  .card_title {
+    text-align: start;
+  }
+
+  .card_desc {
+
+  text-align: start;
+}
+
   .features {
     padding: 88px 20px;
   }

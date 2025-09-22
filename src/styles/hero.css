@@ -136,6 +136,7 @@
   transition: color 0.3s ease;
   outline: none;
   border: none;
+  text-align: center;
 }
 .btn_primary:focus,
 .btn_primary:active {

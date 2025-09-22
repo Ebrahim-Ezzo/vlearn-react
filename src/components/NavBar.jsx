@@ -86,25 +86,9 @@ export default function NavBar() {
             )}
           </nav>
 
-          {/* language */}
-          {/* <button
-            className="lang-toggle"
-            onClick={() => {
-              const next = i18n.language === "ar" ? "en" : "ar";
-              i18n.changeLanguage(next);
-            }}
-          >
-            <i className="fa-solid fa-globe"></i>
-            <span className="lang-code">
-              {i18n.language.toUpperCase()}
-            </span>
-          </button> */}
           <LanguageToggle />
 
-          {/*  */}
-
         </div>
-        {/* logo*/}
         <div className="navbar_logo">
           <img src="/assets/logo.svg" alt="VLearn logo" />
         </div>

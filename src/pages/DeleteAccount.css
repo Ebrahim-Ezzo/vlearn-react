@@ -124,10 +124,18 @@
 }
 
 .btn-danger {
-  color: red;
-  background-color: white;
+  color: white;
+  background-color: red;
   border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
+
+/* .btn-danger:hover {
+  border-color: red;
+} */
 
 .btn-ghost {
   background-color: red;
@@ -163,6 +171,19 @@
   gap: 10px;
   justify-content: flex-end;
   margin-top: 20px;
+}
+
+.verify {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 2px 2px;
+  color: var(--ink);
+}
+
+.verify input[type="checkbox"] {
+  margin-top: 4px;
+  accent-color: var(--primary);
 }
 
 @media (max-width: 520px) {

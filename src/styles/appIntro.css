@@ -19,6 +19,7 @@
   font-size: 28px;
   font-weight: 800;
   margin: 0 0 10px;
+  text-align: center;
 }
 
 .appintro_para {
@@ -27,6 +28,7 @@
   font-weight: bold;
   line-height: 1.9;
   opacity: 0.95;
+  text-align: center;
 }
 
 .appintro_btn {
@@ -111,9 +113,11 @@
   }
   .appintro_title {
     font-size: 32px;
+    text-align: center;
   }
   .appintro_para {
     font-size: 17px;
+    text-align: center;
   }
   .appintro_btn {
     margin-bottom: 30px;

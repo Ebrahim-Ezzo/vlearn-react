@@ -1,11 +1,13 @@
 // src/pages/Contact.jsx
 import { useState } from "react";
-import { useTranslation } from "react-i18next"; // i18n
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import MinimalTopBar from "../components/MinimalTopBar";
 import "./contact.css";
 
 export default function Contact() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const isAr = i18n.language?.startsWith("ar");
 
     const [form, setForm] = useState({
         name: "",
@@ -42,8 +44,7 @@ export default function Contact() {
         }
         setSubmitting(true);
         try {
-            // send to API later
-            await new Promise((r) => setTimeout(r, 800));
+            await new Promise((r) => setTimeout(r, 800)); // TODO: send to API
             setStatus({ ok: true, err: "" });
             setForm({ name: "", email: "", phone: "", subject: "", message: "", agree: false });
         } catch {
@@ -53,10 +54,16 @@ export default function Contact() {
         }
     };
 
+    const agreeFull = t("contact.form.agree");
+    const privacyText = t("footer_003");
+    const idx = agreeFull.indexOf(privacyText);
+    const agreePrefix = idx >= 0 ? agreeFull.slice(0, idx) : "";
+    const agreeSuffix = idx >= 0 ? agreeFull.slice(idx + privacyText.length) : "";
+
     return (
         <>
             <MinimalTopBar />
-            <main className="contact-page">
+            <main className="contact-page" dir={isAr ? "rtl" : "ltr"}>
                 {/* Hero */}
                 <section className="contact-hero">
                     <h1>{t("contact.title")}</h1>
@@ -89,6 +96,7 @@ export default function Contact() {
                                     value={form.email}
                                     onChange={onChange}
                                     placeholder={t("contact.form.placeholders.email")}
+                                    dir="ltr"
                                     required
                                 />
                             </div>
@@ -104,6 +112,7 @@ export default function Contact() {
                                     value={form.phone}
                                     onChange={onChange}
                                     placeholder={t("contact.form.placeholders.phone")}
+                                    dir="ltr"
                                 />
                             </div>
 
@@ -130,21 +139,43 @@ export default function Contact() {
                                 value={form.message}
                                 onChange={onChange}
                                 placeholder={t("contact.form.placeholders.message")}
+                                dir={isAr ? "rtl" : "ltr"}
+                                style={{ textAlign: isAr ? "right" : "left" }}
                                 required
                             />
                         </div>
 
-                        <label className="check">
-                            <input type="checkbox" name="agree" checked={form.agree} onChange={onChange} />
-                            <span>{t("contact.form.agree")}</span>
-                        </label>
+                        <div className="cont">
 
-                        {status.err && <p className="alert error">{status.err}</p>}
-                        {status.ok && <p className="alert success">{t("contact.alerts.success")}</p>}
+                            <label className="check">
+                                <input
+                                    type="checkbox"
+                                    name="agree"
+                                    checked={form.agree}
+                                    onChange={onChange}
+                                />
+                                <span>
+                                    {agreePrefix}
+                                    <Link
+                                        to="/privacy"
+                                        className="inline-link"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        {privacyText}
+                                    </Link>
+                                    {agreeSuffix}
+                                </span>
+                            </label>
 
-                        <button type="submit" className="btn btn-primary" disabled={submitting}>
-                            {submitting ? t("contact.form.sending") : t("contact.form.send")}
-                        </button>
+                            {status.err && <p className="alert error">{status.err}</p>}
+                            {status.ok && <p className="alert success">{t("contact.alerts.success")}</p>}
+
+                            <button type="submit" className="btn btn-primary" disabled={submitting}>
+                                {submitting ? t("contact.form.sending") : t("contact.form.send")}
+                            </button>
+
+                        </div>
+
                     </form>
 
                     {/* Side info */}

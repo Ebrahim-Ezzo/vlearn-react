@@ -5,19 +5,24 @@ import "./DeleteAccount.css";
 import MinimalTopBar from "../components/MinimalTopBar";
 
 export default function DeleteAccount() {
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const isArabic = i18n.language.startsWith("ar");
+
     const [phone, setPhone] = useState("");
     const [agree, setAgree] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [touched, setTouched] = useState(false);
+    const [human, setHuman] = useState(false); // ✅ verify human
+
 
     useEffect(() => {
-        document.title=t("deleteaccount_016");
+        document.title = t("deleteaccount_016");
     }, []);
 
     const phoneRegex = useMemo(() => /^(?:\+\d{9,12}|0\d{9,12})$/, []);
     const isPhoneValid = phoneRegex.test(phone.trim());
-    const canProceed = isPhoneValid && agree;
+    const canProceed = isPhoneValid && agree && human; // ✅ لازم كمان يتحقق "human"
 
     const openModal = (e) => {
         e.preventDefault();
@@ -50,12 +55,17 @@ export default function DeleteAccount() {
             <section className="delete-page" aria-labelledby="delete-title">
                 <header className="delete-header">
                     <h1 id="delete-title">{t('deleteaccount_001')}</h1>
-                    <p>{t('deleteaccount_002')}<Link to="/privacy">{t('deleteaccount_003')}</Link>{t('deleteaccount_004')}<Link to="/terms">{t('deleteaccount_005')}</Link>. قد تفقد بشكل نهائي أي
-                        تقدّم/نقاط/قوائم محفوظة. لا يمكن التراجع عن هذه العملية.
+                    <p>{t('deleteaccount_002')}<Link to="/privacy">{t('deleteaccount_003')}</Link>{t('deleteaccount_004')}<Link to="/terms">{t('deleteaccount_005')}</Link> {t('deleteaccount_013')}
                     </p>
                 </header>
 
-                <form className="delete-form" onSubmit={openModal} noValidate>
+                {/* <form className="delete-form" onSubmit={openModal} noValidate> */}
+                <form
+                    className="delete-form"
+                    onSubmit={openModal}
+                    noValidate
+                    dir={isArabic ? "rtl" : "ltr"}   // 👈 يغير الاتجاه حسب اللغة
+                >
                     <div className="field">
                         <label htmlFor="phone">{t('deleteaccount_006')}</label>
                         <input
@@ -86,7 +96,23 @@ export default function DeleteAccount() {
                         <span>{t('deleteaccount_009')}<strong>{t('deleteaccount_010')}</strong>.
                         </span>
                     </label>
+                    {/* v */}
 
+                    <label className="verify">
+                        <input
+                            type="checkbox"
+                            checked={human}
+                            onChange={(e) => setHuman(e.target.checked)}
+                            aria-describedby="verify-hint"
+                        />
+                        <span>{t('deleteaccount_human')}</span>
+                    </label>
+                    <div id="verify-hint" className="hint">
+                        {t('deleteaccount_human_hint')}
+                    </div>
+
+
+                    {/*  */}
                     <button
                         type="submit"
                         className="btn btn-danger"

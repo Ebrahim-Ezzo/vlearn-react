@@ -72,12 +72,12 @@
   "deleteaccount_001": "حذف الحساب",
   "deleteaccount_002": "يرجى قراءة النقاط التالية قبل المتابعة بحذفك للحساب سيتم إزالة بياناتك الشخصية وفقًا لـ",
   "deleteaccount_003": "سياسة الخصوصية",
-  "deleteaccount_004": "و{\" \"}",
+  "deleteaccount_004": " و ",
   "deleteaccount_005": "الشروط والأحكام",
   "deleteaccount_006": "رقم الهاتف المرتبط بالحساب",
   "deleteaccount_007": "اكتب الرقم بصيغة دولية (مثال: ‎+9715xxxxxxx) أرقام فقط",
   "deleteaccount_008": "الرجاء إدخال رقم هاتف صالح",
-  "deleteaccount_009": "أقرّ أني أفهم أن عملية الحذف",
+  "deleteaccount_009": "أقرّ أني أفهم أن عملية الحذف ",
   "deleteaccount_010": "نهائية وغير قابلة للاسترجاع",
   "deleteaccount_011": "حذف الحساب",
   "deleteaccount_012": "تأكيد حذف الحساب",
@@ -86,6 +86,11 @@
   "deleteaccount_015": "تأكيد الحذف",
   "deleteaccount_016": "حذف الحساب — VLearn",
   "deleteaccount_017": "طلب حذف حساب",
+
+"deleteaccount_human": "أؤكّد أني لست روبوت",
+"deleteaccount_human_hint": "اختيار هذا المربع مطلوب لمتابعة الحذف.",
+
+
   "loginpage_001": "تسجيل الدخول",
   "loginpage_002": "الاسم",
   "loginpage_003": "رقم الموبايل",
