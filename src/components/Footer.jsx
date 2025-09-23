@@ -14,17 +14,11 @@ export default function Footer() {
 
     return (
         <footer className="footer" id="footer" dir="auto">
-            {/* موجة خفيفة أعلى الفوتر */}
-
-            <div className="footer_wave" aria-hidden="true">
-                <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-                    <path fill="currentColor" d="M0,80 
-      L0,55  L180,80
-      L360,55 L540,80
-      L720,55 L900,80
-      L1080,55 L1260,80
-      L1440,55 L1440,80 Z"/>
-                </svg>
+            {/* موجات متحركة ملونة في خلفية الفوتر */}
+            <div className="footer_waves" aria-hidden="true">
+                <span className="wave w1"></span>
+                <span className="wave w2"></span>
+                <span className="wave w3"></span>
             </div>
 
             <div className="footer_container">
@@ -44,10 +38,22 @@ export default function Footer() {
                 </ul>
 
                 <p className="footer_copy">
-                    © {year} {t("footer_rights")} — VRoad
+                    © {year} {t("footer_rights")} —{" "}
+                    <a
+                        href="https://vroad-me.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        VRoad
+                    </a>
                 </p>
 
-                <a href="#top" onClick={scrollToTop} className="footer_topbtn" aria-label="Back to top">
+                <a
+                    href="#top"
+                    onClick={scrollToTop}
+                    className="footer_topbtn"
+                    aria-label="Back to top"
+                >
                     ↑
                 </a>
             </div>

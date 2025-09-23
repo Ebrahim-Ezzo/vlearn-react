@@ -99,7 +99,8 @@
 
 .tab.active {
   background: var(--secondary);
-  color: var(--button-text);
+  /* color: var(--button-text); */
+  color: white;
   transform: scale(0.98);
 }
 
@@ -132,7 +133,7 @@
   z-index: 1;
   margin-top: 30px;
   background-color: var(--secondary);
-  color: var(--button-text);
+  color: white !important;
   transition: color 0.3s ease;
   outline: none;
   border: none;

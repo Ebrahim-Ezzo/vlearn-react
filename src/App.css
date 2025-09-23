@@ -52,7 +52,6 @@ body {
   list-style: none;
 }
 
-/* عربي: نصوص فقط RTL ويمين */
 html[lang="ar"]
   :where(
     p,
@@ -70,10 +69,8 @@ html[lang="ar"]
     .step_desc
   ) {
   direction: rtl;
-  /* text-align: right; */
 }
 
-/* إنجليزي: نصوص فقط LTR ويسار (للتأكيد) */
 html[lang="en"]
   :where(
     p,
@@ -91,5 +88,4 @@ html[lang="en"]
     .step_desc
   ) {
   direction: ltr;
-  /* text-align: left; */
 }

@@ -87,9 +87,8 @@
   "deleteaccount_016": "حذف الحساب — VLearn",
   "deleteaccount_017": "طلب حذف حساب",
 
-"deleteaccount_human": "أؤكّد أني لست روبوت",
-"deleteaccount_human_hint": "اختيار هذا المربع مطلوب لمتابعة الحذف.",
-
+  "deleteaccount_human": "أؤكّد أني لست روبوت",
+  "deleteaccount_human_hint": "اختيار هذا المربع مطلوب لمتابعة الحذف.",
 
   "loginpage_001": "تسجيل الدخول",
   "loginpage_002": "الاسم",
@@ -224,5 +223,6 @@
       "location_value": "دمشق، الجمهورية العربية السورية",
       "map_placeholder": "عنصر خريطة (تجريبي)"
     }
-  }
+  },
+  "back_home": "العودة للرئيسية"
 }

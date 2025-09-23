@@ -2,7 +2,9 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import MinimalTopBar from "../components/MinimalTopBar";
+// import MinimalTopBar from "../components/MinimalTopBar";
+import BackHomeButton from "./BackHomeButton";
+
 import "./contact.css";
 
 export default function Contact() {
@@ -62,9 +64,10 @@ export default function Contact() {
 
     return (
         <>
-            <MinimalTopBar />
+            {/* <MinimalTopBar /> */}
+
             <main className="contact-page" dir={isAr ? "rtl" : "ltr"}>
-                
+
                 <section className="contact-hero">
                     <h1>{t("contact.title")}</h1>
                     <p>{t("contact.intro")}</p>
@@ -216,6 +219,8 @@ export default function Contact() {
                         </div>
                     </aside>
                 </section>
+                <BackHomeButton />
+
             </main>
         </>
     );

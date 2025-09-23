@@ -1,3 +1,7 @@
+/* #root,body {
+  background-color: var(--muted) !important;
+} */
+
 :root {
   --ink: #0f172a;
   --muted: #475569;
@@ -13,7 +17,7 @@
 .privacy-page {
   max-width: 920px;
   margin: 32px auto 96px;
-  padding: 0 16px;
+  padding: 80px 16px;
   color: var(--ink);
 }
 
@@ -22,6 +26,7 @@
   font-size: 26px;
   font-weight: 800;
   letter-spacing: 0.2px;
+  color: var(--text);
 }
 .privacy-header .meta {
   color: #64748b;

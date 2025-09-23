@@ -1,96 +1,78 @@
 import { useState, useEffect } from "react";
 import "../i18n";
 import "../styles/navbar.css";
-import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaWhatsapp, FaUser } from "react-icons/fa";
 import ThemeSwitch from "./ThemeSwitch";
-import { FaUser } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { FaGlobe } from "react-icons/fa";
 import LanguageToggle from "./LanguageToggle";
-
+import { HashLink } from "react-router-hash-link";   // ✅ الاستيراد يكون هنا فقط
 
 export default function NavBar() {
   const { t, i18n } = useTranslation();
-
+  const dir = i18n.dir();
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
-    const onChange = (e) => {
-      if (e.matches) setOpen(false);
-    };
+    const onChange = (e) => { if (e.matches) setOpen(false); };
     mq.addEventListener?.("change", onChange);
-    return () => {
-      mq.removeEventListener?.("change", onChange);
-    };
+    return () => mq.removeEventListener?.("change", onChange);
   }, []);
 
   if (location.pathname === "/login") {
     return (
-      <nav className="navbar login_nav">
+      <nav className={`navbar login_nav ${dir === "rtl" ? "navbar_rtl" : "navbar_ltr"}`}>
         <div className="navbar_container">
-
-          <div className="logo">
-            <img src="/images/logo.svg" alt="VLearn" />
-          </div>
-
-          <Link to="/" className="back_home">{t('navbar_001')}</Link>
+          <div className="navbar_logo"><img src="/images/logo.svg" alt="VLearn" /></div>
+          <Link to="/" className="back_home">{t("navbar_001")}</Link>
         </div>
       </nav>
     );
   }
 
   return (
-    <header className="navbar">
+    <header className={`navbar ${dir === "rtl" ? "navbar_rtl" : "navbar_ltr"}`}>
       <div className="navbar_container">
-        {/* menu button */}
+        <div className="navbar_logo"><img src="/assets/logo.svg" alt="VLearn logo" /></div>
+        <div className="navbar_spacer" />
+
         <div className="nav-group">
           <button
             className={`navbar_button ${open ? "is-active" : ""}`}
             onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+            aria-expanded={open}
+            aria-controls="primary-menu"
           >
-            <span className="menu-icon">
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
+            <span className="menu-icon"><span></span><span></span><span></span></span>
           </button>
 
-          <div className="navbar_social">
+          <div className="navbar_social item--social">
             <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook"><FaFacebook /></a>
             <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><FaInstagram /></a>
             <a href="https://wa.me/xxxxxxxx" target="_blank" rel="noopener" aria-label="WhatsApp"><FaWhatsapp /></a>
           </div>
-          <ThemeSwitch />
 
-          {/* links*/}
-          <nav className={`navbar_menu ${open ? "is-open" : ""}`}>
-            {location.pathname === "/login" ? (
-              <Link to="/" className="nav_link">{t("hero")}</Link>
-            ) : (
-              <>
-                <a href="#hero">{t("hero")}</a>
-                <a href="#how">{t("how")}</a>
-                <a href="#features">{t("features")}</a>
-                <a href="#downloads">{t("downloads")}</a>
+          <div className="item--theme"><ThemeSwitch /></div>
 
-                <div className="account">
-                  <Link to="/login" className="nav_link account_link">
-                    <FaUser className="icon_user" size={16} />
-                    <p>{t('navbar_002')}</p>
-                  </Link>
-                </div>
-              </>
-            )}
+          <nav id="primary-menu" className={`navbar_menu item--links ${open ? "is-open" : ""}`}>
+            {/* ✅ استخدم HashLink فقط، بدون أي import داخل JSX */}
+            <HashLink smooth to="/#hero" onClick={() => setOpen(false)}>{t("hero")}</HashLink>
+            <HashLink smooth to="/#how" onClick={() => setOpen(false)}>{t("how")}</HashLink>
+            <HashLink smooth to="/#features" onClick={() => setOpen(false)}>{t("features")}</HashLink>
+            <HashLink smooth to="/#downloads" onClick={() => setOpen(false)}>{t("downloads")}</HashLink>
+
+            <div className="account">
+              <Link to="/login" className="nav_link account_link">
+                <FaUser className="icon_user" size={16} />
+                <p>{t("navbar_002")}</p>
+              </Link>
+            </div>
           </nav>
 
-          <LanguageToggle />
-
-        </div>
-        <div className="navbar_logo">
-          <img src="/assets/logo.svg" alt="VLearn logo" />
+          <div className="item--lang"><LanguageToggle /></div>
         </div>
       </div>
     </header>

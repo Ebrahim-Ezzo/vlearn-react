@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
-import MinimalTopBar from "../components/MinimalTopBar";
+// import MinimalTopBar from "../components/MinimalTopBar";
+import BackHomeButton from "./BackHomeButton";
 import "./TermsConditions.css";
-
 export default function TermsConditions() {
     const { t } = useTranslation();
 
@@ -12,7 +12,8 @@ export default function TermsConditions() {
 
     return (
         <>
-            <MinimalTopBar />
+            {/* <MinimalTopBar /> */}
+
             <main className="terms-page" aria-labelledby="terms-title">
                 <header className="terms-header">
                     <h1 id="terms-title">{t("termsconditions_001")}</h1>
@@ -130,6 +131,8 @@ export default function TermsConditions() {
                     <h2>{t("termsconditions_055")}</h2>
                     <p>{t("termsconditions_056")}</p>
                 </article>
+                <BackHomeButton />
+
             </main>
         </>
     );

@@ -10,16 +10,15 @@ i18n
       ar: { translation: ar },
       en: { translation: en },
     },
-    lng: "ar",              // اللغة الافتراضية
+    lng: "ar",
     fallbackLng: "en",
     interpolation: { escapeValue: false },
   });
 
-// ثبّت الاتجاه LTR دايمًا
 const applyLangOnly = (lng) => {
   const html = document.documentElement;
-  html.setAttribute("dir", "ltr");   // 🔒 دايمًا LTR
-  html.setAttribute("lang", lng);    // بس اللانغ تتغير
+  html.setAttribute("dir", "ltr");
+  html.setAttribute("lang", lng);
 };
 
 applyLangOnly(i18n.language);

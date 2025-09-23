@@ -1,4 +1,3 @@
-// src/App.jsx
 import "./App.css";
 import NavBar from "./components/NavBar";
 import Hero from "./components/Hero";
@@ -6,7 +5,7 @@ import HowItWorks from "./components/HowItWorks";
 import AppIntro from "./components/AppIntro";
 import Features from "./components/Features";
 import DownloadInstall from "./components/DownloadInstall";
-import MinimalTopBar from "./components/MinimalTopBar";
+// import MinimalTopBar from "./components/MinimalTopBar";
 import Footer from "./components/Footer";
 import LoginPage from "./pages/LoginPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -15,14 +14,10 @@ import DeleteAccount from "./pages/DeleteAccount";
 import Contact from "./pages/Contact";
 import WhatsAppButton from "./components/WhatsAppButton";
 import { Routes, Route, useLocation } from "react-router-dom";
-
 import { useEffect } from "react";
 
 export default function App() {
   const { pathname } = useLocation();
-
-  const HIDE_CHROME_ROUTES = ["/delete-account", "/privacy", "/terms", "/Contact"];
-  const hideChrome = HIDE_CHROME_ROUTES.includes(pathname);
 
   useEffect(() => {
     const titles = {
@@ -35,10 +30,9 @@ export default function App() {
     document.title = titles[pathname] || "VLearn";
   }, [pathname]);
 
-
   return (
     <>
-      {!hideChrome && <NavBar />}
+      <NavBar />
 
       <Routes>
         {/* الصفحة الرئيسية */}
@@ -63,7 +57,7 @@ export default function App() {
         <Route path="/Contact" element={<Contact />} />
       </Routes>
 
-      {!hideChrome && <Footer />}
+      <Footer />
     </>
   );
 }

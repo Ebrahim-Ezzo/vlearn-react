@@ -1,6 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
-import MinimalTopBar from "../components/MinimalTopBar";
+// import MinimalTopBar from "../components/MinimalTopBar";
+import BackHomeButton from "./BackHomeButton";
+
 import "./PrivacyPolicy.css";
 
 export default function PrivacyPolicy() {
@@ -11,7 +13,8 @@ export default function PrivacyPolicy() {
 
     return (
         <>
-            <MinimalTopBar />
+            {/* <MinimalTopBar /> */}
+
             <main className="privacy-page">
                 <header className="privacy-header">
                     <h1>{t("privacy_001")}</h1>
@@ -51,6 +54,8 @@ export default function PrivacyPolicy() {
                     <h2>{t("privacy_022")}</h2>
                     <p>{t("privacy_023")}</p>
                 </section>
+                <BackHomeButton />
+
             </main>
         </>
     );

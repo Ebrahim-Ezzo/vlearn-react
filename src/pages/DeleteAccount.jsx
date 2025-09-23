@@ -2,7 +2,9 @@ import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import "./DeleteAccount.css";
-import MinimalTopBar from "../components/MinimalTopBar";
+// import MinimalTopBar from "../components/MinimalTopBar";
+import BackHomeButton from "./BackHomeButton";
+
 
 export default function DeleteAccount() {
     // const { t } = useTranslation();
@@ -50,7 +52,7 @@ export default function DeleteAccount() {
 
     return (
         <>
-            <MinimalTopBar />
+            {/* <MinimalTopBar /> */}
 
             <section className="delete-page" aria-labelledby="delete-title">
                 <header className="delete-header">
@@ -138,7 +140,10 @@ export default function DeleteAccount() {
                         </div>
                     </div>
                 )}
+                <BackHomeButton />
+
             </section>
+
         </>
 
     );

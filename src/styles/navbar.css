@@ -228,8 +228,6 @@
   display: none;
 }
 
-/* desctop */
-
 @media (min-width: 1024px) {
   .navbar {
     height: 80px;
@@ -243,10 +241,6 @@
     display: flex;
     position: static;
     justify-content: space-between;
-    /* 
-  left & top are set to auto here
-  just for clarification, since they’re default with position: static
-*/
     left: auto;
     top: auto;
     transform: none;
