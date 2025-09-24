@@ -24,7 +24,6 @@ export default function Hero() {
 
                         <p className="hero_paragraph">{t('hero_intro')}</p>
 
-
                         {/* Tabs */}
                         <div className="hero_tabs" role="tablist">
                             <button
@@ -54,12 +53,15 @@ export default function Hero() {
 
                         {/* cta */}
                         <div className="hero_buttons">
-                            <button className="btn_primary">{t('hero_005')}</button>
+                            <a href="#downloads" className="btn_primary">
+                                {t('hero_005')}
+                            </a>
                         </div>
+
                     </div>
                 </div>
                 <div className="hero_image">
-                    <div className="phone_frame">
+                    <div className="phone_frame" dir="ltr">
                         <Swiper
                             modules={[Navigation, Autoplay]}
                             slidesPerView={1}

@@ -24,6 +24,7 @@
   --link-color: #fff;
   --text-inverse: #fff;
   --how-it-works: #dddddd2b;
+  --card:rgba(255, 255, 255, 0%);
 }
 /**********************************/
 
@@ -44,6 +45,7 @@ html[data-theme="alt"] {
   --bg: #12161b;
   --how-it-works: #12161b;
   --border: rgba(255, 255, 255, 0.08);
+   --card:rgba(255, 255, 255 / 0%);
 }
 
 body {

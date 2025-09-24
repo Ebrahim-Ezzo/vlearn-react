@@ -8,7 +8,6 @@ export default function DownloadInstall() {
     return (
         <section id="downloads" className="dl">
             <div className="dl_container">
-                {/* النص + الأزرار */}
                 <div className="dl_text">
                     <h2 className="dl_title">{t('downloadinstall_001')}</h2>
                     <p className="dl_lead">{t('downloadinstall_002')}</p>

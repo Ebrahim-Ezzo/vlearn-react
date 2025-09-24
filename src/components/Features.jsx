@@ -18,8 +18,8 @@ const CARDS = [
 
 export default function Features() {
     const { t } = useTranslation();
-    const metrics = METRICS.map(m => ({...m, label: t(m.labelKey)}));
-    const cards = CARDS.map(c => ({...c, title: t(c.titleKey), desc: t(c.descKey)}));
+    const metrics = METRICS.map(m => ({ ...m, label: t(m.labelKey) }));
+    const cards = CARDS.map(c => ({ ...c, title: t(c.titleKey), desc: t(c.descKey) }));
     const [idx, setIdx] = useState(0);
     const n = cards.length;
 

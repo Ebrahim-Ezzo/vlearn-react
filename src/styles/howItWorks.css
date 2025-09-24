@@ -7,7 +7,6 @@
   isolation: isolate;
   overflow: hidden;
 }
-
 .howitworks > * {
   position: relative;
   z-index: 1;
@@ -35,7 +34,6 @@
   font-weight: 800;
   margin: 0 0 6px;
 }
-
 .howitworks_lead {
   text-align: center;
   color: var(--accent);
@@ -54,25 +52,95 @@
   gap: 14px;
 }
 
-/* card */
+/* card base */
 .step {
+  position: relative;
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
   gap: 12px;
-  background: var(--muted);
-  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 16px;
   padding: 14px 16px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   transition:
     transform 0.15s ease,
-    box-shadow 0.15s ease;
+    box-shadow 0.15s ease,
+    border-color 0.2s ease;
 }
-
 .step:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* Glassmorphism */
+.glass-card {
+  background: rgba(255, 255, 255, 0%);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 20px 10px rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+.glass-card::before,
+.glass-card::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  display: flex;
+}
+
+.glass-card::before {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+}
+.glass-card::after {
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.3)
+  );
+}
+
+/* step number badge */
+.step_badge {
+  position: absolute;
+  top: 10px;
+  inset-inline-end: 10px;
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    rgb(99 102 241 / 68%),
+    rgb(16 185 129 / 41%)
+  );
+  color: #ffffff;
+  font-size: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  visibility: hidden;
+  align-self: self-end;
+}
+
+html[dir="ltr"] .step_badge {
+  inset-inline-start: auto;
+  inset-inline-end: 10px;
 }
 
 /* icon pill */
@@ -101,7 +169,6 @@
   color: var(--primary);
   text-align: start;
 }
-
 .step_desc {
   margin: 0;
   font-size: 14px;
@@ -117,7 +184,6 @@
   justify-content: center;
   margin-top: 18px;
 }
-
 .howitworks_link {
   color: var(--accent);
   text-decoration: none;
@@ -137,21 +203,24 @@
 
 /* responsive */
 @media (min-width: 768px) {
+  .step_badge {
+    visibility: visible;
+  }
+
   .howitworks_title {
     font-size: 32px;
   }
   .howitworks_lead {
     font-size: 18px;
   }
+
   .howitworks_steps {
     grid-template-columns: 1fr 1fr;
     gap: 18px;
   }
-
   .step {
     padding: 16px 18px;
   }
-
   .step_title {
     font-size: 17px;
   }
@@ -164,6 +233,7 @@
   .howitworks {
     padding: 50px 20px;
     margin-top: 40px;
+    padding-block-start: 40px;
   }
   .howitworks_steps {
     gap: 22px;
@@ -172,8 +242,5 @@
     width: 50px;
     height: 50px;
     font-size: 24px;
-  }
-  .howitworks {
-    padding-block-start: 40px;
   }
 }

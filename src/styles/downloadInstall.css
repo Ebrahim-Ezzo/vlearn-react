@@ -170,7 +170,10 @@
     gap: 40px;
   }
   .dl_text {
+    display: flex;
+    flex-direction: column;
     text-align: start;
+    align-items: start;
   }
 
   .dl_steps {

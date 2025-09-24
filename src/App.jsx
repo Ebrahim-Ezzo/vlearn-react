@@ -41,10 +41,10 @@ export default function App() {
           element={
             <main>
               <Hero />
-              <WhatsAppButton />
-              <HowItWorks />
               <AppIntro />
               <Features />
+              <WhatsAppButton />
+              <HowItWorks />
               <DownloadInstall />
             </main>
           }
