@@ -15,6 +15,7 @@ import Contact from "./pages/Contact";
 import WhatsAppButton from "./components/WhatsAppButton";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import ScrollToTop from "./pages/ScrollToTop";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -32,10 +33,9 @@ export default function App() {
 
   return (
     <>
+      <ScrollToTop />
       <NavBar />
-
       <Routes>
-        {/* الصفحة الرئيسية */}
         <Route
           path="/"
           element={
@@ -49,7 +49,6 @@ export default function App() {
             </main>
           }
         />
-
         <Route path="/login" element={<LoginPage />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsConditions />} />

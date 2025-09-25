@@ -150,7 +150,7 @@ export default function Contact() {
 
                         <div className="cont">
 
-                            <label className="check">
+                            {/* <label className="check">
                                 <input
                                     type="checkbox"
                                     name="agree"
@@ -168,12 +168,12 @@ export default function Contact() {
                                     </Link>
                                     {agreeSuffix}
                                 </span>
-                            </label>
+                            </label> */}
 
                             {status.err && <p className="alert error">{status.err}</p>}
                             {status.ok && <p className="alert success">{t("contact.alerts.success")}</p>}
 
-                            <button type="submit" className="btn btn-primary" disabled={submitting}>
+                            <button type="submit" className="Contact-btn btn-primary" disabled={submitting}>
                                 {submitting ? t("contact.form.sending") : t("contact.form.send")}
                             </button>
 

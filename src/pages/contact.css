@@ -148,7 +148,7 @@
   color: #2a9d8f;
 }
 
-.btn {
+.Contact-btn {
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
   border-radius: 8px;
@@ -166,7 +166,7 @@
 .btn-primary:hover {
   background: #d62839;
 }
-.btn[disabled] {
+.Contact-btn[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
 }

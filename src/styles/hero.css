@@ -94,7 +94,7 @@
 .tab:focus { outline: none; }
 .tab.active {
   background: var(--secondary);
-  color: #fff;
+  color: var(--rev-text);
   transform: scale(0.98);
 }
 

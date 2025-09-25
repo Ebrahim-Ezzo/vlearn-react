@@ -25,6 +25,8 @@
   --text-inverse: #fff;
   --how-it-works: #dddddd2b;
   --card:rgba(255, 255, 255, 0%);
+
+  --newC: white;
 }
 /**********************************/
 
@@ -46,6 +48,9 @@ html[data-theme="alt"] {
   --how-it-works: #12161b;
   --border: rgba(255, 255, 255, 0.08);
    --card:rgba(255, 255, 255 / 0%);
+
+     --newC: #7bd3ea;
+
 }
 
 body {
