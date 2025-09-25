@@ -23,7 +23,7 @@ export default function AppIntro() {
             <div className="appintro_container">
                 <div className="appintro_text">
                     <h2 className="appintro_title">{t('appintro_001')}</h2>
-                    <p className="appintro_para">{t('appintro_002')}<b>VLearn</b>{t('appintro_003')}</p>
+                    <p className="appintro_para">{t('appintro_002')} <b> VLearn </b> {t('appintro_003')}</p>
                     <p className="appintro_para">{t('appintro_004')}</p>
                     <a href="#features" className="appintro_btn">{t('appintro_005')}</a>
                 </div>

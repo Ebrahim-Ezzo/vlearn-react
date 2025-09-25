@@ -150,26 +150,6 @@ export default function Contact() {
 
                         <div className="cont">
 
-                            {/* <label className="check">
-                                <input
-                                    type="checkbox"
-                                    name="agree"
-                                    checked={form.agree}
-                                    onChange={onChange}
-                                />
-                                <span>
-                                    {agreePrefix}
-                                    <Link
-                                        to="/privacy"
-                                        className="inline-link"
-                                        onClick={(e) => e.stopPropagation()}
-                                    >
-                                        {privacyText}
-                                    </Link>
-                                    {agreeSuffix}
-                                </span>
-                            </label> */}
-
                             {status.err && <p className="alert error">{status.err}</p>}
                             {status.ok && <p className="alert success">{t("contact.alerts.success")}</p>}
 
@@ -192,7 +172,7 @@ export default function Contact() {
                                 </li>
                                 <li>
                                     <strong>{t("contact.info.phone")}:</strong>{" "}
-                                    <a href="tel:+963994080102">+963 994 080 102</a>
+                                    <a href="tel:+963994080102" dir="ltr">+963 994 080 102</a>
                                 </li>
                                 <li>
                                     <strong>{t("contact.info.social")}:</strong>

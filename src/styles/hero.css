@@ -130,7 +130,7 @@ a.btn_primary {
   font-weight: 600;
 
   background-color: var(--primary);
-  color: #fff !important;
+  color: var(--rev-text);
 
   text-decoration: none;
   border: none;

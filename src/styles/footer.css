@@ -15,13 +15,15 @@
 
 .wave {
   position: absolute;
-  left: 0; right: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 120px;
   background-repeat: repeat-x;
   background-size: 1440px 120px;
   animation: waveMove 20s linear infinite;
-  opacity: .22;
-  filter: drop-shadow(0 -6px 10px rgba(0,0,0,.05));
+  opacity: 0.22;
+  filter: drop-shadow(0 -6px 10px rgba(0, 0, 0, 0.05));
 }
 
 .w1 {
@@ -36,7 +38,7 @@
   animation-duration: 24s;
   animation-direction: reverse;
   transform: translateY(8px);
-  opacity: .20;
+  opacity: 0.2;
   background-image: url("data:image/svg+xml;utf8,\
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120' preserveAspectRatio='none'>\
 <path fill='%23FCA5A5' d='M0,78 C80,96 160,56 240,78 S400,100 480,78 S640,56 720,78 S880,100 960,78 S1120,56 1200,78 S1360,100 1440,78 L1440,120 L0,120 Z'/>\
@@ -46,7 +48,7 @@
 .w3 {
   animation-duration: 32s;
   transform: translateY(16px);
-  opacity: .18;
+  opacity: 0.18;
   background-image: url("data:image/svg+xml;utf8,\
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120' preserveAspectRatio='none'>\
 <path fill='%2325D366' d='M0,86 C100,104 200,64 300,86 S500,108 600,86 S800,64 900,86 S1100,108 1200,86 S1400,64 1440,86 L1440,120 L0,120 Z'/>\
@@ -54,8 +56,12 @@
 }
 
 @keyframes waveMove {
-  from { background-position-x: 0; }
-  to   { background-position-x: -1440px; }
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -1440px;
+  }
 }
 
 .footer_container {
@@ -132,7 +138,10 @@
   text-decoration: none;
   font-weight: 800;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 .footer_topbtn:hover,
 .footer_topbtn:focus-visible {
@@ -156,5 +165,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .wave { opacity: .24; }
+  .wave {
+    opacity: 0.24;
+  }
 }

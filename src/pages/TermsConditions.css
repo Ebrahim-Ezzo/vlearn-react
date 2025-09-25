@@ -1,20 +1,13 @@
-/* #root,body {
-  background-color: var(--muted) !important;
-} */
-
 .terms-page {
   max-width: 920px;
   margin: 32px auto 96px;
   padding: 80px 16px;
-  color: #0f172a;
+  color: var(--text);
   background-color: white;
   border-radius: 20px;
   margin-top: 100px;
-  /* padding-inline: 250px; */
-  /* padding-bottom: 0px; */
-}
-
-.terms-header {
+  background-color: red;
+  background-color: var(--card);
 }
 
 .terms-header h1 {
@@ -31,7 +24,7 @@
 .terms-header p {
   margin: 0 0 10px;
   line-height: 1.9;
-  color: black;
+  color: var(--text);
 }
 .terms-header a {
   color: #2563eb;
@@ -45,11 +38,11 @@
 
 .terms-content {
   margin-top: 14px;
-  background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   padding: 18px;
+  background-color: var(--border);
 }
 
 .terms-content h2 {
@@ -59,7 +52,7 @@
 }
 .terms-content p {
   margin: 0 0 8px;
-  color: #0f172a;
+  color: var(--text);
   line-height: 1.9;
 }
 .terms-content ul {
@@ -68,7 +61,7 @@
 }
 .terms-content li {
   margin: 4px 0;
-  color: #0f172a;
+  color: var(--text);
   line-height: 1.9;
   text-align: start;
   list-style-position: inside;

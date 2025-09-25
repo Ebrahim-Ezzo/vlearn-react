@@ -9,7 +9,7 @@
 .back_home_btn {
   display: inline-block;
   background: var(--primary);
-  color: #fff !important;
+  color: var(--rev-text) !important;
   padding: 8px 16px;
   border-radius: 8px;
   text-decoration: none !important;

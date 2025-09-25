@@ -38,7 +38,7 @@
 
 .delete-form {
   margin-top: 18px;
-  background-color: var(--rev-text);
+  background-color: var(--border);
   border: 1px solid gray;
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);

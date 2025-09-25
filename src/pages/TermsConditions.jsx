@@ -19,10 +19,8 @@ export default function TermsConditions() {
                     <h1 id="terms-title">{t("termsconditions_001")}</h1>
                     <div className="meta">{t("termsconditions_002")}</div>
 
-                    {/* المقدمة مع رقم الهاتف وكامل السطر ضمن الـ keys */}
                     <p>{t("termsconditions_003")}</p>
 
-                    {/* فقرة: قائمة الشروط... */}
                     <p>{t("termsconditions_004")}</p>
                 </header>
 

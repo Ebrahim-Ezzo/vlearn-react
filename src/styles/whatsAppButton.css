@@ -58,15 +58,16 @@
 .wa-text {
   font-size: 14px;
   line-height: 1;
+  display: none;
 }
 
 @media (max-width: 1024px) {
   :root {
     --btn-bottom: 18px;
   }
-  .wa-text {
+  /* .wa-text {
     display: none;
-  }
+  } */
 }
 
 @media (max-width: 640px) {

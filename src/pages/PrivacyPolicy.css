@@ -1,9 +1,5 @@
-/* #root,body {
-  background-color: var(--muted) !important;
-} */
 
 :root {
-  --ink: #0f172a;
   --muted: #475569;
   --link: #2563eb;
   --link-600: #1e40af;
@@ -18,7 +14,6 @@
   max-width: 920px;
   margin: 32px auto 96px;
   padding: 80px 16px;
-  color: var(--ink);
 }
 
 .privacy-header h1 {
@@ -36,7 +31,7 @@
 
 .privacy-content {
   margin-top: 14px;
-  background: var(--card);
+  background-color: var(--border);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -51,7 +46,6 @@
 .privacy-content p,
 .privacy-content li {
   margin: 0 0 8px;
-  color: var(--ink);
   line-height: 1.9;
   list-style-position: inside;
   text-align: start;

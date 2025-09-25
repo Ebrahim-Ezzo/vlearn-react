@@ -38,7 +38,7 @@ export default function Footer() {
                 </ul>
 
                 <p className="footer_copy">
-                    © {year} {t("footer_rights")} —{" "}
+                    {t(`footer_rights`)} {`©`} {` ${year} - `}
                     <a
                         href="https://vroad-me.com/"
                         target="_blank"
