@@ -67,10 +67,11 @@
   align-items: center;
   gap: 8px;
   height: 46px;
+  width: 110px;
   padding: 0 16px;
   border-radius: 12px;
-  background: var(--secondary);
-  color: white;
+  background: var(--primary);
+  color: var(--rev-text);
   text-decoration: none;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
@@ -87,6 +88,7 @@
 .store_btn:focus {
   transform: translateY(-2px);
   outline: none;
+  color: var(--text);
 }
 
 .store_btn.play:hover,
@@ -94,7 +96,6 @@
 .store_btn.ios:hover,
 .store_btn.ios:focus {
   /* background-image: linear-gradient(to right, var(--primary), var(--secondary)); */
-  color: var(--rev-text);
   background-color: var(--secondary);
 }
 
@@ -184,5 +185,5 @@
   .dl_steps li {
     text-align: start;
     padding-inline: 20px;
-}
+  }
 }

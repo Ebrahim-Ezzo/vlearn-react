@@ -90,7 +90,6 @@
   pointer-events: none;
   display: flex;
 }
-
 .glass-card::before {
   top: 0;
   left: 0;
@@ -137,7 +136,6 @@
   visibility: hidden;
   align-self: self-end;
 }
-
 html[dir="ltr"] .step_badge {
   inset-inline-start: auto;
   inset-inline-end: 10px;
@@ -178,7 +176,7 @@ html[dir="ltr"] .step_badge {
   text-align: start;
 }
 
-/* CTA link */
+/* CTA */
 .howitworks_cta {
   display: flex;
   justify-content: center;
@@ -190,6 +188,9 @@ html[dir="ltr"] .step_badge {
   font-weight: 700;
   border-bottom: 2px solid transparent;
   padding-bottom: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   transition:
     border-color 0.2s ease,
     color 0.2s ease;
@@ -200,47 +201,37 @@ html[dir="ltr"] .step_badge {
   border-color: currentColor;
   outline: none;
 }
+.scroll_hand {
+  display: inline-block;
+  line-height: 1;
+  font-size: 18px;
+  animation: bounce 1.2s infinite;
+  transform-origin: center;
+}
+
+/* motion */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(6px); }
+  60% { transform: translateY(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll_hand { animation: none; }
+}
 
 /* responsive */
 @media (min-width: 768px) {
-  .step_badge {
-    visibility: visible;
-  }
-
-  .howitworks_title {
-    font-size: 32px;
-  }
-  .howitworks_lead {
-    font-size: 18px;
-  }
-
-  .howitworks_steps {
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
-  .step {
-    padding: 16px 18px;
-  }
-  .step_title {
-    font-size: 17px;
-  }
-  .step_desc {
-    font-size: 15px;
-  }
+  .step_badge { visibility: visible; }
+  .howitworks_title { font-size: 32px; }
+  .howitworks_lead { font-size: 18px; }
+  .howitworks_steps { grid-template-columns: 1fr 1fr; gap: 18px; }
+  .step { padding: 16px 18px; }
+  .step_title { font-size: 17px; }
+  .step_desc { font-size: 15px; }
 }
 
 @media (min-width: 1024px) {
-  .howitworks {
-    padding: 50px 20px;
-    margin-top: 40px;
-    padding-block-start: 40px;
-  }
-  .howitworks_steps {
-    gap: 22px;
-  }
-  .step_icon {
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-  }
+  .howitworks { padding: 50px 20px; margin-top: 40px; padding-block-start: 40px; }
+  .howitworks_steps { gap: 22px; }
+  .step_icon { width: 50px; height: 50px; font-size: 24px; }
 }

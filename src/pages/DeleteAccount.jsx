@@ -5,10 +5,8 @@ import ReCAPTCHA from "react-google-recaptcha";
 import "./DeleteAccount.css";
 import BackHomeButton from "./BackHomeButton";
 
-// 🔑 إذا عندك إنفايرونمنت فاريابل رح يُستعمل تلقائيًا.
-// إذا ما عندك، حط المفتاح مكان النص بين علامتَي التنصيص.
 const SITE_KEY =
-    import.meta.env.VITE_RECAPTCHA_SITE_KEY || "PASTE_YOUR_SITE_KEY_HERE";
+    import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeaxtQrAAAAAG_PiEPGK168eT5ZOl57h5yug1C-";
 
 export default function DeleteAccount() {
     const { t, i18n } = useTranslation();
@@ -18,7 +16,7 @@ export default function DeleteAccount() {
     const [agree, setAgree] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [touched, setTouched] = useState(false);
-    const [captchaOk, setCaptchaOk] = useState(false); // ✅ نتيجة الكابتشا
+    const [captchaOk, setCaptchaOk] = useState(false);
 
     useEffect(() => {
         document.title = t("deleteaccount_016");
@@ -83,13 +81,10 @@ export default function DeleteAccount() {
                         onChange={(e) => {
                             let val = e.target.value;
 
-                            // ثبّت "09" بالبداية
                             if (!val.startsWith("09")) {
                                 val = "09" + val.replace(/^0+/, "");
                             }
-                            // أرقام فقط
                             val = val.replace(/[^\d]/g, "");
-                            // اسمح بثماني أرقام فقط بعد "09" (إجمالي 10)
                             if (val.length > 10) {
                                 val = val.slice(0, 10);
                             }
@@ -121,10 +116,9 @@ export default function DeleteAccount() {
                     </span>
                 </label>
 
-                {/* ✅ reCAPTCHA */}
                 <div className="captcha">
                     <ReCAPTCHA
-                        sitekey="6LeaxtQrAAAAAG_PiEPGK168eT5ZOl57h5yug1C-" // ← حط المفتاح مكان "PASTE_YOUR_SITE_KEY_HERE" إذا بدك تدخله يدويًا
+                        sitekey="6LeaxtQrAAAAAG_PiEPGK168eT5ZOl57h5yug1C-"
                         onChange={(token) => setCaptchaOk(!!token)}
                         onExpired={() => setCaptchaOk(false)}
                         onError={() => setCaptchaOk(false)}

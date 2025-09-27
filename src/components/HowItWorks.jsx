@@ -21,7 +21,6 @@ export default function HowItWorks() {
                 </header>
 
                 <ul className="howitworks_steps">
-
                     <li className="step glass-card">
                         <span className="step_badge" aria-hidden="true">1</span>
                         <span className="step_icon" aria-hidden="true"><FiUserPlus /></span>
@@ -29,7 +28,6 @@ export default function HowItWorks() {
                             <h3 className="step_title">{t("how_step_signup")}</h3>
                             <p className="step_desc">{t("how_step_signup_desc")}</p>
                         </div>
-
                     </li>
 
                     <li className="step glass-card">
@@ -79,7 +77,10 @@ export default function HowItWorks() {
                 </ul>
 
                 <div className="howitworks_cta">
-                    <a href="#downloads" className="howitworks_link">{t("howitworks_005")}</a>
+                    <a href="#downloads" className="howitworks_link">
+                        {t("howitworks_005")}
+                        <span className="scroll_hand" aria-hidden="true">👇</span>
+                    </a>
                 </div>
             </div>
         </section>

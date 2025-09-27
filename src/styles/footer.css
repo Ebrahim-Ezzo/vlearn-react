@@ -115,7 +115,7 @@
 .delet a,
 .delet a:hover,
 .delet a:focus-visible {
-  color: var(--primary);
+  color: var(--secondary);
 }
 
 .footer_copy {

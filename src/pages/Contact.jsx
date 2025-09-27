@@ -1,8 +1,6 @@
-// src/pages/Contact.jsx
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-// import MinimalTopBar from "../components/MinimalTopBar";
 import BackHomeButton from "./BackHomeButton";
 
 import "./contact.css";
@@ -11,10 +9,18 @@ export default function Contact() {
     const { t, i18n } = useTranslation();
     const isAr = i18n.language?.startsWith("ar");
 
+    // حدود الحقول
+    const LIMITS = {
+        name: 60,
+        email: 100,
+        subject: 40,
+        message: 1000,
+    };
+
     const [form, setForm] = useState({
         name: "",
         email: "",
-        phone: "",
+        phone: "09",
         subject: "",
         message: "",
         agree: false,
@@ -23,16 +29,61 @@ export default function Contact() {
     const [submitting, setSubmitting] = useState(false);
 
     const onChange = (e) => {
-        const { name, type, value, checked } = e.target;
-        setForm((prev) => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
+        const { name, type, value, checked, maxLength } = e.target;
+
+        if (name === "phone") {
+            let digits = value.replace(/\D+/g, "");
+
+            if (!digits.startsWith("09")) {
+                digits = "09" + digits.replace(/^0+/, "");
+            }
+
+            if (digits.length > 10) digits = digits.slice(0, 10);
+
+            setForm((prev) => ({ ...prev, phone: digits }));
+            return;
+        }
+
+        let next = type === "checkbox" ? checked : value;
+        if (typeof next === "string" && maxLength && next.length > maxLength) {
+            next = next.slice(0, maxLength);
+        }
+        setForm((prev) => ({ ...prev, [name]: next }));
     };
+
+    const onPhoneKeyDown = useCallback((e) => {
+        const keysToBlock = ["Backspace", "Delete"];
+        if (!keysToBlock.includes(e.key)) return;
+
+        const start = e.currentTarget.selectionStart ?? 0;
+        const end = e.currentTarget.selectionEnd ?? 0;
+
+        if (start <= 2 && end <= 2) {
+            e.preventDefault();
+        }
+    }, []);
+
+    const onPhonePaste = useCallback((e) => {
+        e.preventDefault();
+        const pasted = (e.clipboardData.getData("text") || "").replace(/\D+/g, "");
+        let digits = "09" + pasted.replace(/^0+/, "");
+        if (digits.length > 10) digits = digits.slice(0, 10);
+        setForm((prev) => ({ ...prev, phone: digits }));
+    }, []);
 
     const validate = () => {
         if (!form.name.trim()) return t("contact.validation.name_required");
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) return t("contact.validation.email_invalid");
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+            return t("contact.validation.email_invalid");
         if (!form.subject.trim()) return t("contact.validation.subject_required");
-        if (!form.message.trim() || form.message.trim().length < 10) return t("contact.validation.message_min");
+        if (!form.message.trim() || form.message.trim().length < 10)
+            return t("contact.validation.message_min");
         if (!form.agree) return t("contact.validation.agree_required");
+
+        if (form.phone && form.phone !== "09" && !/^09\d{8}$/.test(form.phone)) {
+            return t("contact.validation.phone_invalid");
+        }
+
         return "";
     };
 
@@ -48,7 +99,14 @@ export default function Contact() {
         try {
             await new Promise((r) => setTimeout(r, 800));
             setStatus({ ok: true, err: "" });
-            setForm({ name: "", email: "", phone: "", subject: "", message: "", agree: false });
+            setForm({
+                name: "",
+                email: "",
+                phone: "09",
+                subject: "",
+                message: "",
+                agree: false,
+            });
         } catch {
             setStatus({ ok: false, err: t("contact.alerts.error_generic") });
         } finally {
@@ -67,7 +125,6 @@ export default function Contact() {
             {/* <MinimalTopBar /> */}
 
             <main className="contact-page" dir={isAr ? "rtl" : "ltr"}>
-
                 <section className="contact-hero">
                     <h1>{t("contact.title")}</h1>
                     <p>{t("contact.intro")}</p>
@@ -87,6 +144,8 @@ export default function Contact() {
                                     onChange={onChange}
                                     placeholder={t("contact.form.placeholders.name")}
                                     required
+                                    maxLength={LIMITS.name}
+                                    autoComplete="name"
                                 />
                             </div>
 
@@ -101,6 +160,8 @@ export default function Contact() {
                                     placeholder={t("contact.form.placeholders.email")}
                                     dir="ltr"
                                     required
+                                    maxLength={LIMITS.email}
+                                    autoComplete="email"
                                 />
                             </div>
                         </div>
@@ -114,8 +175,14 @@ export default function Contact() {
                                     type="tel"
                                     value={form.phone}
                                     onChange={onChange}
+                                    onKeyDown={onPhoneKeyDown}
+                                    onPaste={onPhonePaste}
                                     placeholder={t("contact.form.placeholders.phone")}
                                     dir="ltr"
+                                    inputMode="numeric"
+                                    pattern="^09\d{8}$"
+                                    maxLength={10}
+                                    autoComplete="tel"
                                 />
                             </div>
 
@@ -129,6 +196,7 @@ export default function Contact() {
                                     onChange={onChange}
                                     placeholder={t("contact.form.placeholders.subject")}
                                     required
+                                    maxLength={LIMITS.subject}
                                 />
                             </div>
                         </div>
@@ -145,20 +213,29 @@ export default function Contact() {
                                 dir={isAr ? "rtl" : "ltr"}
                                 style={{ textAlign: isAr ? "right" : "left" }}
                                 required
+                                maxLength={LIMITS.message}
                             />
+                            <div className="char-counter" aria-live="polite">
+                                {form.message.length}/{LIMITS.message}
+                            </div>
                         </div>
 
                         <div className="cont">
-
                             {status.err && <p className="alert error">{status.err}</p>}
-                            {status.ok && <p className="alert success">{t("contact.alerts.success")}</p>}
+                            {status.ok && (
+                                <p className="alert success">{t("contact.alerts.success")}</p>
+                            )}
 
-                            <button type="submit" className="Contact-btn btn-primary" disabled={submitting}>
-                                {submitting ? t("contact.form.sending") : t("contact.form.send")}
+                            <button
+                                type="submit"
+                                className="Contact-btn btn-primary"
+                                disabled={submitting}
+                            >
+                                {submitting
+                                    ? t("contact.form.sending")
+                                    : t("contact.form.send")}
                             </button>
-
                         </div>
-
                     </form>
 
                     {/* Side info */}
@@ -172,14 +249,22 @@ export default function Contact() {
                                 </li>
                                 <li>
                                     <strong>{t("contact.info.phone")}:</strong>{" "}
-                                    <a href="tel:+963994080102" dir="ltr">+963 994 080 102</a>
+                                    <a href="tel:+963994080102" dir="ltr">
+                                        +963 994 080 102
+                                    </a>
                                 </li>
                                 <li>
                                     <strong>{t("contact.info.social")}:</strong>
                                     <span className="social">
-                                        <a href="#" aria-label="Facebook">Facebook</a>
-                                        <a href="#" aria-label="Instagram">Instagram</a>
-                                        <a href="#" aria-label="Telegram">Telegram</a>
+                                        <a href="#" aria-label="Facebook">
+                                            Facebook
+                                        </a>
+                                        <a href="#" aria-label="Instagram">
+                                            Instagram
+                                        </a>
+                                        <a href="#" aria-label="Telegram">
+                                            Telegram
+                                        </a>
                                     </span>
                                 </li>
                             </ul>
@@ -200,7 +285,6 @@ export default function Contact() {
                     </aside>
                 </section>
                 <BackHomeButton />
-
             </main>
         </>
     );
