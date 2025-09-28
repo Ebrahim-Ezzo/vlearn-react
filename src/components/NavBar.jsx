@@ -62,12 +62,12 @@ export default function NavBar() {
           <HashLink smooth to="/#features" onClick={() => setOpen(false)}>{t("features")}</HashLink>
           <HashLink smooth to="/#downloads" onClick={() => setOpen(false)}>{t("downloads")}</HashLink>
 
-          <div className="vnav__account">
+          {/* <div className="vnav__account">
             <Link to="/login" className="vnav__btn-account">
               <FaUser className="vnav__icon-user" size={16} />
               <span>{t("navbar_002")}</span>
             </Link>
-          </div>
+          </div> */}
         </nav>
 
         <div className="vnav__utils">

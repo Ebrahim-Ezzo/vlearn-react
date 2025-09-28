@@ -1,8 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
-// import MinimalTopBar from "../components/MinimalTopBar";
 import BackHomeButton from "./BackHomeButton";
 import "./TermsConditions.css";
+import WhatsAppButton from "../components/WhatsAppButton";
+
 export default function TermsConditions() {
     const { t } = useTranslation();
 
@@ -12,8 +13,6 @@ export default function TermsConditions() {
 
     return (
         <>
-            {/* <MinimalTopBar /> */}
-
             <main className="terms-page" aria-labelledby="terms-title">
                 <header className="terms-header">
                     <h1 id="terms-title">{t("termsconditions_001")}</h1>
@@ -25,22 +24,18 @@ export default function TermsConditions() {
                 </header>
 
                 <article className="terms-content">
-                    {/* 1) تعريف بالتطبيق وطريقة عمله */}
                     <h2>{t("termsconditions_005")}</h2>
                     <p>{t("termsconditions_006")}</p>
 
-                    {/* 2) الجهة المسؤولة عن التطبيق */}
                     <h2>{t("termsconditions_007")}</h2>
                     <p>{t("termsconditions_008")}</p>
 
-                    {/* 3) الفئات المستهدفة */}
                     <h2>{t("termsconditions_009")}</h2>
                     <ul>
                         <li>{t("termsconditions_010")}</li>
                         <li>{t("termsconditions_011")}</li>
                     </ul>
 
-                    {/* 4) مكونات المنصة */}
                     <h2>{t("termsconditions_012")}</h2>
                     <ul>
                         <li>{t("termsconditions_013")}</li>
@@ -48,7 +43,6 @@ export default function TermsConditions() {
                         <li>{t("termsconditions_015")}</li>
                     </ul>
 
-                    {/* 5) هيكلية التطبيق */}
                     <h2>{t("termsconditions_016")}</h2>
                     <ul>
                         <li>
@@ -65,11 +59,9 @@ export default function TermsConditions() {
                         </li>
                     </ul>
 
-                    {/* 6) خدمات التطبيق */}
                     <h2>{t("termsconditions_021")}</h2>
                     <p>{t("termsconditions_022")}</p>
 
-                    {/* 7) حساب المستخدم على المنصة */}
                     <h2>{t("termsconditions_023")}</h2>
                     <ul>
                         <li>{t("termsconditions_024")}</li>
@@ -79,7 +71,6 @@ export default function TermsConditions() {
                         <li>{t("termsconditions_028")}</li>
                     </ul>
 
-                    {/* 8) آلية تقديم الخدمة */}
                     <h2>{t("termsconditions_029")}</h2>
                     <p><strong>{t("termsconditions_030")}</strong></p>
                     <ul>
@@ -94,7 +85,6 @@ export default function TermsConditions() {
                         <li>{t("termsconditions_037")}</li>
                     </ul>
 
-                    {/* 9) الاشتراكات */}
                     <h2>{t("termsconditions_038")}</h2>
                     <ul>
                         <li>{t("termsconditions_039")}</li>
@@ -105,7 +95,6 @@ export default function TermsConditions() {
                         <li>{t("termsconditions_044")}</li>
                     </ul>
 
-                    {/* 10) دفع الاشتراكات */}
                     <h2>{t("termsconditions_045")}</h2>
                     <ul>
                         <li>{t("termsconditions_046")}</li>
@@ -114,23 +103,19 @@ export default function TermsConditions() {
                         <li>{t("termsconditions_049")}</li>
                     </ul>
 
-                    {/* 11) منصة VLearn ديناميكية */}
                     <h2>{t("termsconditions_050")}</h2>
                     <ul>
                         <li>{t("termsconditions_051")}</li>
                         <li>{t("termsconditions_052")}</li>
                     </ul>
 
-                    {/* 12) الشكاوى والمقترحات */}
                     <h2>{t("termsconditions_053")}</h2>
                     <p>{t("termsconditions_054")}</p>
-
-                    {/* 13) التعديلات */}
                     <h2>{t("termsconditions_055")}</h2>
                     <p>{t("termsconditions_056")}</p>
                 </article>
                 <BackHomeButton />
-
+                <WhatsAppButton />
             </main>
         </>
     );

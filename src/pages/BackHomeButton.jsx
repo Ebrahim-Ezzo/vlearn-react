@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import "./backHomeButton.css"; // تأكد الاسم تماماً
+import "./backHomeButton.css";
 
 export default function BackHomeButton() {
     const { t } = useTranslation();
@@ -9,7 +9,6 @@ export default function BackHomeButton() {
             <Link
                 to="/"
                 className="back_home_btn"
-                // ستايل بسيط كـ fallback لو ملف CSS ما انقرأ
                 style={{ display: "inline-block" }}
             >
                 {t("back_home", "العودة للرئيسية")}

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./DeleteAccount.css";
 import BackHomeButton from "./BackHomeButton";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 const SITE_KEY =
     import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeaxtQrAAAAAG_PiEPGK168eT5ZOl57h5yug1C-";
@@ -156,8 +157,8 @@ export default function DeleteAccount() {
                     </div>
                 </div>
             )}
-
             <BackHomeButton />
+            <WhatsAppButton />
         </section>
     );
 }

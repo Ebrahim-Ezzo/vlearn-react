@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "../styles/features.css";
 
 const METRICS = [
@@ -20,14 +20,53 @@ export default function Features() {
     const { t } = useTranslation();
     const metrics = METRICS.map(m => ({ ...m, label: t(m.labelKey) }));
     const cards = CARDS.map(c => ({ ...c, title: t(c.titleKey), desc: t(c.descKey) }));
-    const [idx, setIdx] = useState(0);
-    const n = cards.length;
 
+    // --- إعدادات السلايدر ---
+    const n = cards.length;
+    // مصفوفة ممتدة: [آخر] + الأصلية + [أول]
+    const extended = [cards[n - 1], ...cards, cards[0]];
+
+    // vIdx يبدأ من 1 = أول سلايد حقيقي ضمن extended
+    const [vIdx, setVIdx] = useState(1);
+    const [anim, setAnim] = useState(true); // تحكم بالtransition
+    const realIdx = (vIdx - 1 + n) % n;     // لمزامنة الدوتس
+
+    // --- أوتو بلاي كل 2 ثانية ---
+    useEffect(() => {
+        const id = setInterval(() => setVIdx(p => p + 1), 2000);
+        return () => clearInterval(id);
+    }, [n]);
+
+    // --- سوايب موبايل ---
     const startX = useRef(0), dx = useRef(0);
     const onTouchStart = (e) => { startX.current = e.touches[0].clientX; dx.current = 0; };
     const onTouchMove = (e) => { dx.current = e.touches[0].clientX - startX.current; };
     const onTouchEnd = () => {
-        if (Math.abs(dx.current) > 50) setIdx(p => (dx.current < 0 ? (p + 1) % n : (p - 1 + n) % n));
+        if (Math.abs(dx.current) > 50) setVIdx(p => p + (dx.current < 0 ? 1 : -1));
+    };
+
+    // --- قفزة بدون أنيميشن عند الوصول للـclones ---
+    const jumpWithoutAnim = (to) => {
+        // عطّل الترانزيشن، غيّر الموضع مباشرة، رجّع الترانزيشن بعد فريمين (double RAF)
+        setAnim(false);
+        setVIdx(to);
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => setAnim(true));
+        });
+    };
+
+    // --- نحصر transitionend على التراك فقط ووقت وجود transition فعّال ---
+    const onTransitionEnd = (e) => {
+        if (e.target !== e.currentTarget) return; // تجاهل أحداث من عناصر الأبناء (صور..)
+        if (!anim) return;                        // لو الترانزيشن مطفي، ما نعمل شي
+
+        if (vIdx === 0) {
+            // قبل أول حقيقي (clone الأخير) → اقفز لآخر حقيقي
+            jumpWithoutAnim(n);
+        } else if (vIdx === n + 1) {
+            // بعد آخر حقيقي (clone الأول) → اقفز لأول حقيقي
+            jumpWithoutAnim(1);
+        }
     };
 
     return (
@@ -59,10 +98,13 @@ export default function Features() {
                     >
                         <ul
                             className="feat_track"
-                            style={{ transform: `translate3d(-${idx * 100}%, 0, 0)` }}
-
+                            onTransitionEnd={onTransitionEnd}
+                            style={{
+                                transform: `translate3d(-${vIdx * 100}%, 0, 0)`,
+                                transition: anim ? "transform 0.4s ease" : "none",
+                            }}
                         >
-                            {cards.map((c, i) => (
+                            {extended.map((c, i) => (
                                 <li key={i} className="feat_slide">
                                     <div className="card">
                                         <div className="card_media">
@@ -75,12 +117,13 @@ export default function Features() {
                             ))}
                         </ul>
                     </div>
+
                     <div className="feat_dots" role="tablist" aria-label={t("features_002")}>
                         {cards.map((_, i) => (
                             <button
                                 key={i}
-                                className={`dot ${idx === i ? "is-active" : ""}`}
-                                onClick={() => setIdx(i)}
+                                className={`dot ${realIdx === i ? "is-active" : ""}`}
+                                onClick={() => setVIdx(i + 1)} // +1 لأننا ضمن extended
                             />
                         ))}
                     </div>

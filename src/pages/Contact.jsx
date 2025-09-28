@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import BackHomeButton from "./BackHomeButton";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 import "./contact.css";
 
@@ -9,7 +10,6 @@ export default function Contact() {
     const { t, i18n } = useTranslation();
     const isAr = i18n.language?.startsWith("ar");
 
-    // حدود الحقول
     const LIMITS = {
         name: 60,
         email: 100,
@@ -285,6 +285,7 @@ export default function Contact() {
                     </aside>
                 </section>
                 <BackHomeButton />
+                <WhatsAppButton />
             </main>
         </>
     );

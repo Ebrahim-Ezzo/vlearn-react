@@ -89,3 +89,13 @@ html[lang="en"]
   ) {
   direction: ltr;
 }
+
+::selection {
+  background: var(--primary);
+  color: var(--rev-text);
+}
+
+::-moz-selection {
+  background: var(--primary);
+  color: #fff;
+}
