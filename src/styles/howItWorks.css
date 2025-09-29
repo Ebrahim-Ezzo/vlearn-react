@@ -15,8 +15,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: url("/assets/bg/vlearn-bg.svg") no-repeat right 20% top 80px / 70%;
-  opacity: 0.08;
+  background: url("/assets/bg/vlearn-bg.svg") no-repeat right 20% top 0px / 60%;
+  opacity: 0.06;
   pointer-events: none;
   z-index: 0;
 }

@@ -1,6 +1,22 @@
 .appintro {
   background-color: #dddddd2b;
   padding: 20px 16px;
+  position: relative;
+}
+
+.appintro > * {
+  position: relative;
+  z-index: 1;
+}
+.appintro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url(/assets/bg/vlearn-bg.svg) no-repeat right 170% top -100px /
+    150%;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .appintro_container {

@@ -14,7 +14,6 @@ export default function Footer() {
 
     return (
         <footer className="footer" id="footer" dir="auto">
-            {/* موجات متحركة ملونة في خلفية الفوتر */}
             <div className="footer_waves" aria-hidden="true">
                 <span className="wave w1"></span>
                 <span className="wave w2"></span>

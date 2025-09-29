@@ -13,12 +13,12 @@
   z-index: 1;
 }
 .hero::before {
+  background: url(/assets/bg/vlearn-bg.svg) no-repeat right 200% top 100% / 115%;
+  pointer-events: none;
+  opacity: 0.06;
   content: "";
   position: absolute;
   inset: 0;
-  background: url("/assets/bg/vlearn-bg.svg") no-repeat right 20% top 80px / 70%;
-  opacity: 0.08;
-  pointer-events: none;
   z-index: 0;
 }
 
@@ -91,7 +91,9 @@
     color 0.2s ease,
     transform 0.15s ease;
 }
-.tab:focus { outline: none; }
+.tab:focus {
+  outline: none;
+}
 .tab.active {
   background: var(--secondary);
   color: var(--rev-text);
@@ -154,14 +156,19 @@ a.btn_primary {
 a.btn_primary:hover,
 a.btn_primary:focus {
   color: var(--rev-text);
-  background-image: linear-gradient(to right, var(--new) 0%, var(--primary) 100%);
+  background-image: linear-gradient(
+    to right,
+    var(--new) 0%,
+    var(--primary) 100%
+  );
   transform: translateY(-2px);
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
   outline: none;
 }
 
-/* imgs slider */
-.hero_image { margin-top: 20px; }
+.hero_image {
+  margin-top: 20px;
+}
 
 .phone_frame {
   width: 70vw;
@@ -192,14 +199,24 @@ a.btn_primary:focus {
   height: 28px;
 }
 .hero_swiper .swiper-button-next:after,
-.hero_swiper .swiper-button-prev:after { font-size: 18px; }
+.hero_swiper .swiper-button-prev:after {
+  font-size: 18px;
+}
 
 /* Tablet */
 @media (min-width: 768px) {
-  .hero_title { font-size: 48px; }
+  .hero_title {
+    font-size: 48px;
+  }
 
-  .hero_paragraph { font-size: 18px; max-width: 400px; }
-  .tab_text { font-size: 18px; max-width: 400px; }
+  .hero_paragraph {
+    font-size: 18px;
+    max-width: 400px;
+  }
+  .tab_text {
+    font-size: 18px;
+    max-width: 400px;
+  }
 
   .btn_primary,
   a.btn_primary {
@@ -208,12 +225,19 @@ a.btn_primary:focus {
     font-size: 18px;
   }
 
-  .phone_frame { width: 70vw; max-width: 300px; }
+  .phone_frame {
+    width: 70vw;
+    max-width: 300px;
+    height: 630px;
+  }
 }
 
 /* Desktop */
 @media (min-width: 1024px) {
-  .hero_container { grid-template-columns: 1fr 1fr; gap: 48px; }
+  .hero_container {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
 
   .phone_frame {
     border: solid 4px var(--primary);
@@ -221,5 +245,7 @@ a.btn_primary:focus {
     max-width: 320px;
     aspect-ratio: 9 / 16;
   }
-  .hero_image { padding-top: 45px; }
+  .hero_image {
+    padding-top: 45px;
+  }
 }
