@@ -8,7 +8,7 @@ export default function WhatsAppButton() {
 
     return (
         <a
-            className="wa-fab-left"
+            className="wa-fab"
             href={href}
             target="_blank"
             rel="noopener noreferrer"

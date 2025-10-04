@@ -37,7 +37,7 @@ export default function Footer() {
                 </ul>
 
                 <p className="footer_copy">
-                    {t(`footer_rights`)} {`©`} {` ${year} - `}
+                    {t("footer_rights")} © {year} -{" "}
                     <a
                         href="https://vroad-me.com/"
                         target="_blank"
@@ -53,7 +53,20 @@ export default function Footer() {
                     className="footer_topbtn"
                     aria-label="Back to top"
                 >
-                    ↑
+                    <svg
+                        className="icon-chevron-up"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M6 14l6-6 6 6"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.25"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
                 </a>
             </div>
         </footer>

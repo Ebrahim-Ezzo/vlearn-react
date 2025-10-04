@@ -148,6 +148,12 @@
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
 }
 
+.footer_topbtn .icon-chevron-up {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 820px) {
   .footer_container {

@@ -6,6 +6,7 @@
     rgba(0, 0, 0, 0.04) 50%,
     rgba(246, 246, 246, 0) 100%
   );
+  position: relative;
 }
 
 :root {
@@ -15,6 +16,21 @@
   --slide-h-max: 480px;
   --arrow-size: 36px;
   --dot-size: 20px;
+}
+
+.features > * {
+  position: relative;
+  z-index: 1;
+}
+.features::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/assets/bg/vlearn-bg.svg") no-repeat right 780px top -650px /
+    150%;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .features_container {
@@ -82,8 +98,7 @@
   transform: scale(1);
   transition:
     transform var(--slide-dur) ease,
-    /* opacity var(--slide-dur) ease, */
-    box-shadow var(--slide-dur) ease,
+    /* opacity var(--slide-dur) ease, */ box-shadow var(--slide-dur) ease,
     filter var(--slide-dur) ease;
   overflow: hidden;
 }
@@ -330,7 +345,6 @@ html[lang="ar"] .metric_item::before,
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   .metric_item.is-active {
     transform: none;
     box-shadow: inset 0 0 0 2px var(--secondary);
