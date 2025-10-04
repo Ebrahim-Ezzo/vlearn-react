@@ -57,6 +57,16 @@
   font-size: 14.6px;
 }
 
+.field .input {
+  width: 175px;
+  height: 30px;
+  outline: none;
+  border: none;
+}
+.field .input:focus {
+  outline: 1px solid red;
+}
+
 .hintput {
   width: 150px;
   height: 46px;
@@ -126,10 +136,10 @@
 }
 
 .btn-danger {
-  color: white;
+  color: red;
   border: none;
   outline: none;
-  background-color: red;
+  background-color: white;
   border: 1.5px solid var(--primary);
   display: flex;
   justify-content: center;
@@ -137,8 +147,8 @@
 }
 
 .btn-ghost {
-  background-color: white;
-  color: red;
+  background-color: red;
+  color: white;
   border: 1px solid red;
 }
 

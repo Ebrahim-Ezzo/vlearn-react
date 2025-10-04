@@ -21,14 +21,14 @@ export default function DownloadInstall() {
 
                     <div className="dl_cta">
                         <a
-                            href=""
+                            href="https://play.google.com/store/apps/details?id=com.vroad.vlearn"
                             className="store_btn play"
                         >
                             <FaGooglePlay aria-hidden="true" />
                             <span>Google Play</span>
                         </a>
                         <a
-                            href=""
+                            href="https://apps.apple.com/au/app/vlearn/id6737718962"
                             className="store_btn ios"
                         >
                             <FaApple aria-hidden="true" />

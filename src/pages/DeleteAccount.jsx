@@ -9,11 +9,29 @@ import WhatsAppButton from "../components/WhatsAppButton";
 const SITE_KEY =
     import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeaxtQrAAAAAG_PiEPGK168eT5ZOl57h5yug1C-";
 
+const PREFIX = "+963";
+const PREFIX_LEN = PREFIX.length;
+
+function normalizeSyPhone(raw) {
+    const s = (raw || "").replace(/\s+/g, "");
+    if (s.startsWith(PREFIX)) {
+        return PREFIX + s.slice(PREFIX_LEN).replace(/\D/g, "").slice(0, 9);
+    }
+    if (s.startsWith("+") && !s.startsWith(PREFIX)) {
+        return PREFIX;
+    }
+    let digits = s.replace(/\D/g, "");
+    if (digits.startsWith("00963")) digits = digits.slice(5);
+    else if (digits.startsWith("963")) digits = digits.slice(3);
+    else if (digits.startsWith("09")) digits = digits.slice(1);
+    return PREFIX + digits.slice(0, 9);
+}
+
 export default function DeleteAccount() {
     const { t, i18n } = useTranslation();
     const isArabic = i18n.language.startsWith("ar");
 
-    const [phone, setPhone] = useState("09");
+    const [phone, setPhone] = useState(PREFIX);
     const [agree, setAgree] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [touched, setTouched] = useState(false);
@@ -23,7 +41,7 @@ export default function DeleteAccount() {
         document.title = t("deleteaccount_016");
     }, [t]);
 
-    const phoneRegex = useMemo(() => /^(?:\+\d{9,12}|0\d{9,12})$/, []);
+    const phoneRegex = useMemo(() => /^\+963\d{9}$/, []);
     const isPhoneValid = phoneRegex.test(phone.trim());
     const canProceed = isPhoneValid && agree && captchaOk;
 
@@ -49,6 +67,32 @@ export default function DeleteAccount() {
         );
         window.location.href = `mailto:${support}?subject=${subject}&body=${body}`;
         setShowModal(false);
+    };
+
+    const guardPrefixKeydown = (e) => {
+        const input = e.target;
+        const start = input.selectionStart ?? 0;
+        const end = input.selectionEnd ?? start;
+        const touchesPrefix =
+            (e.key === "Backspace" && start <= PREFIX_LEN) ||
+            (e.key === "Delete" && start < PREFIX_LEN) ||
+            (start < PREFIX_LEN && end > 0);
+        if (touchesPrefix) {
+            e.preventDefault();
+            requestAnimationFrame(() => {
+                input.setSelectionRange(PREFIX_LEN, PREFIX_LEN);
+            });
+        }
+    };
+
+    const handlePhoneChange = (e) => {
+        setPhone(normalizeSyPhone(e.target.value));
+    };
+
+    const handlePaste = (e) => {
+        e.preventDefault();
+        const pasted = (e.clipboardData?.getData("text") || "").trim();
+        setPhone(normalizeSyPhone(pasted));
     };
 
     return (
@@ -77,23 +121,13 @@ export default function DeleteAccount() {
                         className="input"
                         inputMode="tel"
                         dir="ltr"
-                        placeholder=""
+                        placeholder="+963XXXXXXXXX"
                         value={phone}
-                        onChange={(e) => {
-                            let val = e.target.value;
-
-                            if (!val.startsWith("09")) {
-                                val = "09" + val.replace(/^0+/, "");
-                            }
-                            val = val.replace(/[^\d]/g, "");
-                            if (val.length > 10) {
-                                val = val.slice(0, 10);
-                            }
-
-                            setPhone(val);
-                        }}
+                        onChange={handlePhoneChange}
+                        onPaste={handlePaste}
+                        onKeyDown={guardPrefixKeydown}
                         onBlur={() => setTouched(true)}
-                        aria-describedby="phone-hint phone-error"
+                        maxLength={PREFIX_LEN + 9}
                     />
                     <div id="phone-hint" className="hint">
                         {t("deleteaccount_007")}
@@ -119,18 +153,14 @@ export default function DeleteAccount() {
 
                 <div className="captcha">
                     <ReCAPTCHA
-                        sitekey="6LeaxtQrAAAAAG_PiEPGK168eT5ZOl57h5yug1C-"
+                        sitekey={SITE_KEY}
                         onChange={(token) => setCaptchaOk(!!token)}
                         onExpired={() => setCaptchaOk(false)}
                         onError={() => setCaptchaOk(false)}
                     />
                 </div>
 
-                <button
-                    type="submit"
-                    className="btn btn-danger"
-                    disabled={!canProceed}
-                >
+                <button type="submit" className="btn btn-danger" disabled={!canProceed}>
                     {t("deleteaccount_011")}
                 </button>
             </form>
