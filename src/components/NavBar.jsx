@@ -62,12 +62,6 @@ export default function NavBar() {
           <HashLink smooth to="/#features" onClick={() => setOpen(false)}>{t("features")}</HashLink>
           <HashLink smooth to="/#downloads" onClick={() => setOpen(false)}>{t("downloads")}</HashLink>
 
-          {/* <div className="vnav__account">
-            <Link to="/login" className="vnav__btn-account">
-              <FaUser className="vnav__icon-user" size={16} />
-              <span>{t("navbar_002")}</span>
-            </Link>
-          </div> */}
         </nav>
 
         <div className="vnav__utils">
@@ -86,9 +80,9 @@ export default function NavBar() {
           <div className="vnav__lang"><LanguageToggle /></div>
 
           <div className="vnav__social">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebook /></a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
-            <a href="https://wa.me/xxxxxxxx" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><FaWhatsapp /></a>
+            <a href="https://www.facebook.com/vlearn.sy?rdid=9IxQn09V4O8fIIc7&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BoSoMzUGg%2F#" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebook /></a>
+            <a href="https://www.instagram.com/vlearn.sy?igsh=MXZ1ejdhYzJmMXF3Ng%3D%3D" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
+            <a href="https://api.whatsapp.com/send/?phone=%2B963994080102&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><FaWhatsapp /></a>
           </div>
         </div>
       </div>
