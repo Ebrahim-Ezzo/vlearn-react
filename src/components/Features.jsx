@@ -69,7 +69,7 @@ export default function Features() {
     const [vIdx, setVIdx] = useState(1);
     const [anim, setAnim] = useState(true);
     const [sliding, setSliding] = useState(false);
-    const realIdx = (vIdx - 1 + n) % n;          // 0..5
+    const realIdx = (vIdx - 1 + n) % n;          // 0..(n-1)
     const activeMetricIdx = realIdx % METRICS.length;
 
     const preloadReady = useImagePreloader(cards.map((c) => c.img));
@@ -91,7 +91,9 @@ export default function Features() {
     const startX = useRef(0), dx = useRef(0);
     const onTouchStart = (e) => { startX.current = e.touches[0].clientX; dx.current = 0; };
     const onTouchMove = (e) => { dx.current = e.touches[0].clientX - startX.current; };
-    const onTouchEnd = () => { if (Math.abs(dx.current) > 50) setVIdx((p) => p + (dx.current < 0 ? 1 : -1)); };
+    const onTouchEnd = () => {
+        if (Math.abs(dx.current) > 50) setVIdx((p) => p + (dx.current < 0 ? 1 : -1));
+    };
 
     const jumpWithoutAnim = (to) => {
         setAnim(false);
@@ -131,6 +133,15 @@ export default function Features() {
 
     const isNear = (i) => i === vIdx || i === vIdx - 1 || i === vIdx + 1;
 
+    const handleMetricEnter = (i) => {
+        stopAutoplay();
+        setVIdx(i + 1);
+    };
+    const handleMetricLeave = () => {
+        startAutoplay();
+    };
+    /* ▲▲ جديد */
+
     return (
         <section id="features" className="features">
             <div className="features_container">
@@ -147,6 +158,10 @@ export default function Features() {
                                 key={i}
                                 className={`metric_item ${activeMetricIdx === i ? "is-active" : ""}`}
                                 aria-current={activeMetricIdx === i ? "true" : "false"}
+                                onMouseEnter={() => handleMetricEnter(i)}
+                                onMouseLeave={handleMetricLeave}
+                                onFocus={() => handleMetricEnter(i)}
+                                onBlur={handleMetricLeave}
                             >
                                 <div className="metric_value">{m.value}</div>
                                 <div className="metric_label">{t(m.labelKey)}</div>
@@ -168,7 +183,7 @@ export default function Features() {
                                 onTransitionEnd={onTransitionEnd}
                                 style={{
                                     transform: `translate3d(-${vIdx * 100}%, 0, 0)`,
-                                    transition: anim ? "transform var(--slide-dur, 0.4s) ease" : "none",
+                                    transition: anim ? "transform var(--slide-dur, 0.6s) ease" : "none",
                                 }}
                             >
                                 {extended.map((c, i) => (

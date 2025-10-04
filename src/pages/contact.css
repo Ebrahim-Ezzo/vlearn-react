@@ -208,6 +208,7 @@
 
 .contact-info a {
   text-decoration: none;
+  margin-inline: 5px;
 }
 .contact-info a:hover {
   text-decoration: underline;

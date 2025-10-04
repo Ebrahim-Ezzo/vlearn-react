@@ -256,14 +256,14 @@ export default function Contact() {
                                 <li>
                                     <strong>{t("contact.info.social")}:</strong>
                                     <span className="social">
-                                        <a href="#" aria-label="Facebook">
+                                        <a href="https://www.facebook.com/vlearn.sy?rdid=bKjvfyaZyrG6goZm&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BoSoMzUGg%2F#" aria-label="Facebook">
                                             Facebook
                                         </a>
-                                        <a href="#" aria-label="Instagram">
+                                        <a href="https://www.instagram.com/vlearn.sy?igsh=MXZ1ejdhYzJmMXF3Ng%3D%3D" aria-label="Instagram">
                                             Instagram
                                         </a>
-                                        <a href="#" aria-label="Telegram">
-                                            Telegram
+                                        <a href="https://api.whatsapp.com/send/?phone=%2B963994080102&text&type=phone_number&app_absent=0" aria-label="WhatsApp">
+                                            WhatsApp
                                         </a>
                                     </span>
                                 </li>
