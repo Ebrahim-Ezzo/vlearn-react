@@ -199,7 +199,7 @@
     "form": {
       "full_name": "Full Name",
       "email": "Email",
-      "phone_optional": "Phone (optional)",
+      "phone_optional": "Phone",
       "subject": "Subject",
       "message": "Message",
       "placeholders": {
@@ -234,5 +234,9 @@
       "map_placeholder": "Map placeholder"
     }
   },
-  "back_home": "Back to Home"
+  "back_home": "Back to Home",
+  "contact.validation.phone_required": "Please enter your number",
+  "contact.validation.class_required": "Please enter your class",
+  "contact.form.placeholders.class": "enter your class",
+  "contact.form.class":"Class"
 }

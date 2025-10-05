@@ -1,50 +1,45 @@
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import BackHomeButton from "./BackHomeButton";
 import WhatsAppButton from "../components/WhatsAppButton";
 
 import "./contact.css";
 
+const LIMITS = {
+    name: 60,
+    class: 100,
+    subject: 40,
+    message: 1000,
+};
+
 export default function Contact() {
     const { t, i18n } = useTranslation();
     const isAr = i18n.language?.startsWith("ar");
 
-    const LIMITS = {
-        name: 60,
-        email: 100,
-        subject: 40,
-        message: 1000,
-    };
-
     const [form, setForm] = useState({
         name: "",
-        email: "",
+        class: "",
         phone: "09",
         subject: "",
         message: "",
-        agree: false,
     });
     const [status, setStatus] = useState({ ok: false, err: "" });
     const [submitting, setSubmitting] = useState(false);
 
     const onChange = (e) => {
-        const { name, type, value, checked, maxLength } = e.target;
+        const { name, value, maxLength } = e.target;
 
         if (name === "phone") {
             let digits = value.replace(/\D+/g, "");
-
             if (!digits.startsWith("09")) {
                 digits = "09" + digits.replace(/^0+/, "");
             }
-
             if (digits.length > 10) digits = digits.slice(0, 10);
-
             setForm((prev) => ({ ...prev, phone: digits }));
             return;
         }
 
-        let next = type === "checkbox" ? checked : value;
+        let next = value;
         if (typeof next === "string" && maxLength && next.length > maxLength) {
             next = next.slice(0, maxLength);
         }
@@ -73,16 +68,23 @@ export default function Contact() {
 
     const validate = () => {
         if (!form.name.trim()) return t("contact.validation.name_required");
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-            return t("contact.validation.email_invalid");
-        if (!form.subject.trim()) return t("contact.validation.subject_required");
-        if (!form.message.trim() || form.message.trim().length < 10)
-            return t("contact.validation.message_min");
-        if (!form.agree) return t("contact.validation.agree_required");
 
-        if (form.phone && form.phone !== "09" && !/^09\d{8}$/.test(form.phone)) {
+        // class is required
+        if (!form.class.trim()) return t("contact.validation.class_required");
+
+        // phone required and format
+        const phoneRaw = form.phone.trim();
+        if (!phoneRaw || phoneRaw === "09") {
+            return t("contact.validation.phone_required");
+        }
+        if (!/^09\d{8}$/.test(phoneRaw)) {
             return t("contact.validation.phone_invalid");
         }
+
+        if (!form.subject.trim()) return t("contact.validation.subject_required");
+
+        const msg = form.message.trim();
+        if (!msg || msg.length < 10) return t("contact.validation.message_min");
 
         return "";
     };
@@ -101,11 +103,10 @@ export default function Contact() {
             setStatus({ ok: true, err: "" });
             setForm({
                 name: "",
-                email: "",
+                class: "",
                 phone: "09",
                 subject: "",
                 message: "",
-                agree: false,
             });
         } catch {
             setStatus({ ok: false, err: t("contact.alerts.error_generic") });
@@ -114,16 +115,8 @@ export default function Contact() {
         }
     };
 
-    const agreeFull = t("contact.form.agree");
-    const privacyText = t("footer_003");
-    const idx = agreeFull.indexOf(privacyText);
-    const agreePrefix = idx >= 0 ? agreeFull.slice(0, idx) : "";
-    const agreeSuffix = idx >= 0 ? agreeFull.slice(idx + privacyText.length) : "";
-
     return (
         <>
-            {/* <MinimalTopBar /> */}
-
             <main className="contact-page" dir={isAr ? "rtl" : "ltr"}>
                 <section className="contact-hero">
                     <h1>{t("contact.title")}</h1>
@@ -131,7 +124,6 @@ export default function Contact() {
                 </section>
 
                 <section className="contact-grid">
-                    {/* Form */}
                     <form className="contact-form" onSubmit={onSubmit} noValidate>
                         <div className="row">
                             <div className="field">
@@ -150,18 +142,17 @@ export default function Contact() {
                             </div>
 
                             <div className="field">
-                                <label htmlFor="email">{t("contact.form.email")}</label>
+                                <label htmlFor="class">{t("contact.form.class")}</label>
                                 <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    value={form.email}
+                                    id="class"
+                                    name="class"
+                                    type="text"
+                                    value={form.class}
                                     onChange={onChange}
-                                    placeholder={t("contact.form.placeholders.email")}
-                                    dir="ltr"
+                                    placeholder={t("contact.form.placeholders.class")}
                                     required
-                                    maxLength={LIMITS.email}
-                                    autoComplete="email"
+                                    maxLength={LIMITS.class}
+                                    autoComplete="off"
                                 />
                             </div>
                         </div>
@@ -180,9 +171,10 @@ export default function Contact() {
                                     placeholder={t("contact.form.placeholders.phone")}
                                     dir="ltr"
                                     inputMode="numeric"
-                                    pattern="^09\d{8}$"
+                                    pattern="^09\\d{8}$"
                                     maxLength={10}
                                     autoComplete="tel"
+                                    required
                                 />
                             </div>
 
@@ -221,48 +213,57 @@ export default function Contact() {
                         </div>
 
                         <div className="cont">
-                            {status.err && <p className="alert error">{status.err}</p>}
+                            {status.err && (
+                                <p className="alert error" role="alert">
+                                    {status.err}
+                                </p>
+                            )}
                             {status.ok && (
-                                <p className="alert success">{t("contact.alerts.success")}</p>
+                                <p className="alert success" role="status">
+                                    {t("contact.alerts.success")}
+                                </p>
                             )}
 
                             <button
                                 type="submit"
                                 className="Contact-btn btn-primary"
                                 disabled={submitting}
+                                aria-busy={submitting}
                             >
-                                {submitting
-                                    ? t("contact.form.sending")
-                                    : t("contact.form.send")}
+                                {submitting ? t("contact.form.sending") : t("contact.form.send")}
                             </button>
                         </div>
                     </form>
 
-                    {/* Side info */}
                     <aside className="contact-info">
                         <div className="card">
                             <h3>{t("contact.info.title")}</h3>
                             <ul>
                                 <li>
-                                    <strong>{t("contact.info.email")}:</strong>{" "}
-                                    <a href="mailto:support@vlearn.com">support@vlearn.com</a>
-                                </li>
-                                <li>
-                                    <strong>{t("contact.info.phone")}:</strong>{" "}
+                                    <strong>{t("contact.info.phone")}: </strong>
                                     <a href="tel:+963994080102" dir="ltr">
                                         +963 994 080 102
                                     </a>
                                 </li>
                                 <li>
-                                    <strong>{t("contact.info.social")}:</strong>
+                                    <strong>{t("contact.info.social")}: </strong>
                                     <span className="social">
-                                        <a href="https://www.facebook.com/vlearn.sy?rdid=bKjvfyaZyrG6goZm&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BoSoMzUGg%2F#" aria-label="Facebook">
+                                        <a
+                                            href="https://www.facebook.com/vlearn.sy?rdid=bKjvfyaZyrG6goZm&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BoSoMzUGg%2F#"
+                                            aria-label="Facebook"
+                                        >
                                             Facebook
                                         </a>
-                                        <a href="https://www.instagram.com/vlearn.sy?igsh=MXZ1ejdhYzJmMXF3Ng%3D%3D" aria-label="Instagram">
+                                        <a
+                                            href="https://www.instagram.com/vlearn.sy?igsh=MXZ1ejdhYzJmMXF3Ng%3D%3D"
+                                            aria-label="Instagram"
+                                        >
                                             Instagram
                                         </a>
-                                        <a href="https://api.whatsapp.com/send/?phone=%2B963994080102&text&type=phone_number&app_absent=0" aria-label="WhatsApp">
+                                        <a
+                                            href="https://api.whatsapp.com/send/?phone=%2B963994080102&text&type=phone_number&app_absent=0"
+                                            aria-label="WhatsApp"
+                                        >
                                             WhatsApp
                                         </a>
                                     </span>
