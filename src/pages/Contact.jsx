@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import BackHomeButton from "./BackHomeButton";
 import WhatsAppButton from "../components/WhatsAppButton";
+import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa"; // 👈 إضافة الإمبورت للآيكونات
 
 import "./contact.css";
 
@@ -252,19 +253,19 @@ export default function Contact() {
                                             href="https://www.facebook.com/vlearn.sy?rdid=bKjvfyaZyrG6goZm&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BoSoMzUGg%2F#"
                                             aria-label="Facebook"
                                         >
-                                            Facebook
+                                            <FaFacebookF size={18} />
                                         </a>
                                         <a
                                             href="https://www.instagram.com/vlearn.sy?igsh=MXZ1ejdhYzJmMXF3Ng%3D%3D"
                                             aria-label="Instagram"
                                         >
-                                            Instagram
+                                            <FaInstagram size={18} />
                                         </a>
                                         <a
                                             href="https://api.whatsapp.com/send/?phone=%2B963994080102&text&type=phone_number&app_absent=0"
                                             aria-label="WhatsApp"
                                         >
-                                            WhatsApp
+                                            <FaWhatsapp size={18} />
                                         </a>
                                     </span>
                                 </li>
@@ -285,7 +286,7 @@ export default function Contact() {
                         </div>
                     </aside>
                 </section>
-                <BackHomeButton />
+                {/* <BackHomeButton /> */}
                 <WhatsAppButton />
             </main>
         </>

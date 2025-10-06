@@ -114,7 +114,7 @@ export default function TermsConditions() {
                     <h2>{t("termsconditions_055")}</h2>
                     <p>{t("termsconditions_056")}</p>
                 </article>
-                <BackHomeButton />
+                {/* <BackHomeButton /> */}
                 <WhatsAppButton />
             </main>
         </>

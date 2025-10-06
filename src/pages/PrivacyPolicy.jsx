@@ -52,7 +52,7 @@ export default function PrivacyPolicy() {
                     <h2>{t("privacy_022")}</h2>
                     <p>{t("privacy_023")}</p>
                 </section>
-                <BackHomeButton />
+                {/* <BackHomeButton /> */}
                 <WhatsAppButton />
             </main>
         </>

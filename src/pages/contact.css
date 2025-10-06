@@ -209,7 +209,7 @@
 
 .contact-info li:nth-child(2) {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
 }
 
@@ -222,7 +222,7 @@
 }
 
 /* Social links */
-.social a {
+/* .social a {
   margin-inline-end: 10px;
   font-size: 0.95rem;
   color: #457b9d;
@@ -230,6 +230,11 @@
 
 .social a:hover {
   color: #1d3557;
+} */
+
+.social {
+  display: flex;
+  gap: 10px;
 }
 
 /* Map iframe */

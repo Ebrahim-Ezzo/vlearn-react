@@ -104,7 +104,7 @@ export default function DeleteAccount() {
                     <Link to="/privacy">{t("deleteaccount_003")}</Link>
                     {t("deleteaccount_004")}
                     <Link to="/terms">{t("deleteaccount_005")}</Link>{" "}
-                    {t("deleteaccount_013")}
+                    {t("deleteaccount_313")}
                 </p>
             </header>
 
@@ -187,7 +187,7 @@ export default function DeleteAccount() {
                     </div>
                 </div>
             )}
-            <BackHomeButton />
+            {/* <BackHomeButton /> */}
             <WhatsAppButton />
         </section>
     );

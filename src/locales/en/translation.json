@@ -82,16 +82,17 @@
   "deleteaccount_003": "Privacy Policy",
   "deleteaccount_004": " and ",
   "deleteaccount_005": "Terms & Conditions",
+  "deleteaccount_313": "Your data and benefits will be permanently lost if you delete your account, some data may be kept for a limited period for legal compliance.",
   "deleteaccount_006": "Phone number linked to the account",
   "deleteaccount_007": "Enter your subscription number (+963xxxxxxxxx) ",
   "deleteaccount_008": "Please enter a valid subscription number",
   "deleteaccount_009": "I acknowledge that the deletion process is",
   "deleteaccount_010": " final and irreversible",
-  "deleteaccount_011": "Delete Account",
+  "deleteaccount_011": "Delete Account Request",
   "deleteaccount_012": "Confirm Account Deletion",
-  "deleteaccount_013": "By deleting your account, you may permanently lose your data and benefits, and some data may be retained for a limited period for legal compliance Do you want to continue?",
+  "deleteaccount_013": "Your request will be received first, then our team will reach out to finalize the deletion. Continue?",
   "deleteaccount_014": "Cancel",
-  "deleteaccount_015": "Confirm Deletion",
+  "deleteaccount_015": "Confirm deletion request",
   "deleteaccount_016": "Delete Account — VLearn",
   "deleteaccount_017": "Account Deletion Request",
 
@@ -238,5 +239,5 @@
   "contact.validation.phone_required": "Please enter your number",
   "contact.validation.class_required": "Please enter your class",
   "contact.form.placeholders.class": "enter your class",
-  "contact.form.class":"Class"
+  "contact.form.class": "Class"
 }
