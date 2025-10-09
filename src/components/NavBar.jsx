@@ -1,17 +1,31 @@
+// src/components/NavBar.jsx
 import { useState, useEffect } from "react";
 import "../i18n";
 import "../styles/navbar.css";
-import { FaFacebook, FaInstagram, FaWhatsapp, FaUser } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import ThemeSwitch from "./ThemeSwitch";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LanguageToggle from "./LanguageToggle";
 import { HashLink } from "react-router-hash-link";
+import useContact from "../lib/useContact";
+
+const HARDCODED_INTL = "963994080102";
+
+function buildApiWhatsAppLink(intlDigits) {
+  return `https://api.whatsapp.com/send/?phone=${encodeURIComponent(
+    `+${intlDigits}`
+  )}&text&type=phone_number&app_absent=0`;
+}
 
 export default function NavBar() {
   const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { whatsapp } = useContact();
+
+  const waDigits = whatsapp || HARDCODED_INTL;
+  const waHref = buildApiWhatsAppLink(waDigits);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -61,7 +75,6 @@ export default function NavBar() {
           <HashLink smooth to="/#how" onClick={() => setOpen(false)}>{t("how")}</HashLink>
           <HashLink smooth to="/#features" onClick={() => setOpen(false)}>{t("features")}</HashLink>
           <HashLink smooth to="/#downloads" onClick={() => setOpen(false)}>{t("downloads")}</HashLink>
-
         </nav>
 
         <div className="vnav__utils">
@@ -80,9 +93,30 @@ export default function NavBar() {
           <div className="vnav__lang"><LanguageToggle /></div>
 
           <div className="vnav__social">
-            <a href="https://www.facebook.com/vlearn.sy?rdid=9IxQn09V4O8fIIc7&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BoSoMzUGg%2F#" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebook /></a>
-            <a href="https://www.instagram.com/vlearn.sy?igsh=MXZ1ejdhYzJmMXF3Ng%3D%3D" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
-            <a href="https://api.whatsapp.com/send/?phone=%2B963994080102&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><FaWhatsapp /></a>
+            <a
+              href="https://www.facebook.com/vlearn.sy?rdid=9IxQn09V4O8fIIc7&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BoSoMzUGg%2F#"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <FaFacebook />
+            </a>
+            <a
+              href="https://www.instagram.com/vlearn.sy?igsh=MXZ1ejdhYzJmMXF3Ng%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <FaInstagram />
+            </a>
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+            >
+              <FaWhatsapp />
+            </a>
           </div>
         </div>
       </div>

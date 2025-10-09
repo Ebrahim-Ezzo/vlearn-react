@@ -3,11 +3,9 @@
   margin: 32px auto 96px;
   padding: 80px 16px;
   color: var(--text);
-  background-color: white;
+  background-color: var(--card);
   border-radius: 20px;
   margin-top: 100px;
-  background-color: red;
-  background-color: var(--card);
 }
 
 .terms-header h1 {
@@ -16,21 +14,25 @@
   font-weight: 800;
   letter-spacing: 0.2px;
 }
+
 .terms-header .meta {
   color: #64748b;
   font-size: 13.5px;
   margin-bottom: 10px;
 }
+
 .terms-header p {
   margin: 0 0 10px;
   line-height: 1.9;
   color: var(--text);
 }
+
 .terms-header a {
   color: #2563eb;
   text-decoration: none;
   font-weight: 700;
 }
+
 .terms-header a:hover {
   color: #1e40af;
   text-decoration: underline;
@@ -45,20 +47,26 @@
   background-color: var(--border);
 }
 
+/* Headings within the cleaned content */
 .terms-content h2 {
   margin: 14px 0 8px;
   font-size: 18px;
   font-weight: 800;
 }
+
+/* Paragraphs */
 .terms-content p {
   margin: 0 0 8px;
   color: var(--text);
   line-height: 1.9;
 }
+
+/* Lists */
 .terms-content ul {
   margin: 0 0 10px 0;
   padding: 0 20px 0 0;
 }
+
 .terms-content li {
   margin: 4px 0;
   color: var(--text);
@@ -66,6 +74,7 @@
   text-align: start;
   list-style-position: inside;
 }
+
 .terms-content em {
   font-style: normal;
   color: #475569;
@@ -79,3 +88,35 @@
     padding: 14px;
   }
 }
+
+/* Skeleton loader */
+.skeleton {
+  height: 140px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #eee 25%, #f5f5f5 37%, #eee 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.2s infinite linear;
+  margin: 12px 0;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+/* Clean base for the injected Word HTML */
+.policy-html {
+  line-height: 1.9;
+  direction: rtl;
+  text-align: justify;
+}
+
+/* Ensure no underline leaks from Word exports */
+.terms-content .policy-html u {
+  text-decoration: none !important;
+}
+

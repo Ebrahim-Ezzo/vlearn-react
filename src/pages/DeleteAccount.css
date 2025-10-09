@@ -53,7 +53,6 @@
   display: block;
   font-weight: 700;
   margin: 0 0 8px;
-  /* color: var(--ink); */
   font-size: 14.6px;
 }
 
@@ -75,7 +74,6 @@
   outline: none;
   padding: 0 12px;
   direction: ltr;
-  /* background: var(--bg-soft); */
   transition:
     border-color 0.2s,
     box-shadow 0.2s,
@@ -192,7 +190,6 @@
   align-items: flex-start;
   gap: 10px;
   padding: 6px 2px 2px;
-  /* color: var(--ink); */
 }
 
 .verify input[type="checkbox"] {

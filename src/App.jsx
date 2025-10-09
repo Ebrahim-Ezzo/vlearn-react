@@ -5,7 +5,6 @@ import HowItWorks from "./components/HowItWorks";
 import AppIntro from "./components/AppIntro";
 import Features from "./components/Features";
 import DownloadInstall from "./components/DownloadInstall";
-// import MinimalTopBar from "./components/MinimalTopBar";
 import Footer from "./components/Footer";
 import LoginPage from "./pages/LoginPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";

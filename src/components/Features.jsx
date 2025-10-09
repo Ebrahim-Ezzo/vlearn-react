@@ -140,7 +140,6 @@ export default function Features() {
     const handleMetricLeave = () => {
         startAutoplay();
     };
-    /* ▲▲ جديد */
 
     return (
         <section id="features" className="features">

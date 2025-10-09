@@ -22,7 +22,6 @@ export default function LoginPage() {
         if (!okName) { e.currentTarget.name.focus(); return; }
         if (!okPhone) { e.currentTarget.phone.focus(); return; }
 
-        // خزن بيانات المستخدم
         sessionStorage.setItem("user", JSON.stringify({ name, phone }));
 
         setShowMsgs(false);
@@ -75,7 +74,6 @@ export default function LoginPage() {
                     <button type="submit" className="login_btn">{t('loginpage_004')}</button>
                 </form>
 
-                {/* رسالة نجاح */}
                 {success && (
                     <p className="success_text">
                         ✅ اهلا <span className="username">{name}</span>{t('loginpage_005')}</p>

@@ -1,0 +1,11 @@
+// src/lib/api.js
+import axios from "axios";
+
+export const api = axios.create({
+  baseURL: (import.meta.env.VITE_API_URL || window.location.origin).replace(
+    /\/$/,
+    ""
+  ),
+  timeout: 15000,
+  headers: { Accept: "application/json" },
+});

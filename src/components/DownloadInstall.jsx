@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-// src/components/DownloadInstall.jsx
 import "../styles/downloadInstall.css";
 import { FaGooglePlay, FaApple } from "react-icons/fa";
 

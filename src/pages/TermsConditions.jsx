@@ -1,122 +1,156 @@
 import { useTranslation } from "react-i18next";
-import { useEffect } from "react";
-import BackHomeButton from "./BackHomeButton";
-import "./TermsConditions.css";
+import { useEffect, useState } from "react";
+import { api } from "../lib/api";
 import WhatsAppButton from "../components/WhatsAppButton";
+import "./TermsConditions.css";
+
+function cleanWordHtml(raw) {
+    if (!raw) return "";
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(`<div id="root">${raw}</div>`, "text/html");
+    const root = doc.getElementById("root");
+
+    const walker = doc.createTreeWalker(root, NodeFilter.SHOW_COMMENT, null);
+    const comments = [];
+    while (walker.nextNode()) comments.push(walker.currentNode);
+    comments.forEach((n) => n.remove());
+    root.querySelectorAll("o\\:p").forEach((n) => n.remove());
+
+    root.querySelectorAll("*").forEach((el) => {
+        if (el.hasAttribute("style")) {
+            const style = el.getAttribute("style") || "";
+            const cleaned =
+                style
+                    .split(";")
+                    .map((s) => s.trim())
+                    .filter((s) => s && !/^mso-/i.test(s))
+                    .join("; ") || "";
+            if (cleaned) el.setAttribute("style", cleaned);
+            else el.removeAttribute("style");
+        }
+        if (el.className && /(^|\s)Mso/i.test(el.className)) el.removeAttribute("class");
+        if (el.hasAttribute("align")) el.removeAttribute("align");
+
+        if (
+            el.tagName === "SPAN" &&
+            (el.textContent || "").replace(/\u00A0/g, " ").trim() === ""
+        ) {
+            el.remove();
+        }
+    });
+
+    (function fixText(node) {
+        node.childNodes.forEach((child) => {
+            if (child.nodeType === 3) {
+                let t = child.nodeValue || "";
+                t = t.replace(/\u00A0|&nbsp;|&#160;/g, " ");
+                t = t.replace(/ {2,}/g, " ");
+                t = t.replace(/\s*-\s*/g, " - ");
+                child.nodeValue = t;
+            } else {
+                fixText(child);
+            }
+        });
+    })(root);
+
+    root.querySelectorAll("p,h1,h2,h3,h4,h5,h6").forEach((el) => {
+        if ((el.textContent || "").trim() === "") el.remove();
+    });
+
+    root.querySelectorAll("[style*='text-indent']").forEach((el) => {
+        el.style.textIndent = "0";
+    });
+
+    return (root.innerHTML || "").trim();
+}
 
 export default function TermsConditions() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const [status, setStatus] = useState("loading"); // "loading" | "api" | "local"
+    const [html, setHtml] = useState("");
+    const [err, setErr] = useState("");
 
     useEffect(() => {
         document.title = t("termsconditions_051");
     }, [t]);
 
+    useEffect(() => {
+        let aborted = false;
+        const controller = new AbortController();
+
+        (async () => {
+            setStatus("loading");
+            setErr("");
+            try {
+                const res = await api.get("/api/terms", { signal: controller.signal });
+                const data = res?.data?.data || {};
+                const pickAr = i18n.language?.startsWith("ar");
+                const raw = pickAr
+                    ? (data.terms_ar || data.terms_en || data.terms || "")
+                    : (data.terms_en || data.terms_ar || data.terms || "");
+                const cleaned = cleanWordHtml(String(raw || ""));
+
+                if (aborted) return;
+                if (cleaned) {
+                    setHtml(cleaned);
+                    setStatus("api");
+                } else {
+                    setStatus("local");
+                }
+            } catch (e) {
+                if (aborted) return;
+                setErr(e?.message || "Request failed");
+                setStatus("local");
+            }
+        })();
+
+        return () => {
+            aborted = true;
+            controller.abort();
+        };
+    }, [i18n.language]);
+
+    const isAr = i18n.language?.startsWith("ar");
+    const dir = isAr ? "rtl" : "ltr";
+
     return (
-        <>
-            <main className="terms-page" aria-labelledby="terms-title">
-                <header className="terms-header">
-                    <h1 id="terms-title">{t("termsconditions_001")}</h1>
-                    <div className="meta">{t("termsconditions_002")}</div>
+        <main className="terms-page" dir={dir} aria-labelledby="terms-title">
+            {status === "loading" && (
+                <section className="terms-content">
+                    <div className="skeleton" />
+                </section>
+            )}
 
-                    <p>{t("termsconditions_003")}</p>
+            {status === "api" && (
+                <section className="terms-content">
+                    <div
+                        className={`policy-html ${isAr ? "rtl" : "ltr"}`}
+                        dangerouslySetInnerHTML={{ __html: html }}
+                    />
+                </section>
+            )}
 
-                    <p>{t("termsconditions_004")}</p>
-                </header>
+            {status === "local" && (
+                <section className="terms-content">
+                    {err && (
+                        <div style={{ color: "#b00", marginBottom: 8 }}>
+                            Offline fallback • {String(err)}
+                        </div>
+                    )}
+                    <header className="terms-header">
+                        <h1 id="terms-title">{t("termsconditions_001")}</h1>
+                        <div className="meta">{t("termsconditions_002")}</div>
+                        <p>{t("termsconditions_003")}</p>
+                        <p>{t("termsconditions_004")}</p>
+                    </header>
 
-                <article className="terms-content">
-                    <h2>{t("termsconditions_005")}</h2>
-                    <p>{t("termsconditions_006")}</p>
-
-                    <h2>{t("termsconditions_007")}</h2>
-                    <p>{t("termsconditions_008")}</p>
-
-                    <h2>{t("termsconditions_009")}</h2>
-                    <ul>
-                        <li>{t("termsconditions_010")}</li>
-                        <li>{t("termsconditions_011")}</li>
-                    </ul>
-
-                    <h2>{t("termsconditions_012")}</h2>
-                    <ul>
-                        <li>{t("termsconditions_013")}</li>
-                        <li>{t("termsconditions_014")}</li>
-                        <li>{t("termsconditions_015")}</li>
-                    </ul>
-
-                    <h2>{t("termsconditions_016")}</h2>
-                    <ul>
-                        <li>
-                            <strong>{t("termsconditions_017")}</strong>
-                            {t("termsconditions_018")}
-                        </li>
-                        <li>
-                            <strong>{t("termsconditions_019")}</strong>
-                            {t("termsconditions_020")}
-                        </li>
-                        <li>
-                            <strong>{t("termsconditions_021")}</strong>
-                            {t("termsconditions_022")}
-                        </li>
-                    </ul>
-
-                    <h2>{t("termsconditions_021")}</h2>
-                    <p>{t("termsconditions_022")}</p>
-
-                    <h2>{t("termsconditions_023")}</h2>
-                    <ul>
-                        <li>{t("termsconditions_024")}</li>
-                        <li>{t("termsconditions_025")}</li>
-                        <li>{t("termsconditions_026")}</li>
-                        <li>{t("termsconditions_027")}</li>
-                        <li>{t("termsconditions_028")}</li>
-                    </ul>
-
-                    <h2>{t("termsconditions_029")}</h2>
-                    <p><strong>{t("termsconditions_030")}</strong></p>
-                    <ul>
-                        <li>{t("termsconditions_031")}</li>
-                        <li>{t("termsconditions_032")}</li>
-                        <li>{t("termsconditions_033")}</li>
-                    </ul>
-                    <p><strong>{t("termsconditions_034")}</strong></p>
-                    <ul>
-                        <li>{t("termsconditions_035")}</li>
-                        <li>{t("termsconditions_036")}</li>
-                        <li>{t("termsconditions_037")}</li>
-                    </ul>
-
-                    <h2>{t("termsconditions_038")}</h2>
-                    <ul>
-                        <li>{t("termsconditions_039")}</li>
-                        <li>{t("termsconditions_040")}</li>
-                        <li>{t("termsconditions_041")}</li>
-                        <li>{t("termsconditions_042")}</li>
-                        <li>{t("termsconditions_043")}</li>
-                        <li>{t("termsconditions_044")}</li>
-                    </ul>
-
-                    <h2>{t("termsconditions_045")}</h2>
-                    <ul>
-                        <li>{t("termsconditions_046")}</li>
-                        <li>{t("termsconditions_047")}</li>
-                        <li>{t("termsconditions_048")}</li>
-                        <li>{t("termsconditions_049")}</li>
-                    </ul>
-
-                    <h2>{t("termsconditions_050")}</h2>
-                    <ul>
-                        <li>{t("termsconditions_051")}</li>
-                        <li>{t("termsconditions_052")}</li>
-                    </ul>
-
-                    <h2>{t("termsconditions_053")}</h2>
-                    <p>{t("termsconditions_054")}</p>
-                    <h2>{t("termsconditions_055")}</h2>
-                    <p>{t("termsconditions_056")}</p>
-                </article>
-                {/* <BackHomeButton /> */}
-                <WhatsAppButton />
-            </main>
-        </>
+                    <article className="terms-content">
+                        <h2>{t("termsconditions_005")}</h2>
+                        <p>{t("termsconditions_006")}</p>
+                    </article>
+                </section>
+            )}
+            <WhatsAppButton />
+        </main>
     );
 }
