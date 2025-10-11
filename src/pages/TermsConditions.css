@@ -47,21 +47,18 @@
   background-color: var(--border);
 }
 
-/* Headings within the cleaned content */
 .terms-content h2 {
   margin: 14px 0 8px;
   font-size: 18px;
   font-weight: 800;
 }
 
-/* Paragraphs */
 .terms-content p {
   margin: 0 0 8px;
   color: var(--text);
   line-height: 1.9;
 }
 
-/* Lists */
 .terms-content ul {
   margin: 0 0 10px 0;
   padding: 0 20px 0 0;
@@ -89,34 +86,65 @@
   }
 }
 
-/* Skeleton loader */
+/* Skeleton — إطار + مساحة داخلية متل الصورة */
 .skeleton {
-  height: 140px;
-  border-radius: 10px;
+  position: relative;
+  border-radius: 16px;
+  background: #eef2f6;
+  border: 1px solid #e5e7eb;
+  height: clamp(260px, 42vh, 520px);
+  margin: 12px 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.skeleton::before {
+  content: "";
+  position: absolute;
+  inset: 28px;
+  border-radius: 12px;
   background: linear-gradient(90deg, #eee 25%, #f5f5f5 37%, #eee 63%);
   background-size: 400% 100%;
   animation: shimmer 1.2s infinite linear;
-  margin: 12px 0;
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: 100% 0;
-  }
-  100% {
-    background-position: -100% 0;
-  }
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
 }
 
-/* Clean base for the injected Word HTML */
 .policy-html {
   line-height: 1.9;
   direction: rtl;
   text-align: justify;
 }
 
-/* Ensure no underline leaks from Word exports */
 .terms-content .policy-html u {
   text-decoration: none !important;
 }
 
+/* Skeleton (same look as privacy) */
+.terms-content .skeleton {
+  position: relative;
+  border-radius: 16px;
+  background: #eef2f6;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  height: clamp(260px, 42vh, 520px);
+  margin: 12px 0;
+}
+
+.terms-content .skeleton::before {
+  content: "";
+  position: absolute;
+  inset: 28px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f3f4f6 25%, #fafafa 37%, #f3f4f6 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.2s linear infinite;
+}
+
+/* keep once globally (remove if already declared) */
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}

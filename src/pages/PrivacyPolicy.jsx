@@ -1,3 +1,4 @@
+// src/pages/PrivacyPolicy.jsx
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { api } from "../lib/api";
@@ -26,35 +27,49 @@ export default function PrivacyPolicy() {
                     : (data.privacy_policy_en || data.privacy_policy_ar || "");
                 const cleaned = String(raw || "").trim();
 
-                if (mounted) {
-                    if (cleaned.length > 0) {
-                        setHtml(cleaned);
-                        setSource("api");
-                    } else {
-                        setSource("local");
-                    }
-                }
-            } catch (e) {
-                if (mounted) {
-                    setErr(e?.message || "Request failed");
+                if (!mounted) return;
+                if (cleaned.length > 0) {
+                    setHtml(cleaned);
+                    setSource("api");
+                } else {
                     setSource("local");
                 }
+            } catch (e) {
+                if (!mounted) return;
+                setErr(e?.message || "Request failed");
+                setSource("local");
             }
         })();
         return () => { mounted = false; };
     }, [i18n.language]);
 
-    const dir = i18n.language?.startsWith("ar") ? "rtl" : "ltr";
+    const isAr = i18n.language?.startsWith("ar");
+    const dir = isAr ? "rtl" : "ltr";
 
     return (
         <main className="privacy-page" dir={dir}>
-            {source === "api" ? (
+            {source === "loading" && (
                 <section className="privacy-content">
-                    <div className="policy-html" dangerouslySetInnerHTML={{ __html: html }} />
+                    <div className="skeleton" />
                 </section>
-            ) : (
+            )}
+
+            {source === "api" && (
                 <section className="privacy-content">
-                    {err && <div style={{ color: "#b00", marginBottom: 8 }}>Offline fallback • {String(err)}</div>}
+                    <div
+                        className={`policy-html ${isAr ? "rtl" : "ltr"}`}
+                        dangerouslySetInnerHTML={{ __html: html }}
+                    />
+                </section>
+            )}
+
+            {source === "local" && (
+                <section className="privacy-content">
+                    {err && (
+                        <div style={{ color: "#b00", marginBottom: 8 }}>
+                            Offline fallback • {String(err)}
+                        </div>
+                    )}
 
                     <header className="privacy-header">
                         <h1>{t("privacy_001")}</h1>
@@ -62,7 +77,9 @@ export default function PrivacyPolicy() {
                     </header>
 
                     <p>{t("privacy_003")}</p>
-                    <p>{t("privacy_004")} <strong>{t("privacy_005")}</strong></p>
+                    <p>
+                        {t("privacy_004")} <strong>{t("privacy_005")}</strong>
+                    </p>
                     <p>{t("privacy_006")}</p>
                     <p>{t("privacy_007")}</p>
 

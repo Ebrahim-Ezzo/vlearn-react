@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { api } from "../lib/api";
 import WhatsAppButton from "../components/WhatsAppButton";
+import DOMPurify from "dompurify";
 import "./TermsConditions.css";
 
 function cleanWordHtml(raw) {
@@ -31,10 +32,7 @@ function cleanWordHtml(raw) {
         if (el.className && /(^|\s)Mso/i.test(el.className)) el.removeAttribute("class");
         if (el.hasAttribute("align")) el.removeAttribute("align");
 
-        if (
-            el.tagName === "SPAN" &&
-            (el.textContent || "").replace(/\u00A0/g, " ").trim() === ""
-        ) {
+        if (el.tagName === "SPAN" && (el.textContent || "").replace(/\u00A0/g, " ").trim() === "") {
             el.remove();
         }
     });
@@ -64,15 +62,21 @@ function cleanWordHtml(raw) {
     return (root.innerHTML || "").trim();
 }
 
+function ensureParagraphsIfPlain(s) {
+    if (!s) return "";
+    if (/(<(p|br|h\d|ul|ol|li|div)\b)/i.test(s)) return s; // فيه HTML
+    const blocks = s.split(/\n{2,}/).map(x => x.trim()).filter(Boolean);
+    if (blocks.length > 1) return `<p>${blocks.join("</p><p>")}</p>`;
+    return s.replace(/\n/g, "<br>");
+}
+
 export default function TermsConditions() {
     const { t, i18n } = useTranslation();
-    const [status, setStatus] = useState("loading"); // "loading" | "api" | "local"
+    const [status, setStatus] = useState("loading"); // loading | api | local
     const [html, setHtml] = useState("");
     const [err, setErr] = useState("");
 
-    useEffect(() => {
-        document.title = t("termsconditions_051");
-    }, [t]);
+    useEffect(() => { document.title = t("termsconditions_051"); }, [t]);
 
     useEffect(() => {
         let aborted = false;
@@ -88,11 +92,15 @@ export default function TermsConditions() {
                 const raw = pickAr
                     ? (data.terms_ar || data.terms_en || data.terms || "")
                     : (data.terms_en || data.terms_ar || data.terms || "");
-                const cleaned = cleanWordHtml(String(raw || ""));
+
+                let cleaned = cleanWordHtml(String(raw || ""));
+                if (!cleaned) cleaned = "";
+                cleaned = ensureParagraphsIfPlain(cleaned);
 
                 if (aborted) return;
                 if (cleaned) {
-                    setHtml(cleaned);
+                    const safe = DOMPurify.sanitize(cleaned);
+                    setHtml(safe);
                     setStatus("api");
                 } else {
                     setStatus("local");
@@ -104,10 +112,7 @@ export default function TermsConditions() {
             }
         })();
 
-        return () => {
-            aborted = true;
-            controller.abort();
-        };
+        return () => { aborted = true; controller.abort(); };
     }, [i18n.language]);
 
     const isAr = i18n.language?.startsWith("ar");
@@ -116,9 +121,7 @@ export default function TermsConditions() {
     return (
         <main className="terms-page" dir={dir} aria-labelledby="terms-title">
             {status === "loading" && (
-                <section className="terms-content">
-                    <div className="skeleton" />
-                </section>
+                <section className="terms-content"><div className="skeleton" /></section>
             )}
 
             {status === "api" && (
@@ -132,18 +135,13 @@ export default function TermsConditions() {
 
             {status === "local" && (
                 <section className="terms-content">
-                    {err && (
-                        <div style={{ color: "#b00", marginBottom: 8 }}>
-                            Offline fallback • {String(err)}
-                        </div>
-                    )}
+                    {err && <div style={{ color: "#b00", marginBottom: 8 }}>Offline fallback • {String(err)}</div>}
                     <header className="terms-header">
                         <h1 id="terms-title">{t("termsconditions_001")}</h1>
                         <div className="meta">{t("termsconditions_002")}</div>
                         <p>{t("termsconditions_003")}</p>
                         <p>{t("termsconditions_004")}</p>
                     </header>
-
                     <article className="terms-content">
                         <h2>{t("termsconditions_005")}</h2>
                         <p>{t("termsconditions_006")}</p>

@@ -61,9 +61,13 @@
   height: 30px;
   outline: none;
   border: none;
+
+  background-color: var(--rev-text);
+  color: var(--text);
 }
 .field .input:focus {
   outline: 1px solid red;
+  background-color: var(--rev-text);
 }
 
 .hintput {
@@ -102,6 +106,7 @@
   gap: 10px;
   padding: 6px 2px 2px;
   margin: 8px 0 18px;
+  color: var(--text);
 }
 .agree input[type="checkbox"] {
   margin-top: 4px;
