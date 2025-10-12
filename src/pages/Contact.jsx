@@ -4,9 +4,14 @@ import { useTranslation } from "react-i18next";
 import useContact from "../lib/useContact";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import axios from "axios";
 import "./contact.css";
 
 const LIMITS = { name: 60, class: 20, subject: 40, message: 1000 };
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "/api";
+const API_URL = `${API_BASE}/contact-messages`;
+
 
 const FALLBACK = Object.freeze({
     email: "info@vlearn.sy",
@@ -25,8 +30,7 @@ function toIntlDigits(v) {
 }
 
 /* ====== فلاتر الإدخال ====== */
-// أحرف من أي لغة باستخدام Unicode Property (مدعوم بالمتصفحات الحديثة)
-const LETTER_RE = /\p{L}/u;
+const LETTER_RE = /\p{L}/u; // أي حرف (عربي/إنكليزي..)
 const DIGIT_RE = /[0-9\u0660-\u0669\u06F0-\u06F9]/; // أرقام غربية + عربية
 const isLetter = (ch) => LETTER_RE.test(ch);
 const isDigit = (ch) => DIGIT_RE.test(ch);
@@ -71,7 +75,7 @@ function filterMessage(str) {
     return out;
 }
 
-/** class: أحرف + أرقام (+ مسافة) — والحد الأقصى للطول مضبوط بـ LIMITS.class */
+/** class: أحرف + أرقام (+ مسافة) — الحد الأقصى مضبوط بـ LIMITS.class */
 function filterClass(str) {
     let out = "";
     for (const ch of str || "") {
@@ -113,8 +117,7 @@ export default function Contact() {
         // الهاتف كما هو
         if (name === "phone") {
             let digits = value.replace(/\D+/g, "");
-            if (!digits.startsWith("09"))
-                digits = "09" + digits.replace(/^0+/, "");
+            if (!digits.startsWith("09")) digits = "09" + digits.replace(/^0+/, "");
             if (digits.length > 10) digits = digits.slice(0, 10);
             setForm((p) => ({ ...p, phone: digits }));
             return;
@@ -201,23 +204,35 @@ export default function Contact() {
         return "";
     };
 
+    // === الإرسال إلى Laravel API عبر axios ===
     const onSubmit = async (e) => {
         e.preventDefault();
         setStatus({ ok: false, err: "" });
+
         const err = validate();
         if (err) return setStatus({ ok: false, err });
+
         setSubmitting(true);
         try {
-            await new Promise((r) => setTimeout(r, 800));
-            setStatus({ ok: true, err: "" });
-            setForm({
-                name: "",
-                class: "",
-                phone: "09",
-                subject: "",
-                message: "",
+            const payload = {
+                full_name: form.name.trim(),
+                grade: form.class.trim(),
+                phone: form.phone.trim(), // 09xxxxxxxx
+                subject: form.subject.trim(),
+                message: form.message.trim(),
+            };
+
+            await axios.post(API_URL, payload, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                timeout: 15000,
             });
-        } catch {
+
+            setStatus({ ok: true, err: "" });
+            setForm({ name: "", class: "", phone: "09", subject: "", message: "" });
+        } catch (e) {
             setStatus({ ok: false, err: t("contact.alerts.error_generic") });
         } finally {
             setSubmitting(false);
@@ -403,10 +418,6 @@ export default function Contact() {
                         <iframe
                             title={t("contact.map_title") || "VLearn Location"}
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d412.6904163626034!2d36.29528024959545!3d33.51985454129444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1518e73abd220519%3A0x589b9432947672a7!2sVRoad%20LLC!5e1!3m2!1sar!2sjp!4v1758463478362!5m2!1sar!2sjp"
-                            style={{ border: 0 }}
-                            allowFullScreen
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
                         />
                     </div>
                 </aside>

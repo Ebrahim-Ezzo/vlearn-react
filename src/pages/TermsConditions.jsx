@@ -1,5 +1,6 @@
+// src/pages/TermsConditions.jsx
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
 import { api } from "../lib/api";
 import WhatsAppButton from "../components/WhatsAppButton";
 import DOMPurify from "dompurify";
@@ -31,7 +32,6 @@ function cleanWordHtml(raw) {
         }
         if (el.className && /(^|\s)Mso/i.test(el.className)) el.removeAttribute("class");
         if (el.hasAttribute("align")) el.removeAttribute("align");
-
         if (el.tagName === "SPAN" && (el.textContent || "").replace(/\u00A0/g, " ").trim() === "") {
             el.remove();
         }
@@ -65,66 +65,116 @@ function cleanWordHtml(raw) {
 function ensureParagraphsIfPlain(s) {
     if (!s) return "";
     if (/(<(p|br|h\d|ul|ol|li|div)\b)/i.test(s)) return s; // فيه HTML
-    const blocks = s.split(/\n{2,}/).map(x => x.trim()).filter(Boolean);
+    const blocks = s.split(/\n{2,}/).map((x) => x.trim()).filter(Boolean);
     if (blocks.length > 1) return `<p>${blocks.join("</p><p>")}</p>`;
     return s.replace(/\n/g, "<br>");
 }
 
+const REQ_TIMEOUT_MS = 15000;
+
+function classifyAxiosError(err) {
+    if (err?.code === "ECONNABORTED") return { type: "timeout" };
+    if (err?.response) {
+        const s = err.response.status;
+        if (s === 404) return { type: "not_found", status: s };
+        if (s === 401 || s === 403) return { type: "auth", status: s };
+        if (s >= 500) return { type: "server", status: s };
+        return { type: "bad_request", status: s };
+    }
+    if (typeof navigator !== "undefined" && navigator.onLine === false) {
+        return { type: "offline" };
+    }
+    return { type: "network" }; // Network/CORS/DNS
+}
+
+function pickHtmlFromApi(data, langIsAr) {
+    const d = data?.data || {};
+    if (langIsAr) {
+        return String(d.terms_ar || d.terms_en || d.terms || "").trim();
+    }
+    return String(d.terms_en || d.terms_ar || d.terms || "").trim();
+}
+
+/* ————— Component ————— */
+
 export default function TermsConditions() {
     const { t, i18n } = useTranslation();
-    const [status, setStatus] = useState("loading"); // loading | api | local
-    const [html, setHtml] = useState("");
-    const [err, setErr] = useState("");
-
-    useEffect(() => { document.title = t("termsconditions_051"); }, [t]);
-
-    useEffect(() => {
-        let aborted = false;
-        const controller = new AbortController();
-
-        (async () => {
-            setStatus("loading");
-            setErr("");
-            try {
-                const res = await api.get("/api/terms", { signal: controller.signal });
-                const data = res?.data?.data || {};
-                const pickAr = i18n.language?.startsWith("ar");
-                const raw = pickAr
-                    ? (data.terms_ar || data.terms_en || data.terms || "")
-                    : (data.terms_en || data.terms_ar || data.terms || "");
-
-                let cleaned = cleanWordHtml(String(raw || ""));
-                if (!cleaned) cleaned = "";
-                cleaned = ensureParagraphsIfPlain(cleaned);
-
-                if (aborted) return;
-                if (cleaned) {
-                    const safe = DOMPurify.sanitize(cleaned);
-                    setHtml(safe);
-                    setStatus("api");
-                } else {
-                    setStatus("local");
-                }
-            } catch (e) {
-                if (aborted) return;
-                setErr(e?.message || "Request failed");
-                setStatus("local");
-            }
-        })();
-
-        return () => { aborted = true; controller.abort(); };
-    }, [i18n.language]);
-
     const isAr = i18n.language?.startsWith("ar");
     const dir = isAr ? "rtl" : "ltr";
 
+    const [status, setStatus] = useState("loading"); // loading | success | error
+    const [html, setHtml] = useState("");
+    const [error, setError] = useState(null); // { type, status?, details?, reqId? }
+
+    useEffect(() => { document.title = t("termsconditions_051"); }, [t]);
+
+    const fetchTerms = useCallback(async (signal) => {
+        setStatus("loading");
+        setError(null);
+        try {
+            const res = await api.get("/api/terms", {
+                timeout: REQ_TIMEOUT_MS,
+                signal,
+                validateStatus: (s) => s >= 200 && s < 300,
+            });
+
+            // نجهّز المحتوى
+            const raw = pickHtmlFromApi(res.data, isAr);
+            let cleaned = cleanWordHtml(raw);
+            cleaned = ensureParagraphsIfPlain(cleaned);
+            const safe = DOMPurify.sanitize(String(cleaned || ""));
+
+            if (!safe) {
+                setStatus("error");
+                setError({ type: "empty" });
+                return;
+            }
+
+            setHtml(safe);
+            setStatus("success");
+        } catch (e) {
+            if (signal?.aborted) return;
+            const cls = classifyAxiosError(e);
+            const serverMsg = e?.response?.data?.message || e?.message || "";
+            const reqId = e?.response?.headers?.["x-request-id"];
+            setError({ ...cls, details: serverMsg, reqId });
+            setStatus("error");
+        }
+    }, [isAr]);
+
+    useEffect(() => {
+        const ac = new AbortController();
+        fetchTerms(ac.signal);
+        return () => ac.abort();
+    }, [fetchTerms, i18n.language]);
+
+    const errorMsg = useMemo(() => {
+        if (!error) return "";
+        // لاحظ: بدون نقطة بالنهاية
+        switch (error.type) {
+            case "timeout": return t("terms_err_timeout", "انتهت مهلة الاتصال يرجى المحاولة لاحقًا");
+            case "offline": return t("terms_err_offline", "يبدو أنك غير متصل بالإنترنت");
+            case "network": return t("terms_err_network", "تعذر الوصول للخادم Network/CORS");
+            case "server": return (t("terms_err_server", "خطأ خادوم")) + (error.status ? ` HTTP ${error.status}` : "");
+            case "auth": return (t("terms_err_auth", "غير مصرح")) + (error.status ? ` HTTP ${error.status}` : "");
+            case "not_found": return t("terms_err_not_found", "محتوى غير موجود 404");
+            case "bad_request": return (t("terms_err_bad_request", "طلب غير صحيح")) + (error.status ? ` HTTP ${error.status}` : "");
+            case "empty": return t("terms_err_empty", "المحتوى غير متاح الآن");
+            default: return t("terms_err_unknown", "حدث خطأ غير معروف");
+        }
+    }, [error, t]);
+
     return (
         <main className="terms-page" dir={dir} aria-labelledby="terms-title">
+            {/* LOADING */}
             {status === "loading" && (
-                <section className="terms-content"><div className="skeleton" /></section>
+                <section className="terms-content">
+                    <div className="skeleton" />
+                </section>
             )}
 
-            {status === "api" && (
+            {/* SUCCESS */}
+            {status === "success" && (
                 <section className="terms-content">
                     <div
                         className={`policy-html ${isAr ? "rtl" : "ltr"}`}
@@ -133,21 +183,30 @@ export default function TermsConditions() {
                 </section>
             )}
 
-            {status === "local" && (
-                <section className="terms-content">
-                    {err && <div style={{ color: "#b00", marginBottom: 8 }}>Offline fallback • {String(err)}</div>}
-                    <header className="terms-header">
-                        <h1 id="terms-title">{t("termsconditions_001")}</h1>
-                        <div className="meta">{t("termsconditions_002")}</div>
-                        <p>{t("termsconditions_003")}</p>
-                        <p>{t("termsconditions_004")}</p>
-                    </header>
-                    <article className="terms-content">
-                        <h2>{t("termsconditions_005")}</h2>
-                        <p>{t("termsconditions_006")}</p>
-                    </article>
+            {status === "error" && (
+                <section className="terms-content is-error">
+                    <div className="alert error compact" role="alert" aria-live="assertive">
+                        <p className="title">{errorMsg}</p>
+                        {error?.details && <small className="muted">{String(error.details)}</small>}
+                        {error?.reqId && (
+                            <small className="muted" style={{ display: "block" }}>
+                                Request-ID: {error.reqId}
+                            </small>
+                        )}
+                        <button
+                            type="button"
+                            className="btn-primary"
+                            onClick={() => {
+                                const ac = new AbortController();
+                                fetchTerms(ac.signal);
+                            }}
+                        >
+                            {t("retry", "إعادة المحاولة")}
+                        </button>
+                    </div>
                 </section>
             )}
+
             <WhatsAppButton />
         </main>
     );
