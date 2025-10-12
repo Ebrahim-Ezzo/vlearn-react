@@ -97,7 +97,16 @@
   "deleteaccount_017": "Account Deletion Request",
 
   "deleteaccount_human": "Verify you are a human",
-  "deleteaccount_human_hint": "You must check this box to proceed.",
+  "deleteaccount_human_hint": "You must check this box to proceed",
+
+  "delete_case_created": "Your request has been submitted, Our team will contact you to complete the deletion",
+  "delete_case_duplicate": "Your request is already on file. No need to submit a new one",
+  "delete_case_no_account": "There is no account associated with this number",
+  "delete_err_captcha": "Please complete the reCAPTCHA",
+  "deleting_pls_wait": "Sending...",
+  "ok_got_it": "OK",
+
+  "delete_modal_contact": "Contact us",
 
   "loginpage_001": "Login",
   "loginpage_002": "Name",

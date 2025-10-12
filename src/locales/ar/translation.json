@@ -97,7 +97,16 @@
   "deleteaccount_017": "طلب حذف حساب",
 
   "deleteaccount_human": "أؤكّد أني لست روبوت",
-  "deleteaccount_human_hint": "اختيار هذا المربع مطلوب لمتابعة الحذف.",
+  "deleteaccount_human_hint": "اختيار هذا المربع مطلوب لمتابعة الحذف",
+
+  "delete_case_created": "تم إرسال طلبك، وسيتواصل معك الفريق المختص بخصوص حذف الحساب",
+  "delete_case_duplicate": "تم تسجيل طلبك بالفعل. لا داعي لإرسال طلب جديد",
+  "delete_case_no_account": "ليس لديك حساب مرتبط بهذا الرقم",
+  "delete_err_captcha": "يرجى اجتياز اختبار reCAPTCHA",
+  "deleting_pls_wait": "جارٍ الإرسال...",
+  "ok_got_it": "إغلاق",
+
+  "delete_modal_contact": "تواصل معنا",
 
   "loginpage_001": "تسجيل الدخول",
   "loginpage_002": "الاسم",

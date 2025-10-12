@@ -17,14 +17,8 @@
   color: var(--text);
   font-size: 15.5px;
 }
-
-.delete-header p :link {
-  color: blue;
-}
-
-.delete-header p :link:hover {
-  color: red;
-}
+.delete-header p :link { color: blue; }
+.delete-header p :link:hover { color: red; }
 
 .delete-header a {
   color: var(--primary);
@@ -46,9 +40,7 @@
   color: var(--text);
 }
 
-.field {
-  margin-bottom: 16px;
-}
+.field { margin-bottom: 16px; }
 .field label {
   display: block;
   font-weight: 700;
@@ -61,7 +53,6 @@
   height: 30px;
   outline: none;
   border: none;
-
   background-color: var(--rev-text);
   color: var(--text);
 }
@@ -70,20 +61,7 @@
   background-color: var(--rev-text);
 }
 
-.hintput {
-  width: 150px;
-  height: 46px;
-  border-radius: 12px;
-  border: 1px solid black;
-  outline: none;
-  padding: 0 12px;
-  direction: ltr;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s,
-    background 0.2s;
-  font-size: 15px;
-}
+/* ملاحظـة: كان في .hintput بالنسخة السابقة، خليّناه غير مستخدم */
 .input:focus {
   background: #fff;
   box-shadow: 0 0 0 3px rgba(8, 29, 74, 0.14);
@@ -98,6 +76,7 @@
 .error {
   font-size: 12.6px;
   margin-top: 6px;
+  color: #b91c1c;
 }
 
 .agree {
@@ -113,6 +92,8 @@
   accent-color: var(--primary);
 }
 
+.captcha { margin-bottom: 30px; }
+
 .btn {
   height: 46px;
   border-radius: 12px;
@@ -126,9 +107,7 @@
     box-shadow 0.2s ease,
     background 0.2s ease;
 }
-.btn:active {
-  transform: translateY(1px);
-}
+.btn:active { transform: translateY(1px); }
 
 .btn[disabled],
 .btn[aria-disabled="true"] {
@@ -138,23 +117,30 @@
   box-shadow: none;
 }
 
+/* أزرار */
 .btn-danger {
   color: red;
-  border: none;
-  outline: none;
   background-color: white;
   border: 1.5px solid var(--primary);
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
 }
-
 .btn-ghost {
   background-color: red;
   color: white;
   border: 1px solid red;
 }
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  display: flex;
+  align-items: center;
+  
+}
 
+/* مودال */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -170,7 +156,6 @@
   padding: 22px;
   box-shadow: var(--shadow-md);
 }
-
 .modal-card h2 {
   margin: 0 0 8px;
   font-size: 22px;
@@ -179,7 +164,6 @@
 .modal-card p {
   margin: 0;
   color: black;
-
   line-height: 1.9;
 }
 .modal-actions {
@@ -190,30 +174,42 @@
   margin-top: 20px;
 }
 
-.verify {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 6px 2px 2px;
+/* Alert blocks للنتائج والأخطاء داخل المودال */
+.alert {
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 10px 0 0;
+  border: 1px solid transparent;
+  background: #f8fafc;
+  color: #0f172a;
 }
+.alert.compact { padding: 10px 12px; }
+.alert .title { margin: 0 0 4px; font-weight: 700; }
+.alert .muted { color: #6b7280; display: block; }
 
-.verify input[type="checkbox"] {
-  margin-top: 4px;
-  accent-color: var(--primary);
+.alert.success {
+  background: #f0fdf4;
+  border-color: #86efac;
+  color: #065f46;
 }
-
-.captcha {
-  margin-bottom: 30px;
+.alert.info {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1e40af;
+}
+.alert.warning {
+  background: #fff7ed;
+  border-color: #fdba74;
+  color: #9a3412;
+}
+.alert.error {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #7f1d1d;
 }
 
 @media (max-width: 520px) {
-  .delete-header h1 {
-    font-size: 24px;
-  }
-  .delete-form {
-    padding: 14px;
-  }
-  .btn {
-    width: 100%;
-  }
+  .delete-header h1 { font-size: 24px; }
+  .delete-form { padding: 14px; }
+  .btn { width: 100%; }
 }
