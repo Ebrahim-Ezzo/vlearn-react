@@ -1,13 +1,14 @@
 // src/lib/useContact.js
 import { useEffect, useState } from "react";
-import { api } from "./api";
 
+/** ===== Defaults shown if API is unreachable ===== */
 const FALLBACK = {
   email: "info@vlearn.sy",
   phone: "0994080102",
   whatsapp: "0994080102",
 };
 
+/** Normalize any Syrian number to international digits without + (e.g., 9639xxxxxxxx) */
 function syIntl(n) {
   const d = String(n || "").replace(/\D/g, "");
   if (!d) return "";
@@ -17,6 +18,17 @@ function syIntl(n) {
   if (d.length === 9) return "963" + d;
   return d;
 }
+
+/** Build a safe API base:
+ * - In dev: default to `/api` (Vite proxy)
+ * - In prod: default to absolute https://vlearn.sy/api (so Vercel won’t hit its own domain)
+ */
+const IS_DEV = import.meta.env.DEV;
+const RAW_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  (IS_DEV ? "/api" : "https://vlearn.sy/api");
+const API_BASE = String(RAW_BASE).trim().replace(/\/$/, "");
+const CONTACT_URL = `${API_BASE}/contact_us`;
 
 export default function useContact() {
   const [state, setState] = useState({
@@ -31,17 +43,20 @@ export default function useContact() {
 
   useEffect(() => {
     let cancelled = false;
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 15000); // 15s safety timeout
 
     (async () => {
       try {
-        // نستخدم axios instance المهيّأ على VITE_API_BASE_URL
-        const r = await api.get("/contact_us", {
+        const r = await fetch(CONTACT_URL, {
           headers: { Accept: "application/json" },
+          signal: ctrl.signal,
         });
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
 
-        // بعض الـ APIs ترجع { data: {...} } وبعضها ترجع الجسم مباشرة
-        const j = r?.data;
-        const d = j?.data ?? j ?? {};
+        // Some backends wrap data under { data: {...} }
+        const j = await r.json().catch(() => ({}));
+        const d = j?.data && typeof j.data === "object" ? j.data : j || {};
 
         const email = d.email || FALLBACK.email;
         const phoneIntl = syIntl(d.phone || FALLBACK.phone);
@@ -59,7 +74,6 @@ export default function useContact() {
           });
         }
       } catch {
-        // fallback ثابت
         const p = syIntl(FALLBACK.phone);
         const w = syIntl(FALLBACK.whatsapp);
         if (!cancelled) {
@@ -73,11 +87,15 @@ export default function useContact() {
             whatsappHref: `https://wa.me/${w}`,
           });
         }
+      } finally {
+        clearTimeout(timer);
       }
     })();
 
     return () => {
       cancelled = true;
+      ctrl.abort();
+      clearTimeout(timer);
     };
   }, []);
 
