@@ -61,7 +61,6 @@
   background-color: var(--rev-text);
 }
 
-/* ملاحظـة: كان في .hintput بالنسخة السابقة، خليّناه غير مستخدم */
 .input:focus {
   background: #fff;
   box-shadow: 0 0 0 3px rgba(8, 29, 74, 0.14);
@@ -117,7 +116,6 @@
   box-shadow: none;
 }
 
-/* أزرار */
 .btn-danger {
   color: red;
   background-color: white;
@@ -140,7 +138,6 @@
   
 }
 
-/* مودال */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -174,7 +171,6 @@
   margin-top: 20px;
 }
 
-/* Alert blocks للنتائج والأخطاء داخل المودال */
 .alert {
   border-radius: 12px;
   padding: 12px 14px;

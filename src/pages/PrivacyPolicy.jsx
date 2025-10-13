@@ -43,7 +43,7 @@ function cleanWordHtml(raw) {
                 style
                     .split(";")
                     .map((s) => s.trim())
-                    .filter((s) => s && !/^mso-/i.test(s)) // احذف mso-*
+                    .filter((s) => s && !/^mso-/i.test(s))
                     .join("; ") || "";
             if (cleaned) el.setAttribute("style", cleaned);
             else el.removeAttribute("style");
@@ -118,7 +118,6 @@ export default function PrivacyPolicy() {
                 validateStatus: (s) => s >= 200 && s < 300,
             });
 
-            // تنظيف + تعقيم
             const raw = pickHtml(res.data, isAr);
             let cleaned = cleanWordHtml(raw);
             cleaned = ensureParagraphsIfPlain(cleaned);

@@ -106,6 +106,8 @@
   "deleting_pls_wait": "جارٍ الإرسال...",
   "ok_got_it": "إغلاق",
 
+  "delete_err_rate_limit": "لقد أجريت محاولات كثيرة يرجى المحاولة لاحقًا",
+
   "delete_modal_contact": "تواصل معنا",
 
   "loginpage_001": "تسجيل الدخول",
@@ -271,5 +273,6 @@
   "contact.validation.phone_required": "يرجى إدخال الرقم",
   "contact.validation.class_required": "يرجى ادخال صفك",
   "contact.form.placeholders.class": "اكتب صفك",
-  "contact.form.class": "الصف"
+  "contact.form.class": "الصف",
+  "contact_err_rate_limit": "تم تجاوز الحد المسموح للطلبات مؤقتا حاول بعد قليل"
 }

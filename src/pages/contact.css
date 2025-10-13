@@ -203,10 +203,10 @@
   font-size: 1rem;
   color: var(--text);
   padding-bottom: 20px;
-  display: flex; /* يجعل النص والآيكونات على سطر واحد */
+  display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: wrap; /* لو صغُر العرض تنزل بسطر تاني */
+  flex-wrap: wrap;
 }
 
 .contact-info a {
@@ -218,7 +218,6 @@
 }
 
 .social {
-  /* آيكونات السوشال تبقى على نفس السطر */
   display: inline-flex;
   align-items: center;
   gap: 10px;

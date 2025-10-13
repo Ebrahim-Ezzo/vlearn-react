@@ -106,6 +106,8 @@
   "deleting_pls_wait": "Sending...",
   "ok_got_it": "OK",
 
+  "delete_err_rate_limit": "Too many attempts please try again later",
+
   "delete_modal_contact": "Contact us",
 
   "loginpage_001": "Login",
@@ -269,5 +271,6 @@
   "contact.validation.phone_required": "Please enter your number",
   "contact.validation.class_required": "Please enter your class",
   "contact.form.placeholders.class": "enter your class",
-  "contact.form.class": "Class"
+  "contact.form.class": "Class",
+  "contact_err_rate_limit": "Too many requests please try again later"
 }

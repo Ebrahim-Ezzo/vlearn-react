@@ -64,7 +64,7 @@ function cleanWordHtml(raw) {
 
 function ensureParagraphsIfPlain(s) {
     if (!s) return "";
-    if (/(<(p|br|h\d|ul|ol|li|div)\b)/i.test(s)) return s; // فيه HTML
+    if (/(<(p|br|h\d|ul|ol|li|div)\b)/i.test(s)) return s;
     const blocks = s.split(/\n{2,}/).map((x) => x.trim()).filter(Boolean);
     if (blocks.length > 1) return `<p>${blocks.join("</p><p>")}</p>`;
     return s.replace(/\n/g, "<br>");
@@ -118,7 +118,6 @@ export default function TermsConditions() {
                 validateStatus: (s) => s >= 200 && s < 300,
             });
 
-            // نجهّز المحتوى
             const raw = pickHtmlFromApi(res.data, isAr);
             let cleaned = cleanWordHtml(raw);
             cleaned = ensureParagraphsIfPlain(cleaned);
@@ -150,7 +149,6 @@ export default function TermsConditions() {
 
     const errorMsg = useMemo(() => {
         if (!error) return "";
-        // لاحظ: بدون نقطة بالنهاية
         switch (error.type) {
             case "timeout": return t("terms_err_timeout", "انتهت مهلة الاتصال يرجى المحاولة لاحقًا");
             case "offline": return t("terms_err_offline", "يبدو أنك غير متصل بالإنترنت");

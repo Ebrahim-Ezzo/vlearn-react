@@ -16,12 +16,8 @@ const PREFIX_LEN = PREFIX.length;
 
 function normalizeSyPhone(raw) {
     const s = (raw || "").replace(/\s+/g, "");
-    if (s.startsWith(PREFIX)) {
-        return PREFIX + s.slice(PREFIX_LEN).replace(/\D/g, "").slice(0, 9);
-    }
-    if (s.startsWith("+") && !s.startsWith(PREFIX)) {
-        return PREFIX;
-    }
+    if (s.startsWith(PREFIX)) return PREFIX + s.slice(PREFIX_LEN).replace(/\D/g, "").slice(0, 9);
+    if (s.startsWith("+") && !s.startsWith(PREFIX)) return PREFIX;
     let digits = s.replace(/\D/g, "");
     if (digits.startsWith("00963")) digits = digits.slice(5);
     else if (digits.startsWith("963")) digits = digits.slice(3);
@@ -35,31 +31,38 @@ function classifyAxiosError(err) {
         const s = err.response.status;
         if (s === 404) return { type: "not_found", status: s };
         if (s === 401 || s === 403) return { type: "auth", status: s };
+        if (s === 429) return { type: "rate_limit", status: s };
         if (s >= 500) return { type: "server", status: s };
         return { type: "bad_request", status: s };
     }
-    if (typeof navigator !== "undefined" && navigator.onLine === false) {
-        return { type: "offline" };
-    }
+    if (typeof navigator !== "undefined" && navigator.onLine === false) return { type: "offline" };
     return { type: "network" };
 }
 
 function interpretDeleteApiResponse(res) {
-    const s = res?.status;
-    const d = res?.data || {};
-    const raw = (d.code || d.status || d.result || d.state || "").toString().toLowerCase();
+    const s = res?.status ?? 0;
+    const d = res?.data ?? null;
+    const ct = (res?.headers?.["content-type"] || "").toLowerCase();
+    const isJson = ct.includes("application/json") && d && typeof d === "object";
+    const raw = isJson
+        ? String(d.code ?? d.status ?? d.result ?? d.state ?? "").toLowerCase()
+        : "";
 
-    if (s === 404 || raw === "no_account" || raw.includes("not_found") || d.hasAccount === false) {
-        return { case: "no_account", serverMsg: d.message };
+    if (s >= 200 && s < 300) {
+        return { case: "created", serverMsg: d?.message || d?.msg };
     }
-    if (s === 409 || raw === "duplicate" || raw.includes("already") || d.alreadyRequested === true) {
-        return { case: "duplicate", serverMsg: d.message };
+
+    if (s === 404 || raw === "no_account" || raw.includes("not_found") || d?.hasAccount === false) {
+        return { case: "no_account", serverMsg: d?.message };
     }
-    if ((s >= 200 && s < 300) || raw === "created" || raw.includes("accepted") || d.created === true) {
-        return { case: "created", serverMsg: d.message };
+    if (s === 409 || raw === "duplicate" || raw.includes("already") || d?.alreadyRequested === true) {
+        return { case: "duplicate", serverMsg: d?.message };
     }
+
     return null;
 }
+
+
 
 export default function DeleteAccount() {
     const { t, i18n } = useTranslation();
@@ -72,13 +75,12 @@ export default function DeleteAccount() {
     const [showModal, setShowModal] = useState(false);
     const [sending, setSending] = useState(false);
     const [captchaToken, setCaptchaToken] = useState(null);
+
     const [apiError, setApiError] = useState(null); // { type, status?, details?, reqId? }
     const [resultCase, setResultCase] = useState(null); // "created" | "duplicate" | "no_account"
     const recaptchaRef = useRef(null);
 
-    useEffect(() => {
-        document.title = t("deleteaccount_016");
-    }, [t]);
+    useEffect(() => { document.title = t("deleteaccount_016"); }, [t]);
 
     const phoneRegex = useMemo(() => /^\+963\d{9}$/, []);
     const isPhoneValid = phoneRegex.test(phone.trim());
@@ -99,15 +101,18 @@ export default function DeleteAccount() {
         setApiError(null);
         setResultCase(null);
         try {
-            const payload = { phone: phone, recaptcha_token: captchaToken };
+            const payload = { phone, recaptcha_token: captchaToken };
             const res = await api.post(DELETE_ACCOUNT_PATH, payload, {
                 timeout: 15000,
-                validateStatus: () => true, // خلّيها true لنفسّر 404/409 كمان
+                validateStatus: () => true,
                 headers: { "Content-Type": "application/json" },
             });
+
             const interpreted = interpretDeleteApiResponse(res);
             if (interpreted) {
                 setResultCase(interpreted.case);
+            } else if (res.status === 429) {
+                setApiError({ type: "rate_limit", status: 429, details: res?.data?.message });
             } else {
                 setApiError({ type: "unknown", details: res?.data?.message, status: res?.status });
             }
@@ -146,16 +151,21 @@ export default function DeleteAccount() {
     const errorMsg = (() => {
         if (!apiError) return "";
         switch (apiError.type) {
-            case "timeout": return t("privacy_err_timeout", "انتهت مهلة الاتصال. يرجى المحاولة لاحقًا");
-            case "offline": return t("privacy_err_offline", "يبدو أنك غير متصل بالإنترنت");
-            case "network": return t("privacy_err_network", "تعذّر الوصول للخادم (Network/CORS)");
-            case "server": return t("privacy_err_server", "خطأ خادوم");
-            case "auth": return t("privacy_err_auth", "غير مصرّح");
-            case "not_found": return t("privacy_err_not_found", "المحتوى غير موجود (404)");
-            case "bad_request": return t("privacy_err_bad_request", "طلب غير صحيح");
-            default: return t("privacy_err_unknown", "حدث خطأ غير معروف");
+            case "timeout": return t("privacy_err_timeout");
+            case "offline": return t("privacy_err_offline");
+            case "network": return t("privacy_err_network");
+            case "server": return t("privacy_err_server");
+            case "auth": return t("privacy_err_auth");
+            case "not_found": return t("privacy_err_not_found");
+            case "bad_request": return t("privacy_err_bad_request");
+            case "rate_limit": return t("delete_err_rate_limit");
+            default: return t("privacy_err_unknown");
         }
     })();
+
+
+    const showDetails =
+        !!apiError && !["offline", "network", "timeout", "rate_limit"].includes(apiError.type);
 
     return (
         <section className="delete-page" aria-labelledby="delete-title">
@@ -209,7 +219,7 @@ export default function DeleteAccount() {
                     />
                     <span>
                         {t("deleteaccount_009")}
-                        <strong>{t("deleteaccount_010")}</strong>.
+                        <strong>{t("deleteaccount_010")}</strong>
                     </span>
                 </label>
 
@@ -225,7 +235,7 @@ export default function DeleteAccount() {
 
                 {!captchaToken && touched && (
                     <div className="error" role="alert">
-                        {t("delete_err_captcha", "يرجى اجتياز اختبار reCAPTCHA")}
+                        {t("delete_err_captcha")}
                     </div>
                 )}
 
@@ -248,9 +258,7 @@ export default function DeleteAccount() {
                             <p>{t("deleteaccount_013")}</p>
                         )}
 
-                        {sending && (
-                            <p>{t("deleting_pls_wait", "جارٍ الإرسال...")}</p>
-                        )}
+                        {sending && <p>{t("deleting_pls_wait", "جارٍ الإرسال")}</p>}
 
                         {resultCase === "created" && (
                             <div className="alert success compact" role="status" aria-live="polite">
@@ -273,13 +281,15 @@ export default function DeleteAccount() {
                         {apiError && (
                             <div className="alert error compact" role="alert" aria-live="polite">
                                 <p className="title">{errorMsg}</p>
-                                {apiError?.details && <small className="muted">{String(apiError.details)}</small>}
+                                {showDetails && apiError?.details && (
+                                    <small className="muted">{String(apiError.details)}</small>
+                                )}
                                 {apiError?.reqId && <small className="muted">Request-ID: {apiError.reqId}</small>}
                             </div>
                         )}
 
-                        <div className="modal-actions">
-                            {!resultCase && !sending && !apiError && (
+                        <div className="modal-actions center">
+                            {(!resultCase && !sending && !apiError) ? (
                                 <>
                                     <button
                                         className="btn btn-ghost"
@@ -296,17 +306,10 @@ export default function DeleteAccount() {
                                         {t("deleteaccount_015")}
                                     </button>
                                 </>
-                            )}
-
-                            {(!!resultCase || !!apiError) && (
-                                <>
-                                    <button
-                                        className="btn btn-danger"
-                                        onClick={() => setShowModal(false)}
-                                    >
-                                        {t("ok_got_it", "تم")}
-                                    </button>
-                                </>
+                            ) : (
+                                <button className="btn btn-danger" onClick={() => setShowModal(false)}>
+                                    {t("ok_got_it", "تم")}
+                                </button>
                             )}
                         </div>
                     </div>

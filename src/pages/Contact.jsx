@@ -12,7 +12,6 @@ const LIMITS = { name: 60, class: 20, subject: 40, message: 1000 };
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "/api";
 const API_URL = `${API_BASE}/contact-messages`;
 
-
 const FALLBACK = Object.freeze({
     email: "info@vlearn.sy",
     phoneIntl: "963994080102",
@@ -29,9 +28,8 @@ function toIntlDigits(v) {
     return (v || "").toString().replace(/\D+/g, "").replace(/^0+/, "");
 }
 
-/* ====== فلاتر الإدخال ====== */
-const LETTER_RE = /\p{L}/u; // أي حرف (عربي/إنكليزي..)
-const DIGIT_RE = /[0-9\u0660-\u0669\u06F0-\u06F9]/; // أرقام غربية + عربية
+const LETTER_RE = /\p{L}/u;
+const DIGIT_RE = /[0-9\u0660-\u0669\u06F0-\u06F9]/;
 const isLetter = (ch) => LETTER_RE.test(ch);
 const isDigit = (ch) => DIGIT_RE.test(ch);
 const isSpace = (ch) => ch === " ";
@@ -39,28 +37,20 @@ const isNewline = (ch) => ch === "\n" || ch === "\r";
 const isComma = (ch) => ch === "," || ch === "،";
 const isDot = (ch) => ch === "." || ch === "۔";
 
-/** name: أحرف فقط (+ مسافة) */
 function filterName(str) {
     let out = "";
-    for (const ch of str || "") {
-        if (isLetter(ch) || isSpace(ch)) out += ch;
-    }
+    for (const ch of str || "") if (isLetter(ch) || isSpace(ch)) out += ch;
     return out;
 }
-
-/** subject: أحرف + فواصل + نقط (+ مسافة) — بدون أرقام */
 function filterSubject(str) {
     let out = "";
-    for (const ch of str || "") {
+    for (const ch of str || "")
         if (isLetter(ch) || isSpace(ch) || isComma(ch) || isDot(ch)) out += ch;
-    }
     return out;
 }
-
-/** message: أحرف + أرقام + فواصل + نقط (+ مسافة + سطر جديد) */
 function filterMessage(str) {
     let out = "";
-    for (const ch of str || "") {
+    for (const ch of str || "")
         if (
             isLetter(ch) ||
             isDigit(ch) ||
@@ -68,22 +58,47 @@ function filterMessage(str) {
             isNewline(ch) ||
             isComma(ch) ||
             isDot(ch)
-        ) {
+        )
             out += ch;
-        }
-    }
     return out;
 }
-
-/** class: أحرف + أرقام (+ مسافة) — الحد الأقصى مضبوط بـ LIMITS.class */
 function filterClass(str) {
     let out = "";
-    for (const ch of str || "") {
-        if (isLetter(ch) || isDigit(ch) || isSpace(ch)) out += ch;
-    }
+    for (const ch of str || "") if (isLetter(ch) || isDigit(ch) || isSpace(ch)) out += ch;
     return out;
 }
 /* ==================================== */
+
+function classifyAxiosError(err) {
+    if (err?.code === "ECONNABORTED") return { type: "timeout" };
+    if (err?.response) {
+        const s = err.response.status;
+        if (s === 404) return { type: "not_found", status: s };
+        if (s === 401 || s === 403) return { type: "auth", status: s };
+        if (s === 429) return { type: "rate_limit", status: s };
+        if (s >= 500) return { type: "server", status: s };
+        return { type: "bad_request", status: s };
+    }
+    if (typeof navigator !== "undefined" && navigator.onLine === false)
+        return { type: "offline" };
+    return { type: "network" };
+}
+
+function collectServerValidation(res) {
+    const d = res?.data;
+    const ct = (res?.headers?.["content-type"] || "").toLowerCase();
+    if (!ct.includes("application/json") || !d || typeof d !== "object") return "";
+    if (Array.isArray(d?.errors)) return d.errors.join(" • ");
+    if (d?.errors && typeof d.errors === "object") {
+        const all = [];
+        for (const v of Object.values(d.errors)) {
+            if (Array.isArray(v)) all.push(...v);
+            else if (v) all.push(String(v));
+        }
+        return all.join(" • ");
+    }
+    return d?.message || "";
+}
 
 export default function Contact() {
     const { t, i18n } = useTranslation();
@@ -108,13 +123,14 @@ export default function Contact() {
         subject: "",
         message: "",
     });
+
     const [status, setStatus] = useState({ ok: false, err: "" });
+    const [apiError, setApiError] = useState(null); // { type, status?, details?, reqId? }
     const [submitting, setSubmitting] = useState(false);
 
     const onChange = (e) => {
         const { name, value, maxLength } = e.target;
 
-        // الهاتف كما هو
         if (name === "phone") {
             let digits = value.replace(/\D+/g, "");
             if (!digits.startsWith("09")) digits = "09" + digits.replace(/^0+/, "");
@@ -123,53 +139,20 @@ export default function Contact() {
             return;
         }
 
-        // القيود الخاصة بكل حقل
-        if (name === "name") {
-            const filtered = filterName(value);
-            const next =
-                typeof filtered === "string" && maxLength && filtered.length > maxLength
-                    ? filtered.slice(0, maxLength)
-                    : filtered;
-            setForm((p) => ({ ...p, name: next }));
-            return;
-        }
+        const clip = (s) =>
+            typeof s === "string" && maxLength && s.length > maxLength
+                ? s.slice(0, maxLength)
+                : s;
 
-        if (name === "subject") {
-            const filtered = filterSubject(value);
-            const next =
-                typeof filtered === "string" && maxLength && filtered.length > maxLength
-                    ? filtered.slice(0, maxLength)
-                    : filtered;
-            setForm((p) => ({ ...p, subject: next }));
-            return;
-        }
+        if (name === "name") return setForm((p) => ({ ...p, name: clip(filterName(value)) }));
+        if (name === "subject")
+            return setForm((p) => ({ ...p, subject: clip(filterSubject(value)) }));
+        if (name === "message")
+            return setForm((p) => ({ ...p, message: clip(filterMessage(value)) }));
+        if (name === "class")
+            return setForm((p) => ({ ...p, class: clip(filterClass(value)) }));
 
-        if (name === "message") {
-            const filtered = filterMessage(value);
-            const next =
-                typeof filtered === "string" && maxLength && filtered.length > maxLength
-                    ? filtered.slice(0, maxLength)
-                    : filtered;
-            setForm((p) => ({ ...p, message: next }));
-            return;
-        }
-
-        if (name === "class") {
-            const filtered = filterClass(value);
-            const next =
-                typeof filtered === "string" && maxLength && filtered.length > maxLength
-                    ? filtered.slice(0, maxLength)
-                    : filtered;
-            setForm((p) => ({ ...p, class: next }));
-            return;
-        }
-
-        // الافتراضي
-        let next = value;
-        if (typeof next === "string" && maxLength && next.length > maxLength) {
-            next = next.slice(0, maxLength);
-        }
-        setForm((p) => ({ ...p, [name]: next }));
+        setForm((p) => ({ ...p, [name]: clip(value) }));
     };
 
     const onPhoneKeyDown = useCallback((e) => {
@@ -192,22 +175,18 @@ export default function Contact() {
         if (!form.name.trim()) return t("contact.validation.name_required");
         if (!form.class.trim()) return t("contact.validation.class_required");
         const phoneRaw = form.phone.trim();
-        if (!phoneRaw || phoneRaw === "09")
-            return t("contact.validation.phone_required");
-        if (!/^09\d{8}$/.test(phoneRaw))
-            return t("contact.validation.phone_invalid");
-        if (!form.subject.trim())
-            return t("contact.validation.subject_required");
+        if (!phoneRaw || phoneRaw === "09") return t("contact.validation.phone_required");
+        if (!/^09\d{8}$/.test(phoneRaw)) return t("contact.validation.phone_invalid");
+        if (!form.subject.trim()) return t("contact.validation.subject_required");
         const msg = form.message.trim();
-        if (!msg || msg.length < 10)
-            return t("contact.validation.message_min");
+        if (!msg || msg.length < 10) return t("contact.validation.message_min");
         return "";
     };
 
-    // === الإرسال إلى Laravel API عبر axios ===
     const onSubmit = async (e) => {
         e.preventDefault();
         setStatus({ ok: false, err: "" });
+        setApiError(null);
 
         const err = validate();
         if (err) return setStatus({ ok: false, err });
@@ -222,22 +201,56 @@ export default function Contact() {
                 message: form.message.trim(),
             };
 
-            await axios.post(API_URL, payload, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
+            const res = await axios.post(API_URL, payload, {
+                headers: { "Content-Type": "application/json", Accept: "application/json" },
                 timeout: 15000,
+                validateStatus: () => true,
             });
 
-            setStatus({ ok: true, err: "" });
-            setForm({ name: "", class: "", phone: "09", subject: "", message: "" });
+            if (res.status >= 200 && res.status < 300) {
+                setStatus({ ok: true, err: "" });
+                setForm({ name: "", class: "", phone: "09", subject: "", message: "" });
+            } else if (res.status === 429) {
+                setApiError({ type: "rate_limit", status: 429, details: res?.data?.message });
+            } else if (res.status === 422) {
+                const details = collectServerValidation(res) || res?.data?.message;
+                setApiError({ type: "bad_request", status: 422, details });
+            } else if (res.status === 404) {
+                setApiError({ type: "not_found", status: 404, details: res?.data?.message });
+            } else if (res.status === 401 || res.status === 403) {
+                setApiError({ type: "auth", status: res.status, details: res?.data?.message });
+            } else if (res.status >= 500) {
+                setApiError({ type: "server", status: res.status, details: res?.data?.message });
+            } else {
+                setApiError({ type: "bad_request", status: res.status, details: res?.data?.message });
+            }
         } catch (e) {
-            setStatus({ ok: false, err: t("contact.alerts.error_generic") });
+            const cls = classifyAxiosError(e);
+            const serverMsg = e?.response?.data?.message || e?.message || "";
+            const reqId = e?.response?.headers?.["x-request-id"];
+            setApiError({ ...cls, details: serverMsg, reqId });
         } finally {
             setSubmitting(false);
         }
     };
+
+    const errorMsg = (() => {
+        if (!apiError) return "";
+        switch (apiError.type) {
+            case "timeout": return t("privacy_err_timeout");
+            case "offline": return t("privacy_err_offline");
+            case "network": return t("privacy_err_network");
+            case "server": return t("privacy_err_server");
+            case "auth": return t("privacy_err_auth");
+            case "not_found": return t("privacy_err_not_found");
+            case "bad_request": return t("privacy_err_bad_request");
+            case "rate_limit": return t("contact_err_rate_limit");
+            default: return t("privacy_err_unknown");
+        }
+    })();
+
+    const showDetails =
+        !!apiError && !["offline", "network", "timeout", "rate_limit"].includes(apiError.type);
 
     return (
         <main className="contact-page" dir={isAr ? "rtl" : "ltr"}>
@@ -334,16 +347,28 @@ export default function Contact() {
                     </div>
 
                     <div className="cont">
-                        {status.err && (
+                        {status.err && !apiError && (
                             <p className="alert error" role="alert">
                                 {status.err}
                             </p>
                         )}
-                        {status.ok && (
+                        {apiError && (
+                            <div className="alert error" role="alert" aria-live="polite">
+                                <p className="title">{errorMsg}</p>
+                                {showDetails && apiError?.details && (
+                                    <small className="muted">{String(apiError.details)}</small>
+                                )}
+                                {apiError?.reqId && (
+                                    <small className="muted">Request-ID: {apiError.reqId}</small>
+                                )}
+                            </div>
+                        )}
+                        {status.ok && !apiError && (
                             <p className="alert success" role="status">
                                 {t("contact.alerts.success")}
                             </p>
                         )}
+
                         <button
                             type="submit"
                             className="Contact-btn btn-primary"
