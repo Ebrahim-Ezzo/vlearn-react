@@ -4,13 +4,12 @@ import { Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./DeleteAccount.css";
 import WhatsAppButton from "../components/WhatsAppButton";
-import { api } from "../lib/api"; // استعمال إنستانس axios نفسه
+import { api } from "../lib/api";
 
 const SITE_KEY =
     import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeaxtQrAAAAAG_PiEPGK168eT5ZOl57h5yug1C-";
 
-// ⚠️ عدّل المسار حسب السيرفر إذا اختلف
-const DELETE_ACCOUNT_PATH = "/delete_account";
+const DELETE_ACCOUNT_PATH = "/delete-account-requests";
 
 const PREFIX = "+963";
 const PREFIX_LEN = PREFIX.length;
@@ -45,21 +44,17 @@ function classifyAxiosError(err) {
     return { type: "network" };
 }
 
-// تفسير ردّ الإيه-بي-آي إلى الحالات الثلاث
 function interpretDeleteApiResponse(res) {
     const s = res?.status;
     const d = res?.data || {};
     const raw = (d.code || d.status || d.result || d.state || "").toString().toLowerCase();
 
-    // لا يوجد حساب
     if (s === 404 || raw === "no_account" || raw.includes("not_found") || d.hasAccount === false) {
         return { case: "no_account", serverMsg: d.message };
     }
-    // طلب سابق/مكرر
     if (s === 409 || raw === "duplicate" || raw.includes("already") || d.alreadyRequested === true) {
         return { case: "duplicate", serverMsg: d.message };
     }
-    // تم إنشاء الطلب الآن
     if ((s >= 200 && s < 300) || raw === "created" || raw.includes("accepted") || d.created === true) {
         return { case: "created", serverMsg: d.message };
     }
@@ -104,7 +99,7 @@ export default function DeleteAccount() {
         setApiError(null);
         setResultCase(null);
         try {
-            const payload = { phone_e164: phone, recaptcha_token: captchaToken };
+            const payload = { phone: phone, recaptcha_token: captchaToken };
             const res = await api.post(DELETE_ACCOUNT_PATH, payload, {
                 timeout: 15000,
                 validateStatus: () => true, // خلّيها true لنفسّر 404/409 كمان
