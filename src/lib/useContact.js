@@ -1,5 +1,6 @@
 // src/lib/useContact.js
 import { useEffect, useState } from "react";
+import { api } from "./api";
 
 const FALLBACK = {
   email: "info@vlearn.sy",
@@ -33,12 +34,14 @@ export default function useContact() {
 
     (async () => {
       try {
-        const r = await fetch("/api/contact_us", {
+        // نستخدم axios instance المهيّأ على VITE_API_BASE_URL
+        const r = await api.get("/contact_us", {
           headers: { Accept: "application/json" },
         });
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        const j = await r.json();
-        const d = j?.data || {};
+
+        // بعض الـ APIs ترجع { data: {...} } وبعضها ترجع الجسم مباشرة
+        const j = r?.data;
+        const d = j?.data ?? j ?? {};
 
         const email = d.email || FALLBACK.email;
         const phoneIntl = syIntl(d.phone || FALLBACK.phone);
@@ -56,6 +59,7 @@ export default function useContact() {
           });
         }
       } catch {
+        // fallback ثابت
         const p = syIntl(FALLBACK.phone);
         const w = syIntl(FALLBACK.whatsapp);
         if (!cancelled) {
