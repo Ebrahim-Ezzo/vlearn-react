@@ -24,9 +24,8 @@ function syIntl(n) {
  * - In prod: default to absolute https://vlearn.sy/api (so Vercel won’t hit its own domain)
  */
 const IS_DEV = import.meta.env.DEV;
-const RAW_BASE =
-  import.meta.env.VITE_API_BASE_URL ||
-  (IS_DEV ? "/api" : "https://vlearn.sy/api");
+const RAW_BASE = import.meta.env.VITE_API_BASE_URL || "/api";
+
 const API_BASE = String(RAW_BASE).trim().replace(/\/$/, "");
 const CONTACT_URL = `${API_BASE}/contact_us`;
 
