@@ -1,3 +1,4 @@
+// src/pages/DeleteAccount.jsx
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useState, useRef } from "react";
 import { Link } from "react-router-dom";
@@ -6,8 +7,10 @@ import "./DeleteAccount.css";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { api } from "../lib/api";
 
-const SITE_KEY =
-    import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeaxtQrAAAAAG_PiEPGK168eT5ZOl57h5yug1C-";
+const SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+if (!SITE_KEY) {
+    throw new Error("VITE_RECAPTCHA_SITE_KEY is missing");
+}
 
 const DELETE_ACCOUNT_PATH = "/delete-account-requests";
 
@@ -44,9 +47,7 @@ function interpretDeleteApiResponse(res) {
     const d = res?.data ?? null;
     const ct = (res?.headers?.["content-type"] || "").toLowerCase();
     const isJson = ct.includes("application/json") && d && typeof d === "object";
-    const raw = isJson
-        ? String(d.code ?? d.status ?? d.result ?? d.state ?? "").toLowerCase()
-        : "";
+    const raw = isJson ? String(d.code ?? d.status ?? d.result ?? d.state ?? "").toLowerCase() : "";
 
     if (s >= 200 && s < 300) {
         return { case: "created", serverMsg: d?.message || d?.msg };
@@ -61,8 +62,6 @@ function interpretDeleteApiResponse(res) {
 
     return null;
 }
-
-
 
 export default function DeleteAccount() {
     const { t, i18n } = useTranslation();
@@ -80,7 +79,9 @@ export default function DeleteAccount() {
     const [resultCase, setResultCase] = useState(null); // "created" | "duplicate" | "no_account"
     const recaptchaRef = useRef(null);
 
-    useEffect(() => { document.title = t("deleteaccount_016"); }, [t]);
+    useEffect(() => {
+        document.title = t("deleteaccount_016");
+    }, [t]);
 
     const phoneRegex = useMemo(() => /^\+963\d{9}$/, []);
     const isPhoneValid = phoneRegex.test(phone.trim());
@@ -101,7 +102,11 @@ export default function DeleteAccount() {
         setApiError(null);
         setResultCase(null);
         try {
-            const payload = { phone, recaptcha_token: captchaToken };
+            const payload = {
+                phone,
+                "g-recaptcha-response": captchaToken, // v2: الاسم القياسي
+            };
+
             const res = await api.post(DELETE_ACCOUNT_PATH, payload, {
                 timeout: 15000,
                 validateStatus: () => true,
@@ -122,7 +127,9 @@ export default function DeleteAccount() {
             const reqId = e?.response?.headers?.["x-request-id"];
             setApiError({ ...cls, details: serverMsg, reqId });
         } finally {
-            try { recaptchaRef.current?.reset(); } catch { }
+            try {
+                recaptchaRef.current?.reset();
+            } catch { }
             setCaptchaToken(null);
             setSending(false);
         }
@@ -151,18 +158,26 @@ export default function DeleteAccount() {
     const errorMsg = (() => {
         if (!apiError) return "";
         switch (apiError.type) {
-            case "timeout": return t("privacy_err_timeout");
-            case "offline": return t("privacy_err_offline");
-            case "network": return t("privacy_err_network");
-            case "server": return t("privacy_err_server");
-            case "auth": return t("privacy_err_auth");
-            case "not_found": return t("privacy_err_not_found");
-            case "bad_request": return t("privacy_err_bad_request");
-            case "rate_limit": return t("delete_err_rate_limit");
-            default: return t("privacy_err_unknown");
+            case "timeout":
+                return t("privacy_err_timeout");
+            case "offline":
+                return t("privacy_err_offline");
+            case "network":
+                return t("privacy_err_network");
+            case "server":
+                return t("privacy_err_server");
+            case "auth":
+                return t("privacy_err_auth");
+            case "not_found":
+                return t("privacy_err_not_found");
+            case "bad_request":
+                return t("privacy_err_bad_request");
+            case "rate_limit":
+                return t("delete_err_rate_limit");
+            default:
+                return t("privacy_err_unknown");
         }
     })();
-
 
     const showDetails =
         !!apiError && !["offline", "network", "timeout", "rate_limit"].includes(apiError.type);
@@ -230,6 +245,7 @@ export default function DeleteAccount() {
                         onChange={(token) => setCaptchaToken(token)}
                         onExpired={() => setCaptchaToken(null)}
                         onError={() => setCaptchaToken(null)}
+                        hl={isArabic ? "ar" : "en"} // واجهة الودجِت حسب اللغة
                     />
                 </div>
 
@@ -254,9 +270,7 @@ export default function DeleteAccount() {
                     <div className="modal-card" onClick={(e) => e.stopPropagation()}>
                         <h2 id="modal-title">{t("deleteaccount_012")}</h2>
 
-                        {!resultCase && !apiError && !sending && (
-                            <p>{t("deleteaccount_013")}</p>
-                        )}
+                        {!resultCase && !apiError && !sending && <p>{t("deleteaccount_013")}</p>}
 
                         {sending && <p>{t("deleting_pls_wait", "جارٍ الإرسال")}</p>}
 
@@ -284,12 +298,14 @@ export default function DeleteAccount() {
                                 {showDetails && apiError?.details && (
                                     <small className="muted">{String(apiError.details)}</small>
                                 )}
-                                {apiError?.reqId && <small className="muted">Request-ID: {apiError.reqId}</small>}
+                                {apiError?.reqId && (
+                                    <small className="muted">Request-ID: {apiError.reqId}</small>
+                                )}
                             </div>
                         )}
 
                         <div className="modal-actions center">
-                            {(!resultCase && !sending && !apiError) ? (
+                            {!resultCase && !sending && !apiError ? (
                                 <>
                                     <button
                                         className="btn btn-ghost"
