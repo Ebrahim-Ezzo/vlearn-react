@@ -185,7 +185,7 @@ export default function TermsConditions() {
                 <section className="terms-content is-error">
                     <div className="alert error compact" role="alert" aria-live="assertive">
                         <p className="title">{errorMsg}</p>
-                        {error?.details && <small className="muted">{String(error.details)}</small>}
+                        {error?.details && <small className="muted"></small>}
                         {error?.reqId && (
                             <small className="muted" style={{ display: "block" }}>
                                 Request-ID: {error.reqId}

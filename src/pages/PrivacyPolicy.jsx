@@ -182,7 +182,7 @@ export default function PrivacyPolicy() {
                 <section className="privacy-content is-error">
                     <div className="alert error compact" role="alert" aria-live="polite">
                         <p className="title">{errorMsg}</p>
-                        {error?.details && <small className="muted">{String(error.details)}</small>}
+                        {error?.details && <small className="muted"></small>}
                         {error?.reqId && <small className="muted">Request-ID: {error.reqId}</small>}
                         <button
                             className="btn-primary"
