@@ -7,10 +7,8 @@ import "./DeleteAccount.css";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { api } from "../lib/api";
 
-const SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-if (!SITE_KEY) {
-    throw new Error("VITE_RECAPTCHA_SITE_KEY is missing");
-}
+// ما منرمي throw على مستوى الملف — بنحط قيمة افتراضية فاضية
+const SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY ?? "";
 
 const DELETE_ACCOUNT_PATH = "/delete-account-requests";
 
@@ -66,6 +64,9 @@ function interpretDeleteApiResponse(res) {
 export default function DeleteAccount() {
     const { t, i18n } = useTranslation();
     const isArabic = i18n.language?.startsWith("ar");
+
+    // إذا المفتاح ناقص، بنعطّل الودجت والزر بدل ما نكسّر الصفحة
+    const recaptchaReady = !!SITE_KEY;
 
     const [phone, setPhone] = useState(PREFIX);
     const [agree, setAgree] = useState(false);
@@ -238,24 +239,40 @@ export default function DeleteAccount() {
                     </span>
                 </label>
 
+                {/* تنبيه إذا reCAPTCHA غير مفعّلة */}
+                {!recaptchaReady && (
+                    <div className="error" role="alert">
+                        reCAPTCHA غير مفعّلة حاليًا. تواصل معنا أو جرّب لاحقًا.
+                    </div>
+                )}
+
+                {/* ودجِت reCAPTCHA (فقط إذا المفتاح موجود) */}
                 <div className="captcha">
-                    <ReCAPTCHA
-                        ref={recaptchaRef}
-                        sitekey={SITE_KEY}
-                        onChange={(token) => setCaptchaToken(token)}
-                        onExpired={() => setCaptchaToken(null)}
-                        onError={() => setCaptchaToken(null)}
-                        hl={isArabic ? "ar" : "en"} // واجهة الودجِت حسب اللغة
-                    />
+                    {recaptchaReady ? (
+                        <ReCAPTCHA
+                            ref={recaptchaRef}
+                            sitekey={SITE_KEY}
+                            onChange={(token) => setCaptchaToken(token)}
+                            onExpired={() => setCaptchaToken(null)}
+                            onError={() => setCaptchaToken(null)}
+                            hl={isArabic ? "ar" : "en"}
+                        />
+                    ) : null}
                 </div>
 
+                {/* خطأ عدم اجتياز الكابتشا */}
                 {!captchaToken && touched && (
                     <div className="error" role="alert">
                         {t("delete_err_captcha")}
                     </div>
                 )}
 
-                <button type="submit" className="btn btn-danger" disabled={!canProceed}>
+                {/* زر الإرسال — يتعطّل إذا الكابتشا أو الشروط أو الرقم غير جاهزين */}
+                <button
+                    type="submit"
+                    className="btn btn-danger"
+                    disabled={!canProceed || !recaptchaReady}
+                >
                     {t("deleteaccount_011")}
                 </button>
             </form>
