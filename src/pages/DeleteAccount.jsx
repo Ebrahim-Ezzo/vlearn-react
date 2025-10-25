@@ -7,10 +7,8 @@ import "./DeleteAccount.css";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { api } from "../lib/api";
 
-const SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-if (!SITE_KEY) {
-    throw new Error("VITE_RECAPTCHA_SITE_KEY is missing");
-}
+const SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "";
+const HAS_CAPTCHA = Boolean(SITE_KEY);
 
 const DELETE_ACCOUNT_PATH = "/delete-account-requests";
 
@@ -85,7 +83,7 @@ export default function DeleteAccount() {
 
     const phoneRegex = useMemo(() => /^\+963\d{9}$/, []);
     const isPhoneValid = phoneRegex.test(phone.trim());
-    const canProceed = isPhoneValid && agree && !!captchaToken;
+    const canProceed = isPhoneValid && agree && (HAS_CAPTCHA ? !!captchaToken : false);
 
     const openModal = (e) => {
         e.preventDefault();
@@ -239,17 +237,23 @@ export default function DeleteAccount() {
                 </label>
 
                 <div className="captcha">
-                    <ReCAPTCHA
-                        ref={recaptchaRef}
-                        sitekey={SITE_KEY}
-                        onChange={(token) => setCaptchaToken(token)}
-                        onExpired={() => setCaptchaToken(null)}
-                        onError={() => setCaptchaToken(null)}
-                        hl={isArabic ? "ar" : "en"} // واجهة الودجِت حسب اللغة
-                    />
+                    {HAS_CAPTCHA ? (
+                        <ReCAPTCHA
+                            ref={recaptchaRef}
+                            sitekey={SITE_KEY}
+                            onChange={(token) => setCaptchaToken(token)}
+                            onExpired={() => setCaptchaToken(null)}
+                            onError={() => setCaptchaToken(null)}
+                            hl={isArabic ? "ar" : "en"}
+                        />
+                    ) : (
+                        <div className="alert warning" role="status">
+                            reCAPTCHA غير متاحة حالياً.
+                        </div>
+                    )}
                 </div>
 
-                {!captchaToken && touched && (
+                {HAS_CAPTCHA && !captchaToken && touched && (
                     <div className="error" role="alert">
                         {t("delete_err_captcha")}
                     </div>
